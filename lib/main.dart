@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:fooddelivery_fe/screens/homescreen.dart';
 
-void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  // MainController.initializeControllers();
+  // await initializeDateFormatting('vi_VN', null);
+  runApp(
+    MaterialApp(
+      initialRoute: 'home_screen',
+      debugShowCheckedModeBanner: false,
+      routes: {
+        'home_screen': (context) => HomeScreen(),
+      },
+    ),
+  );
 }
