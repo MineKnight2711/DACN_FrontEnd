@@ -9,8 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^5.1.0
+  google_fonts: ^4.0.3
   get: ^4.6.5
+  intl: ^0.17.0
+  http: ^0.13.6
+  fluttertoast: ^8.2.1
 
 dev_dependencies:
   flutter_test:

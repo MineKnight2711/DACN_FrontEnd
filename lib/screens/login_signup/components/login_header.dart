@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/utils/mediaquery.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreenHeader extends StatelessWidget {
   const LoginScreenHeader({super.key});

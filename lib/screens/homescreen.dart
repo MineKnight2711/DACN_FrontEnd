@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Get.put(LoginController());
-              slideInTransition(context, LoginSreen());
+              slideInTransition(context, LoginScreen());
             },
             child: const Text("Đăng nhập ->"),
           ),
