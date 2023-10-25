@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginWithGoogleButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -16,7 +15,7 @@ class LoginWithGoogleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      width: size.width / 2,
+      width: size.width / 1.8,
       height: size.height / 18,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0), color: Colors.grey[300]),

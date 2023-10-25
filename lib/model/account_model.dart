@@ -24,9 +24,7 @@ class AccountModel {
     return AccountModel(
       accountID: json['accountID'],
       fullName: json['fullName'],
-
       birthday: DateFormat('yyyy-MM-dd').parse(json['birthday']),
-      // isFingerPrintAuthentication: json["isFingerPrintAuthentication"],
       email: json['email'],
       gender: json['gender'],
       imageUrl: json['imageUrl'],
@@ -34,7 +32,6 @@ class AccountModel {
     );
   }
 
-  // Convert the User object to a JSON representation
   Map<String, dynamic> toJson() {
     return {
       'accountID': accountID,
@@ -42,7 +39,6 @@ class AccountModel {
       'password': password,
       'birthday':
           birthday != null ? DateFormat("yyyy-MM-dd").format(birthday!) : '',
-      // 'isFingerPrintAuthentication': isFingerPrintAuthentication.toString(),
       'email': email,
       'gender': gender,
       'imageUrl': imageUrl,

@@ -20,4 +20,18 @@ class AccountApi {
     responseBase.message = 'Error';
     return responseBase;
   }
+
+  Future<ResponseBaseModel?> login(String email, String password) async {
+    final response = await http.get(
+      Uri.parse("${ApiUrl.apiLogin}/$email?password=$password"),
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'Error';
+    return responseBase;
+  }
 }

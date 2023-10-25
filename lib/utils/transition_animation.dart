@@ -44,3 +44,19 @@ void slideInTransitionReplacement(BuildContext context, Widget widget) async {
     ),
   );
 }
+
+void fadeInTransitionReplacement(BuildContext context, Widget widget) async {
+  Navigator.pushReplacement(
+    context,
+    PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (context, animation, secondaryAnimation) => widget,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    ),
+  );
+}

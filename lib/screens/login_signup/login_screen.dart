@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/constant.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
+import 'package:fooddelivery_fe/screens/homescreen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/register_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/custom_input_textfield.dart';
 import 'package:fooddelivery_fe/widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/message.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../utils/mediaquery.dart';
@@ -91,7 +93,20 @@ class LoginScreen extends StatelessWidget {
               DefaultButton(
                 text: 'Đăng nhập',
                 fontSize: 20,
-                press: () {},
+                press: () async {
+                  String? result = await loginController.login(
+                      loginController.emailController.text,
+                      loginController.passwordController.text);
+                  if (result == "Success") {
+                    CustomSuccessMessage.showMessage("Đăng nhập thành công!");
+                    // ignore: use_build_context_synchronously
+                    fadeInTransitionReplacement(context, HomeScreen());
+                  } else if (result == "AccountNotFound") {
+                    CustomErrorMessage.showMessage("Không tìm thấy tài khoản!");
+                  } else {
+                    CustomErrorMessage.showMessage("Lỗi không xác định!");
+                  }
+                },
               ),
               SizedBox(
                 height: CustomMediaQuery.mediaHeight(context, 50),
