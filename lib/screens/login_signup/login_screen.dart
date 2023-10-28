@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/constant.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
-import 'package:fooddelivery_fe/screens/homescreen.dart';
+import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/register_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';

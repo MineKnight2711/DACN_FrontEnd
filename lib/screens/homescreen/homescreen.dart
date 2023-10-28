@@ -1,28 +1,36 @@
-import 'dart:ffi';
-
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+
 import 'package:fooddelivery_fe/controller/category_Controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/model/category_model.dart';
-import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
-import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/homescreen_appbar.dart';
 
-import '../config/mediquerry.dart';
+import 'package:get/get.dart';
+
+import '../../config/mediquerry.dart';
 
 class HomeScreen extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   final AccountModel? accountModel;
+
   HomeScreen({super.key, this.accountModel});
   final loginController = Get.put(LoginController());
   final categoryController = Get.put(CategoryController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
+      appBar: CustomHomeAppBar(scaffoldKey: scaffoldKey),
+      endDrawer:
+          CustomHomeAppBar(scaffoldKey: scaffoldKey).buildDrawer(context),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -139,13 +147,13 @@ class CategryItem extends StatelessWidget {
           categeryController.onSelectCategory("${categoryModel.categoryID}"),
       child: Container(
         margin: const EdgeInsets.only(bottom: 70),
-        width: 100,
-        height: 120,
+        width: CustomMediaQuerry.mediaWidth(context, 5),
+        height: CustomMediaQuerry.mediaHeight(context, 8),
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuerry.mediaHeight(context, 9),
-              width: MediaQuerry.mediaWidth(context, 6),
+              height: CustomMediaQuerry.mediaHeight(context, 10),
+              width: CustomMediaQuerry.mediaWidth(context, 6),
               child: CachedNetworkImage(
                 imageUrl: categoryModel.imageUrl.toString(),
               ),
@@ -164,7 +172,7 @@ class CategryItem extends StatelessWidget {
                           ? const Color.fromARGB(255, 75, 75, 75)
                           : Colors.black26,
                       fontWeight: FontWeight.w500,
-                      fontSize: 9.5,
+                      fontSize: 9.5.sp,
                     ),
                   ),
                 ),

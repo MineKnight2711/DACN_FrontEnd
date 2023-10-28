@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MediaQuerry {
+class CustomMediaQuerry {
   static double mediaWidth(BuildContext context, double? customSize) {
     final givenSize = customSize ?? 1.0;
     return MediaQuery.of(context).size.width / givenSize;
