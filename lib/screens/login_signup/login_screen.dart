@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/constant.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/register_screen.dart';
+import 'package:fooddelivery_fe/screens/login_signup/sign_in_with_google/sign_in_withgoogle.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/custom_input_textfield.dart';
@@ -50,7 +55,7 @@ class LoginScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Chào mừng trở lại!",
+                  tr("login.title"),
                   style: GoogleFonts.roboto(
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
@@ -68,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                 height: CustomMediaQuery.mediaHeight(context, 50),
               ),
               CustomInputTextField(
-                labelText: 'Mật khẩu',
+                labelText: tr("login.password"),
                 controller: loginController.passwordController,
               ),
               SizedBox(
@@ -78,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
                   child: Text(
-                    "Quên mật khẩu ?",
+                    tr("login.forgot_password"),
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       color: mainButtonColor,
@@ -91,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                 height: CustomMediaQuery.mediaHeight(context, 20),
               ),
               DefaultButton(
-                text: 'Đăng nhập',
+                text: tr("login.login"),
                 fontSize: 20,
                 press: () async {
                   String? result = await loginController.login(
@@ -104,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                   } else if (result == "AccountNotFound") {
                     CustomErrorMessage.showMessage("Không tìm thấy tài khoản!");
                   } else {
-                    CustomErrorMessage.showMessage("Lỗi không xác định!");
+                    CustomErrorMessage.showMessage("Lỗi : $result");
                   }
                 },
               ),
@@ -130,7 +135,29 @@ class LoginScreen extends StatelessWidget {
               // ),
               LoginWithGoogleButton(
                   buttonIconAssets: "assets/icons/google.png",
-                  onPressed: () {},
+                  onPressed: () async {
+                    String? result = await loginController.signInWithGoogle();
+
+                    switch (result) {
+                      case "LoginSuccess":
+                        showCustomSnackBar(context, "Thông báo",
+                            "Đăng nhập thành công", ContentType.success);
+                        fadeInTransitionReplacement(context, HomeScreen());
+                        break;
+                      case "SignUpSuccess":
+                        showCustomSnackBar(
+                            context,
+                            "Thông báo",
+                            "Thành công\nVui lòng nhập đầy đủ thông tin để tiếp tục!",
+                            ContentType.help);
+                        slideInTransition(context, SignInWithGoogleScreen());
+                        break;
+                      default:
+                        showCustomSnackBar(context, "Lỗi", "Có lỗi xảy ra!",
+                            ContentType.failure);
+                        break;
+                    }
+                  },
                   buttonText: "Tiếp tục với google"),
               SizedBox(
                 height: CustomMediaQuery.mediaHeight(context, 30),

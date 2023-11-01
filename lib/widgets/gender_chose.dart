@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/utils/mediaquery.dart';
 
@@ -45,7 +46,7 @@ class GenderSelectionWidgetState extends State<GenderSelectionWidget> {
           ),
         ),
         Text(
-          'Nam',
+          tr('gender.male'),
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey[800],
@@ -69,7 +70,7 @@ class GenderSelectionWidgetState extends State<GenderSelectionWidget> {
             activeColor: Colors.pink,
           ),
         ),
-        Text('Nữ',
+        Text(tr('gender.female'),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[800],

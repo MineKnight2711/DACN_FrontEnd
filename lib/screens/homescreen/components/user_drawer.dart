@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
+import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/controller/login_controller.dart';
+import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/drawer_header.dart';
+import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
+import 'package:get/get.dart';
 
 class UserDrawer extends StatelessWidget {
-  // final AccountResponse accounts;
+  final AccountModel accounts;
 
-  // final accountApi = Get.find<AccountApi>();
+  final AccountController _accountController = Get.find();
   UserDrawer({
     Key? key,
-    // required this.accounts,
+    required this.accounts,
   }) : super(key: key);
 
   @override
@@ -17,7 +23,9 @@ class UserDrawer extends StatelessWidget {
       children: [
         SizedBox(
             height: CustomMediaQuerry.mediaHeight(context, 3.3),
-            child: MyDrawerHeader()),
+            child: MyDrawerHeader(
+              account: accounts,
+            )),
         ListTile(
           title: const Text('Cập nhật thông tin'),
           onTap: () {
@@ -81,7 +89,7 @@ class UserDrawer extends StatelessWidget {
         ListTile(
           title: const Text('Đăng xuất'),
           onTap: () {
-            // AccountController().logOut();
+            _accountController.logOut();
             Navigator.pop(context);
           },
         ),
@@ -100,8 +108,9 @@ class NoUserDrawer extends StatelessWidget {
         ListTile(
           title: const Text('Đăng nhập'),
           onTap: () {
-            // Get.put(ChangePasswordController());
-            // slideinTransition(context, ChangePasswordScreen());
+            Navigator.pop(context);
+            Get.put(LoginController());
+            slideInTransition(context, LoginScreen());
           },
         ),
         ListTile(

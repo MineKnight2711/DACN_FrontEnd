@@ -7,13 +7,14 @@ class ApiUrl {
   //ip mobile hostspot - 192.168.29.192/192.168.191.192s
   //ip debug lan - 192.168.93.160/192.168.93.111
 
-  static const baseUrl = 'http://26.196.143.193:6969/api/';
-
+  // static const baseUrl =
+  //     'https://testjava-fooddelivery-07101b5575c7.herokuapp.com/api/';
+  static const baseUrl = "http://26.196.143.193:6969/api/";
   static const apiGetAllAccount = '${baseUrl}account/all';
 
   ///// Api của Đạt-------------------------------------------------
   static const apiCreateAccount = '${baseUrl}account';
-  static const apiLogin = '${baseUrl}account/login';
+  static const apiLoginWithEmail = '${baseUrl}account/login-by-email';
   static const apiGetAllCategory = '${baseUrl}category';
   // static const apiFindAccountById = '${baseUrl}account';
   // static const apiChangePassword = '${baseUrl}account';
@@ -26,6 +27,6 @@ class ApiUrl {
   // static const apiDeleteAddress = '${baseUrl}address/delete';
   // static const apiGetAllReview = '${baseUrl}review';
   // static const apiCreateReview = '${baseUrl}review/create';
-  // static const apiChangeImage = '${baseUrl}account/updateImage';
+  static const apiChangeImage = '${baseUrl}account/updateImage';
   // static const apiGetAndFetchAllOrder = '${baseUrl}order/testGetOrder';
 }

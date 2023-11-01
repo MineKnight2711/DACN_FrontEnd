@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:get/get.dart';
@@ -18,6 +19,26 @@ class CustomErrorMessage {
       fontSize: 16.0,
     );
   }
+}
+
+void showCustomSnackBar(BuildContext context, String title, String message,
+    ContentType contentType) {
+  final snackBar = SnackBar(
+    /// need to set following properties for best effect of awesome_snackbar_content
+    elevation: 0,
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.transparent,
+
+    content: AwesomeSnackbarContent(
+      title: title,
+      message: message,
+      contentType: contentType,
+    ),
+  );
+
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(snackBar);
 }
 
 class CustomSuccessMessage {

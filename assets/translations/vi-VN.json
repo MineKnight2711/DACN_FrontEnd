@@ -1,4 +1,14 @@
 {
     "View All": "Xem thêm",
-    "View Less": "Xem ít hơn"
+    "View Less": "Xem ít hơn",
+    "login":{
+        "title": "Xin chào",
+        "password": "Mật khẩu",
+        "forgot_password":"Quên mật khẩu ?",
+        "login":"Đăng nhập"
+    },
+    "gender":{
+        "male":"Nam",
+        "female":"Nữ"
+     }
 }

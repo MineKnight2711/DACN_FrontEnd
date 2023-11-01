@@ -1,4 +1,14 @@
 {
     "View All": "View All",
-    "View Less": "View Less"
+    "View Less": "View Less",
+    "login":{
+        "title": "Welcome",
+        "password": "Password",
+        "forgot_password":"Forgot Password ?",
+        "login":"Login"
+    },
+    "gender":{
+        "male":"Male",
+        "female":"Female"
+     }
 }
