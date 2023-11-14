@@ -48,28 +48,36 @@ class _HomeViewState extends State<HomeView> {
       "type": "Cafa",
       "food_type": "Western Food"
     },
-    {
-      "image": "assets/img/res_2.png",
-      "name": "Café de Noir",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Cafa",
-      "food_type": "Western Food"
-    },
-    {
-      "image": "assets/img/res_3.png",
-      "name": "Bakes by Tella",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Cafa",
-      "food_type": "Western Food"
-    },
+    // {
+    //   "image": "assets/img/res_2.png",
+    //   "name": "Café de Noir",
+    //   "rate": "4.9",
+    //   "rating": "124",
+    //   "type": "Cafa",
+    //   "food_type": "Western Food"
+    // },
+    // {
+    //   "image": "assets/img/res_3.png",
+    //   "name": "Bakes by Tella",
+    //   "rate": "4.9",
+    //   "rating": "124",
+    //   "type": "Cafa",
+    //   "food_type": "Western Food"
+    // },
   ];
 
   List mostPopArr = [
     {
       "image": "assets/img/m_res_1.png",
       "name": "Minute by tuk tuk",
+      "rate": "4.9",
+      "rating": "124",
+      "type": "Cafa",
+      "food_type": "Western Food"
+    },
+    {
+      "image": "assets/img/m_res_2.png",
+      "name": "Café de Noir",
       "rate": "4.9",
       "rating": "124",
       "type": "Cafa",
@@ -125,27 +133,48 @@ class _HomeViewState extends State<HomeView> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Good morning ",
-                      style: TextStyle(
-                          color: TColor.primaryText,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Good morning ",
+                          style: TextStyle(
+                            color: TColor.primaryText,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MyOrderView()),
+                            );
+                          },
+                          icon: Image.asset(
+                            "assets/img/shopping_cart.png",
+                            width: 25,
+                            height: 25,
+                          ),
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyOrderView()));
-                      },
-                      icon: Image.asset(
-                        "assets/img/shopping_cart.png",
-                        width: 25,
-                        height: 25,
+                    Text(
+                      "Dat Huynh Phuoc !",
+                      style: TextStyle(
+                        color: TColor.secondaryText,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      "huynhphuocdat2@gmail.com",
+                      style: TextStyle(
+                        color: TColor.secondaryText,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -231,26 +260,6 @@ class _HomeViewState extends State<HomeView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ViewAllTitleRow(
-                  title: "Popular Restaurants",
-                  onView: () {},
-                ),
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemCount: popArr.length,
-                itemBuilder: ((context, index) {
-                  var pObj = popArr[index] as Map? ?? {};
-                  return PopularRestaurantRow(
-                    pObj: pObj,
-                    onTap: () {},
-                  );
-                }),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ViewAllTitleRow(
                   title: "Most Popular",
                   onView: () {},
                 ),
@@ -269,6 +278,26 @@ class _HomeViewState extends State<HomeView> {
                     );
                   }),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ViewAllTitleRow(
+                  title: "Popular Restaurants",
+                  onView: () {},
+                ),
+              ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemCount: popArr.length,
+                itemBuilder: ((context, index) {
+                  var pObj = popArr[index] as Map? ?? {};
+                  return PopularRestaurantRow(
+                    pObj: pObj,
+                    onTap: () {},
+                  );
+                }),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
