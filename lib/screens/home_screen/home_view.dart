@@ -21,10 +21,22 @@ class _HomeViewState extends State<HomeView> {
   TextEditingController txtSearch = TextEditingController();
 
   List catArr = [
-    {"image": "assets/img/cat_offer.png", "name": "Offers"},
-    {"image": "assets/img/cat_sri.png", "name": "Sri Lankan"},
-    {"image": "assets/img/cat_3.png", "name": "Italian"},
-    {"image": "assets/img/cat_4.png", "name": "Indian"},
+    {"image": "assets/img/categories/rice-bowl-54.png", "name": "Rice"},
+    {"image": "assets/img/categories/salami-pizza-54.png", "name": "Pizza"},
+    {"image": "assets/img/categories/noodles-54.png", "name": "Noodles"},
+    {"image": "assets/img/categories/hot-dog-54.png", "name": "Hot Dog"},
+    {"image": "assets/img/categories/cola-54.png", "name": "Drinks"},
+    {"image": "assets/img/categories/steak-54.png", "name": "Meat"},
+    {"image": "assets/img/categories/crab-54.png", "name": "Seafood"},
+    {
+      "image": "assets/img/categories/cherry-cheesecake-54.png",
+      "name": "Desserts"
+    },
+    {"image": "assets/img/categories/orange-juice-54.png", "name": "Juice"},
+    {"image": "assets/img/categories/bubble-tea-54.png", "name": "Bubble Tea"},
+    {"image": "assets/img/categories/hemp-milk-54.png", "name": "Milk Tea"},
+    {"image": "assets/img/categories/sandwich-54.png", "name": "Sandwich"},
+    {"image": "assets/img/categories/other-54.png", "name": "Other"},
   ];
 
   List popArr = [
@@ -197,20 +209,21 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 30,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ViewAllTitleRow(
+                  title: "",
+                  onView: () {},
+                ),
               ),
               SizedBox(
-                height: 120,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  itemCount: catArr.length,
-                  itemBuilder: ((context, index) {
-                    var cObj = catArr[index] as Map? ?? {};
-                    return CategoryCell(
-                      cObj: cObj,
-                      onTap: () {},
+                height: 210,
+                child: Wrap(
+                  spacing: 10, // Khoảng cách ngang giữa các item
+                  runSpacing: 30, // Khoảng cách dọc giữa các hàng
+                  children: List.generate(catArr.length, (index) {
+                    return Flexible(
+                      child: CategoryCell(cObj: catArr[index], onTap: () {}),
                     );
                   }),
                 ),

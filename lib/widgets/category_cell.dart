@@ -18,8 +18,8 @@ class CategoryCell extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
                 cObj["image"].toString(),
-                width: 85,
-                height: 85,
+                width: 55,
+                height: 55,
                 fit: BoxFit.cover,
               ),
             ),

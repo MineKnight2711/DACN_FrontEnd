@@ -8,6 +8,7 @@ class CategoryController extends GetxController {
   Rx<List<CategoryModel>?> listCategory = Rx<List<CategoryModel>?>([]);
   final RxBool showAllCategories = false.obs;
   final RxString currentCategoryId = ''.obs;
+  final CategoryController categoryController = Get.put(CategoryController());
   @override
   void onInit() {
     super.onInit();
