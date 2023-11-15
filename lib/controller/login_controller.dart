@@ -30,6 +30,13 @@ class LoginController extends GetxController {
     passwordController.clear();
   }
 
+  String? checkPassword(String? password) {
+    if (password == null || password.isEmpty) {
+      return "Mật khẩu không được trống";
+    }
+    return null;
+  }
+
   Future<String?> login(String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -61,6 +68,8 @@ class LoginController extends GetxController {
         return "Yêu cầu đăng nhập gần đây để thực hiện thao tác nhạy cảm.";
       case "operation-not-allowed":
         return "Không thể đăng nhập vui lòng liên hệ người phát triển.";
+      case "INVALID_LOGIN_CREDENTIALS":
+        return "Email hoặc mật khẩu không hợp lệ";
       default:
         return "Lỗi chưa xác định.";
     }

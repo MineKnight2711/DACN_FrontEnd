@@ -12,6 +12,7 @@ class RegisterController extends GetxController {
 
   TextEditingController fullNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
   TextEditingController phoneController = TextEditingController();
