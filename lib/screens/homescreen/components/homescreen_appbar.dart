@@ -9,6 +9,7 @@ import 'package:fooddelivery_fe/config/radius.dart';
 import 'package:fooddelivery_fe/config/spacing.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/user_drawer.dart';
+import 'package:fooddelivery_fe/screens/mapscreen/map_screen.dart';
 import 'package:get/get.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -50,16 +51,25 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       SvgPicture.asset("assets/icons/arrow_down.svg"),
                     ],
                   ),
-                  Text(
-                    "33/39 Van Kiep, Binh Thanh, Ho Chi Minh City",
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.orange100,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AutocompleteMap()),
+                      );
+                    },
+                    child: Text(
+                      "Chọn địa chỉ ->",
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.orange100,
+                      ),
+                      overflow:
+                          TextOverflow.ellipsis, // Truncate text with ellipsis
+                      maxLines: 1, // Limit to one line
                     ),
-                    overflow:
-                        TextOverflow.ellipsis, // Truncate text with ellipsis
-                    maxLines: 1, // Limit to one line
                   ),
                 ],
               ),

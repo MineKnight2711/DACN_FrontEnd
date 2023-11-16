@@ -17,17 +17,6 @@ class ChangeImageController extends GetxController {
     _accountController = Get.find<AccountController>();
   }
 
-  //Chờ thông tin người dùng hiện tại
-  // Future<AccountResponse?> awaitCurrentAccount() async {
-  //   return await accountApi.fetchCurrent().then((currentAccount) {
-  //     if (currentAccount != null) {
-  //       newImageUrl.value = currentAccount.imageUrl ?? '';
-  //       return currentAccount;
-  //     }
-  //     return null;
-  //   });
-  // }
-
   Future<String> changeImageUrl(String accountId, String newImageUrl) async {
     final respone = await _accountApi.changeImageUrl(accountId, newImageUrl);
     if (respone.message == "Success") {
