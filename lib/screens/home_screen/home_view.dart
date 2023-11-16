@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/screens/goongmap/autocomplete.dart';
+import 'package:fooddelivery_fe/screens/item_details/item_details_view.dart';
 import 'package:fooddelivery_fe/screens/my_order/my_order_view.dart';
 import 'package:fooddelivery_fe/utils/custom/color_extension.dart';
 
@@ -285,7 +286,13 @@ class _HomeViewState extends State<HomeView> {
                     var mObj = mostPopArr[index] as Map? ?? {};
                     return MostPopularCell(
                       mObj: mObj,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ItemDetailsView()),
+                        );
+                      },
                     );
                   }),
                 ),
@@ -306,7 +313,13 @@ class _HomeViewState extends State<HomeView> {
                   var pObj = popArr[index] as Map? ?? {};
                   return PopularRestaurantRow(
                     pObj: pObj,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ItemDetailsView()),
+                      );
+                    },
                   );
                 }),
               ),
@@ -326,7 +339,13 @@ class _HomeViewState extends State<HomeView> {
                   var rObj = recentArr[index] as Map? ?? {};
                   return RecentItemRow(
                     rObj: rObj,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ItemDetailsView()),
+                      );
+                    },
                   );
                 }),
               )
