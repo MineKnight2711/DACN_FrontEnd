@@ -33,7 +33,6 @@ dependencies:
   mapbox_polyline_points: ^0.0.5
   polyline_do: ^0.1.0
   geolocator: ^8.0.1
-  location: ^4.3.0
  
 
 dev_dependencies:
