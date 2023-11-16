@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooddelivery_fe/screens/goongmap/autocomplete.dart';
 import 'package:fooddelivery_fe/screens/my_order/my_order_view.dart';
 import 'package:fooddelivery_fe/utils/custom/color_extension.dart';
 
@@ -196,25 +197,35 @@ class _HomeViewState extends State<HomeView> {
                     const SizedBox(
                       height: 6,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Current Location",
-                          style: TextStyle(
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AutocompleteMap()),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Current Location",
+                            style: TextStyle(
                               color: TColor.secondaryText,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        const SizedBox(
-                          width: 25,
-                        ),
-                        Image.asset(
-                          "assets/img/dropdown.png",
-                          width: 12,
-                          height: 12,
-                        )
-                      ],
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 25,
+                          ),
+                          Image.asset(
+                            "assets/img/dropdown.png",
+                            width: 12,
+                            height: 12,
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

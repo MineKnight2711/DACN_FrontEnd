@@ -26,7 +26,14 @@ dependencies:
   image_picker: ^1.0.4
   flutter_timezone: ^1.0.8
   get_it: ^7.6.4
-  mapbox_maps_flutter: ^0.4.4
+  mapbox_maps_flutter: ^0.4.3
+  dio: ^5.1.2
+  flutter_polyline_points: ^1.0.0
+  polyline_codec: ^0.1.6
+  mapbox_polyline_points: ^0.0.5
+  polyline_do: ^0.1.0
+  geolocator: ^8.0.1
+  location: ^4.3.0
  
 
 dev_dependencies:

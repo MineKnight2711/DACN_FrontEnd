@@ -121,6 +121,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2+3"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "417e2a6f9d83ab396ec38ff4ea5da6c254da71e4db765ad737a42af6930140b7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.3"
   easy_localization:
     dependency: "direct main"
     description:
@@ -201,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+1"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      sha256: "25517a4deb0c03aa0f32fd12db525856438902d9c16536311e76cdc57b31d7d1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -243,6 +259,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_polyline_points:
+    dependency: "direct main"
+    description:
+      name: flutter_polyline_points
+      sha256: "02699e69142f51a248d784b6e3eec524194467fca5f7c4da19699ce2368b6980"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_rating_bar:
     dependency: "direct main"
     description:
@@ -301,6 +325,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.2.2"
+  geolocator:
+    dependency: "direct main"
+    description:
+      name: geolocator
+      sha256: "5c496b46e245d006760e643cedde7c9fa785a34391b5eca857a46358f9bde02b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.2.1"
+  geolocator_android:
+    dependency: transitive
+    description:
+      name: geolocator_android
+      sha256: "3fa9215caf1e4463adbdf1f21b07fdcb9bc2af2ef1df3715a52376b87bebb087"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
+  geolocator_apple:
+    dependency: transitive
+    description:
+      name: geolocator_apple
+      sha256: ab90ae811c42ec2f6021e01eca71df00dee6ff1e69d2c2dafd4daeb0b793f73d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.2"
+  geolocator_platform_interface:
+    dependency: transitive
+    description:
+      name: geolocator_platform_interface
+      sha256: "6c8d494d6948757c56720b778af742f6973f31fca1f702a7539b8917e4a2468a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
+  geolocator_web:
+    dependency: transitive
+    description:
+      name: geolocator_web
+      sha256: "59083f7e0871b78299918d92bf930a14377f711d2d1156c558cd5ebae6c20d58"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
+  geolocator_windows:
+    dependency: transitive
+    description:
+      name: geolocator_windows
+      sha256: "4f4218f122a6978d0ad655fa3541eea74c67417440b09f0657238810d5af6bdc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.3"
   get:
     dependency: "direct main"
     description:
@@ -501,6 +573,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  location:
+    dependency: "direct main"
+    description:
+      name: location
+      sha256: "9051959f6f2ccadd887b28b66e9cbbcc25b6838e37cf9e894c421ccc0ebf80b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.4.0"
+  location_platform_interface:
+    dependency: transitive
+    description:
+      name: location_platform_interface
+      sha256: "62eeaf1658e92e4459b727f55a3c328eccbac8ba043fa6d262ac5286ad48384c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
+  location_web:
+    dependency: transitive
+    description:
+      name: location_web
+      sha256: "6c08c408a040534c0269c4ff9fe17eebb5a36dea16512fbaf116b9c8bc21545b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   mapbox_maps_flutter:
     dependency: "direct main"
     description:
@@ -509,6 +605,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.5"
+  mapbox_polyline_points:
+    dependency: "direct main"
+    description:
+      name: mapbox_polyline_points
+      sha256: "0a92250b10d8ccef5c0c82dbb614104195d21e03c780719145e04050e48a14c2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   matcher:
     dependency: transitive
     description:
@@ -645,6 +749,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.6"
+  polyline_codec:
+    dependency: "direct main"
+    description:
+      name: polyline_codec
+      sha256: "97e72f458612ea7f384bca47580ac1432ef11781fe5b05e228b656ee0536a28d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
+  polyline_do:
+    dependency: "direct main"
+    description:
+      name: polyline_do
+      sha256: "41b7a4c3d3f259816764d577beba843e683f59117958c51e90a5ca975ff3d298"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   rbush:
     dependency: transitive
     description:
