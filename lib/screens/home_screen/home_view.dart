@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/screens/dish_category_details/dish_category_details.dart';
-import 'package:fooddelivery_fe/screens/dish_category_details/dish_category_details_view.dart';
 import 'package:fooddelivery_fe/screens/goongmap/autocomplete.dart';
 import 'package:fooddelivery_fe/screens/item_details/item_details_view.dart';
 import 'package:fooddelivery_fe/screens/my_order/my_order_view.dart';

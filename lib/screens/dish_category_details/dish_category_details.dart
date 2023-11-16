@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fooddelivery_fe/screens/dish_category_details/dish_category_details_view.dart';
 import 'package:fooddelivery_fe/screens/item_details/item_details_view.dart';
 import 'package:fooddelivery_fe/utils/custom/color_extension.dart';
 import 'package:fooddelivery_fe/widgets/filter_view.dart';
@@ -174,7 +173,7 @@ class _BookmarkViewState extends State<DishCategoryDetailsView> {
                     width: 8,
                   ),
                   Text(
-                    "Name Category",
+                    "Cơm - Phở, Bún",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         color: TColor.text,
