@@ -16,6 +16,7 @@ dependencies:
   intl: ^0.18.1
   image_picker: ^0.8.7+1
   image_cropper: ^3.0.3
+  logger: ^1.4.0
   http: ^0.13.6
   firebase_core: ^2.9.0
   firebase_auth: ^4.4.1

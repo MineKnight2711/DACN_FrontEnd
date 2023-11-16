@@ -50,8 +50,9 @@ class LoginScreen extends StatelessWidget {
               ),
               RoundTextfield(
                 hintText: "Email",
-                controller: loginController.emailController,
+                controller: loginController.textControllers.txtEmailLogin,
                 keyboardType: TextInputType.emailAddress,
+                onChanged: loginController.validateEmail,
                 // onChanged: ,
               ),
               const SizedBox(
@@ -59,29 +60,34 @@ class LoginScreen extends StatelessWidget {
               ),
               RoundTextfield(
                 hintText: "Password",
-                controller: loginController.passwordController,
-                onChanged: loginController.checkPassword,
+                controller: loginController.textControllers.txtPasswordLogin,
+                onChanged: loginController.validatePassword,
                 obscureText: true,
               ),
               const SizedBox(
                 height: 25,
               ),
-              RoundButton(
-                  title: "Login",
-                  onPressed: () async {
-                    String? result = await loginController.login(
-                        loginController.emailController.text,
-                        loginController.passwordController.text);
-                    if (result == "Success") {
-                      CustomSuccessMessage.showMessage("Đăng nhập thành công!");
-                      fadeInTransitionReplacement(context, HomeScreen());
-                    } else if (result == "AccountNotFound") {
-                      CustomErrorMessage.showMessage(
-                          "Không tìm thấy tài khoản!");
-                    } else {
-                      CustomErrorMessage.showMessage("Lỗi : $result");
-                    }
-                  }),
+              Obx(
+                () => RoundButton(
+                    enabled: loginController.validate.isLoginValid.value,
+                    title: "Login",
+                    onPressed: () async {
+                      String? result = await loginController.login(
+                          loginController.textControllers.txtEmailLogin.text,
+                          loginController
+                              .textControllers.txtPasswordLogin.text);
+                      if (result == "Success") {
+                        CustomSuccessMessage.showMessage(
+                            "Đăng nhập thành công!");
+                        fadeInTransitionReplacement(context, HomeScreen());
+                      } else if (result == "AccountNotFound") {
+                        CustomErrorMessage.showMessage(
+                            "Không tìm thấy tài khoản!");
+                      } else {
+                        CustomErrorMessage.showMessage("Lỗi : $result");
+                      }
+                    }),
+              ),
               const SizedBox(
                 height: 4,
               ),

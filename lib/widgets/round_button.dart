@@ -8,17 +8,19 @@ class RoundButton extends StatelessWidget {
   final String title;
   final RoundButtonType type;
   final double fontSize;
+  final bool enabled;
   const RoundButton(
       {super.key,
       required this.title,
       required this.onPressed,
       this.fontSize = 16,
-      this.type = RoundButtonType.bgPrimary});
+      this.type = RoundButtonType.bgPrimary,
+      required this.enabled});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed,
+      onTap: enabled ? onPressed : null,
       child: Container(
         height: 56,
         alignment: Alignment.center,

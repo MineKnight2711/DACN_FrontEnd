@@ -1,21 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
+import 'package:fooddelivery_fe/utils/text_controller.dart';
+import 'package:fooddelivery_fe/utils/validate_input.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
   late AccountApi _accountApi;
   late AccountController _accountController;
 
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-
-  TextEditingController phoneController = TextEditingController();
+  ValidateInput validate = ValidateInput();
+  TextControllers textControllers = TextControllers();
 
   RxString selectedGender = "".obs;
   DateTime? selectedBirthDay;
@@ -29,27 +26,23 @@ class RegisterController extends GetxController {
   }
 
   @override
-  void onClose() {
-    super.onClose();
-    _accountApi = AccountApi();
+  void refresh() {
     imageUrl = "";
     selectedGender.value = "";
     selectedBirthDay = null;
-    fullNameController.clear();
-    passwordController.clear();
-    emailController.clear();
-    phoneController.clear();
+    textControllers.clearText();
+    validate.setDefaultValues();
   }
 
   Future<String> saveSignInUserToDatabase() async {
     AccountModel newAccount = AccountModel();
     newAccount.accountID = "";
-    newAccount.fullName = fullNameController.text;
-    newAccount.password = passwordController.text;
+    newAccount.fullName = textControllers.txtFullNameSignUp.text;
+    newAccount.password = textControllers.txtPasswordSignUp.text;
     newAccount.birthday = selectedBirthDay;
-    newAccount.email = emailController.text;
+    newAccount.email = textControllers.txtEmailSignUp.text;
     newAccount.gender = selectedGender.value;
-    newAccount.phoneNumber = phoneController.text;
+    newAccount.phoneNumber = textControllers.txtPhoneSignUp.text;
     newAccount.imageUrl = imageUrl;
     ResponseBaseModel? responseBaseModel =
         await _accountApi.register(newAccount);
@@ -63,7 +56,8 @@ class RegisterController extends GetxController {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
+              email: textControllers.txtEmailSignUp.text,
+              password: textControllers.txtPasswordSignUp.text);
       if (userCredential.user != null) {
         return await saveSignInUserToDatabase();
       }
@@ -106,5 +100,86 @@ class RegisterController extends GetxController {
       return "Success";
     }
     return responseBaseModel?.message ?? "";
+  }
+
+  //Kiểm tra email hợp lệ
+  String? validateEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      validate.isValidEmailSignUp.value = false;
+      return 'Email không được trống';
+    }
+    //Đây là Regex cho đa số trường hợp email, tuy nhiên vẫn có một số ngoại lệ như sau:
+    //huynhphuocdat.siu@résumé.com đây là trường hợp email hợp lệ nhưng sẽ không match được regex này vì không hỗ trợ các ký tự nằm ngoài bảng mã ASCII
+    //Thêm 1 trường hợp nữa là <datcute2711@yahoo.com> đây vẫn là 1 email hợp lệ nhưng cũng không match regex vì không hỗ trợ dấu < và >
+    // RegExp emailRegex =
+    //     RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
+    //Còn đây là regex cho riêng gmail
+    RegExp gmailRegex = RegExp(
+        r'[\w]*@*[a-z]*\.*[\w]{5,}(\.)*(com)*(@gmail\.com)',
+        multiLine: true);
+    if (!gmailRegex.hasMatch(email)) {
+      validate.isValidEmailSignUp.value = false;
+      return 'Email không đúng định dạng';
+    }
+
+    validate.isValidEmailSignUp.value = true;
+
+    return null;
+  }
+
+  //Kiểm tra mật khẩu hợp lệ
+  String? validatePassword(String? password) {
+    if (password == null || password.isEmpty) {
+      validate.isValidPasswordSignUp.value = false;
+      return 'Mật khẩu không được trống';
+    }
+
+    RegExp regex = RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*(),.?":{}|<>]).{8,}$');
+    if (!regex.hasMatch(password)) {
+      validate.isValidPasswordSignUp.value = false;
+      return 'Mật khẩu phải chứa ít nhất:\n* 1 ký tự hoa,\n* 1 ký tự thường ,\n* 1 số,\n* 1 ký tự đặc biệt,\n* 8 ký tự';
+    }
+
+    validate.isValidPasswordSignUp.value = true;
+
+    return null;
+  }
+
+  //Kiểm tra xác nhận mật khẩu hợp lệ
+  String? validateReenterPassword(String? reenterpassword) {
+    if (reenterpassword == null || reenterpassword.isEmpty) {
+      validate.isValidConfirmPasswordSignUp.value = false;
+      return 'Mật khẩu không được trống!';
+    }
+    if (reenterpassword != textControllers.txtPasswordSignUp.text) {
+      validate.isValidConfirmPasswordSignUp.value = false;
+      return 'Mật khẩu không khớp!';
+    }
+    validate.isValidConfirmPasswordSignUp.value = true;
+    return null;
+  }
+
+  String? validateFullname(String? fullname) {
+    if (fullname == null || fullname.isEmpty) {
+      validate.isValidFullnameSignUp.value = false;
+      return 'Họ tên không được trống!';
+    }
+    validate.isValidFullnameSignUp.value = true;
+    return null;
+  }
+
+  String? validatePhonenumber(String? phonenumber) {
+    if (phonenumber == null || phonenumber.isEmpty) {
+      validate.isValidPhonenumberSignUp.value = false;
+      return 'Số điện thoại không được trống!';
+    }
+    RegExp regex = RegExp(r'^(84|0)[35789]([0-9]{8})$');
+    if (!regex.hasMatch(phonenumber)) {
+      validate.isValidPhonenumberSignUp.value = false;
+      return 'Số điện thoại không đúng định dạng!';
+    }
+    validate.isValidPhonenumberSignUp.value = true;
+    return null;
   }
 }

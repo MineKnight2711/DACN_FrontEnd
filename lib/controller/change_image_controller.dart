@@ -2,15 +2,19 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fooddelivery_fe/api/account/account_api.dart';
+import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:get/get.dart';
 
 class ChangeImageController extends GetxController {
   final newImageUrl = ''.obs;
   late AccountApi _accountApi;
+  late AccountController _accountController;
   @override
   void onInit() {
     super.onInit();
     _accountApi = AccountApi();
+    _accountController = Get.find<AccountController>();
   }
 
   //Chờ thông tin người dùng hiện tại
@@ -26,7 +30,13 @@ class ChangeImageController extends GetxController {
 
   Future<String> changeImageUrl(String accountId, String newImageUrl) async {
     final respone = await _accountApi.changeImageUrl(accountId, newImageUrl);
-    if (respone.message!.contains("success")) {
+    if (respone.message == "Success") {
+      AccountModel fetchedAccount = AccountModel.fromJson(respone.data);
+
+      await _accountController
+          .storedUserToSharedRefererces(fetchedAccount)
+          .whenComplete(
+              () => _accountController.accountSession.value = fetchedAccount);
       return "Success";
     }
     return respone.message!;

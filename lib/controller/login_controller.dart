@@ -7,14 +7,15 @@ import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
+import 'package:fooddelivery_fe/utils/text_controller.dart';
+import 'package:fooddelivery_fe/utils/validate_input.dart';
 
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginController extends GetxController {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
+  TextControllers textControllers = TextControllers();
+  ValidateInput validate = ValidateInput();
   late AccountApi _accountApi;
   late AccountController _accountController;
 
@@ -26,22 +27,16 @@ class LoginController extends GetxController {
   }
 
   void refesh() {
-    emailController.clear();
-    passwordController.clear();
-  }
-
-  String? checkPassword(String? password) {
-    if (password == null || password.isEmpty) {
-      return "Mật khẩu không được trống";
-    }
-    return null;
+    textControllers.clearText();
+    validate.setDefaultValues();
   }
 
   Future<String?> login(String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
+              email: textControllers.txtEmailLogin.text,
+              password: textControllers.txtPasswordLogin.text);
       if (userCredential.user != null) {
         return await getAccountFromDatabase(email);
       }
@@ -111,8 +106,10 @@ class LoginController extends GetxController {
       if (accountReceived == "AccountNotFound" ||
           accountReceived != "Success") {
         final registerController = Get.put(RegisterController());
-        registerController.fullNameController.text = "${user.displayName}";
-        registerController.emailController.text = "${user.email}";
+        registerController.textControllers.txtFullNameSignUp.text =
+            "${user.displayName}";
+        registerController.textControllers.txtEmailSignUp.text =
+            "${user.email}";
         registerController.imageUrl = "${user.photoURL}";
         return "SignUpSuccess";
       } else if (accountReceived == "Success") {
@@ -120,5 +117,41 @@ class LoginController extends GetxController {
       }
     }
     return "Fail";
+  }
+
+  //Kiểm tra email hợp lệ
+  String? validateEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      validate.isValidEmailLogin.value = false;
+      return 'Email không được trống';
+    }
+    //Đây là Regex cho đa số trường hợp email, tuy nhiên vẫn có một số ngoại lệ như sau:
+    //huynhphuocdat.siu@résumé.com đây là trường hợp email hợp lệ nhưng sẽ không match được regex này vì không hỗ trợ các ký tự nằm ngoài bảng mã ASCII
+    //Thêm 1 trường hợp nữa là <datcute2711@yahoo.com> đây vẫn là 1 email hợp lệ nhưng cũng không match regex vì không hỗ trợ dấu < và >
+    // RegExp emailRegex =
+    //     RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
+    //Còn đây là regex cho riêng gmail
+    RegExp gmailRegex = RegExp(
+        r'[\w]*@*[a-z]*\.*[\w]{5,}(\.)*(com)*(@gmail\.com)',
+        multiLine: true);
+    if (!gmailRegex.hasMatch(email)) {
+      validate.isValidEmailLogin.value = false;
+      return 'Email không đúng định dạng';
+    }
+
+    validate.isValidEmailLogin.value = true;
+
+    return null;
+  }
+
+  //Kiểm tra mật khẩu hợp lệ
+  String? validatePassword(String? password) {
+    if (password == null || password.isEmpty) {
+      validate.isValidPasswordLogin.value = false;
+      return 'Mật khẩu không được trống';
+    }
+    validate.isValidPasswordLogin.value = true;
+
+    return null;
   }
 }
