@@ -18,132 +18,76 @@ class _BookmarkViewState extends State<DishCategoryDetailsView> {
 
   List nearbyArr = [
     {
-      "name": "Lombar Pizza",
-      "address": "East 46th Street",
-      "category": "Pizza, Italian",
+      "name": "Cơm Gà",
+      "description": "Cơm gà nhà làm, ngon như nhà làm...",
+      "category": "Cơm",
       "image": "assets/img/l1.png",
       "time": "11:30AM to 11:00PM",
+      "kilometter": "2.8 KM",
       "rate": 4.8
     },
     {
-      "name": "Sushi Bar",
-      "address": "210 Salt Pond Rd.",
-      "category": "Sushi, Japan",
+      "name": "Phở Thịt Bò",
+      "description": "Phở thịt bò nhà làm, ngon như nhà làm...",
+      "category": "Phở, Noodles",
       "image": "assets/img/l2.png",
       "time": "11:30AM to 11:00PM",
+      "kilometter": "2.8 KM",
       "rate": 3.8
     },
     {
-      "name": "Steak House",
-      "address": "East 46th Street",
-      "category": "Steak, American",
+      "name": "Cơm Sườn Nướng",
+      "description": "Cơm sườn nướng nhà làm, ngon như nhà làm...",
+      "category": "Cơm",
       "image": "assets/img/l3.png",
       "time": "11:30AM to 11:00PM",
+      "kilometter": "2.8 KM",
       "rate": 2.8
     },
     {
-      "name": "Seafood Lee",
-      "address": "210 Salt Pond Rd.",
+      "name": "Bún Riêu Cua",
+      "description": "Bún riêu cua nhà làm, ngon như nhà làm...",
       "category": "Seafood, Spain",
       "image": "assets/img/t1.png",
       "time": "11:30AM to 11:00PM",
+      "kilometter": "2.8 KM",
       "rate": 5.0
     },
     {
-      "name": "Egg Tomato",
-      "address": "East 46th Street",
-      "category": "Egg, Italian",
-      "image": "assets/img/t2.png",
-      "time": "11:30AM to 11:00PM",
-      "rate": 4.8
-    },
-    {
-      "name": "Burger Hot",
-      "address": "East 46th Street",
-      "category": "Pizza, Italian",
-      "image": "assets/img/t3.png",
-      "time": "11:30AM to 11:00PM",
-      "rate": 4.8
-    },
-    {
-      "name": "Egg Tomato",
-      "address": "East 46th Street",
-      "category": "Egg, Italian",
-      "image": "assets/img/t2.png",
-      "time": "11:30AM to 11:00PM",
-      "rate": 4.8
-    },
-    {
-      "name": "Burger Hot",
-      "address": "East 46th Street",
-      "category": "Pizza, Italian",
-      "image": "assets/img/t3.png",
-      "time": "11:30AM to 11:00PM",
-      "rate": 4.8
-    },
-    {
-      "name": "Lombar Pizza",
-      "address": "East 46th Street",
-      "category": "Pizza, Italian",
+      "name": "Cơm Gà",
+      "description": "Cơm gà nhà làm, ngon như nhà làm...",
+      "category": "Cơm",
       "image": "assets/img/l1.png",
       "time": "11:30AM to 11:00PM",
+      "kilometter": "2.8 KM",
       "rate": 4.8
     },
     {
-      "name": "Sushi Bar",
-      "address": "210 Salt Pond Rd.",
-      "category": "Sushi, Japan",
+      "name": "Phở Thịt Bò",
+      "description": "Phở thịt bò nhà làm, ngon như nhà làm...",
+      "category": "Phở, Noodles",
       "image": "assets/img/l2.png",
       "time": "11:30AM to 11:00PM",
+      "kilometter": "2.8 KM",
       "rate": 3.8
     },
     {
-      "name": "Steak House",
-      "address": "East 46th Street",
-      "category": "Steak, American",
+      "name": "Cơm Sườn Nướng",
+      "description": "Cơm sườn nướng nhà làm, ngon như nhà làm...",
+      "category": "Cơm",
       "image": "assets/img/l3.png",
       "time": "11:30AM to 11:00PM",
+      "kilometter": "2.8 KM",
       "rate": 2.8
     },
     {
-      "name": "Seafood Lee",
-      "address": "210 Salt Pond Rd.",
+      "name": "Bún Riêu Cua",
+      "description": "Bún riêu cua nhà làm, ngon như nhà làm...",
       "category": "Seafood, Spain",
       "image": "assets/img/t1.png",
       "time": "11:30AM to 11:00PM",
+      "kilometter": "2.8 KM",
       "rate": 5.0
-    },
-    {
-      "name": "Egg Tomato",
-      "address": "East 46th Street",
-      "category": "Egg, Italian",
-      "image": "assets/img/t2.png",
-      "time": "11:30AM to 11:00PM",
-      "rate": 4.8
-    },
-    {
-      "name": "Burger Hot",
-      "address": "East 46th Street",
-      "category": "Pizza, Italian",
-      "image": "assets/img/t3.png",
-      "time": "11:30AM to 11:00PM",
-      "rate": 4.8
-    },
-    {
-      "name": "Egg Tomato",
-      "address": "East 46th Street",
-      "category": "Egg, Italian",
-      "image": "assets/img/t2.png",
-      "time": "11:30AM to 11:00PM",
-      "rate": 4.8
-    },
-    {
-      "name": "Burger Hot",
-      "address": "East 46th Street",
-      "category": "Pizza, Italian",
-      "image": "assets/img/t3.png",
-      "time": "11:30AM to 11:00PM",
-      "rate": 4.8
     },
   ];
 
@@ -173,11 +117,11 @@ class _BookmarkViewState extends State<DishCategoryDetailsView> {
                     width: 8,
                   ),
                   Text(
-                    "Cơm - Phở, Bún",
+                    "Cơm - Phở, Bún...",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         color: TColor.text,
-                        fontSize: 32,
+                        fontSize: 24,
                         fontWeight: FontWeight.w700),
                   ),
                 ],

@@ -93,7 +93,7 @@ class CategoryByListRow extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  fObj["address"].toString(),
+                  fObj["description"].toString(),
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: TColor.gray,
@@ -104,7 +104,7 @@ class CategoryByListRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      fObj["category"].toString(),
+                      "${fObj["category"]}, ${fObj["kilometter"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: TColor.gray,

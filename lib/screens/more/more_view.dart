@@ -21,37 +21,37 @@ class _MoreViewState extends State<MoreView> {
     {
       "index": "1",
       "name": "Payment Details",
-      "image": "assets/img/more_payment.png",
+      "image": "assets/img/payment-100.png",
       "base": 0
     },
     {
       "index": "2",
       "name": "My Orders",
-      "image": "assets/img/more_my_order.png",
+      "image": "assets/img/orders-100.png",
       "base": 0
     },
     {
       "index": "3",
       "name": "Notifications",
-      "image": "assets/img/more_notification.png",
+      "image": "assets/img/notifications-100.png",
       "base": 15
     },
     {
       "index": "4",
       "name": "Inbox",
-      "image": "assets/img/more_inbox.png",
+      "image": "assets/img/inbox-100.png",
       "base": 0
     },
     {
       "index": "5",
       "name": "About Us",
-      "image": "assets/img/more_info.png",
+      "image": "assets/img/about-100.png",
       "base": 0
     },
     {
       "index": "6",
       "name": "Logout",
-      "image": "assets/img/more_info.png",
+      "image": "assets/img/exit-100.png",
       "base": 0
     },
   ];
@@ -164,14 +164,14 @@ class _MoreViewState extends State<MoreView> {
                                     height: 50,
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                        color: TColor.placeholder,
                                         borderRadius:
                                             BorderRadius.circular(25)),
                                     alignment: Alignment.center,
-                                    child: Image.asset(mObj["image"].toString(),
-                                        width: 25,
-                                        height: 25,
-                                        fit: BoxFit.contain),
+                                    child: Image.asset(
+                                      mObj["image"].toString(),
+                                      width: 60,
+                                      height: 60,
+                                    ),
                                   ),
                                   const SizedBox(
                                     width: 15,
