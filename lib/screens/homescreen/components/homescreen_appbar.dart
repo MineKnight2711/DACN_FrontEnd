@@ -8,8 +8,10 @@ import 'package:fooddelivery_fe/config/radius.dart';
 
 import 'package:fooddelivery_fe/config/spacing.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/controller/map_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/user_drawer.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/map_screen.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:get/get.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -53,11 +55,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AutocompleteMap()),
-                      );
+                      Get.put(MapController());
+                      slideInTransition(context, MapScreen());
                     },
                     child: Text(
                       "Chọn địa chỉ ->",

@@ -16,6 +16,9 @@ class ApiUrl {
   static const apiCreateAccount = '${baseUrl}account';
   static const apiLoginWithEmail = '${baseUrl}account/login-by-email';
   static const apiGetAllCategory = '${baseUrl}category';
+
+  static const apiMapListLocation = '${baseUrl}map';
+  static const apiMapPredictLocation = '${baseUrl}map/predict';
   // static const apiFindAccountById = '${baseUrl}account';
   // static const apiChangePassword = '${baseUrl}account';
   // static const apiForgotPassword = '${baseUrl}account/reset-password';

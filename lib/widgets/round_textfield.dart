@@ -59,14 +59,6 @@ class _RoundTextfieldState extends State<RoundTextfield> {
             borderRadius: BorderRadius.circular(25)),
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: const Icon(
-                Icons.location_on_outlined,
-                color: Colors.blue,
-                size: 20,
-              ),
-            ),
             if (widget.left != null)
               Padding(
                 padding: const EdgeInsets.only(
