@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/map/map_api.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/model/map/location_model.dart';
 import 'package:fooddelivery_fe/model/map/predict_location_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart' as geolocator;
 import 'package:geolocator_platform_interface/geolocator_platform_interface.dart'
     as gpi;
@@ -27,12 +25,12 @@ class MapController extends GetxController {
   RxString searchText = "".obs;
   RxString mainText = "".obs;
   RxString secondText = "".obs;
-  RxString lat = "".obs;
-  RxString lng = "".obs;
+  RxDouble latitude = 0.0.obs;
+  RxDouble longLatitude = 0.0.obs;
 
-  Rx<List<dynamic>> places = Rx<List<dynamic>>([]);
+  Rx<List<Prediction>> places = Rx<List<Prediction>>([]);
   final TextEditingController searchController = TextEditingController();
-  Rx<List<dynamic>> details = Rx<List<dynamic>>([]);
+  Rx<List<Result>> details = Rx<List<Result>>([]);
 
   @override
   void onInit() {
@@ -63,8 +61,36 @@ class MapController extends GetxController {
     if (responseBaseModel != null && responseBaseModel.message == "Success") {
       PredictLocationResponse locationResponse =
           PredictLocationResponse.fromJson(responseBaseModel.data);
+      places.value = locationResponse.predictions;
+      isShow.value = true;
+      isHidden.value = true;
       Logger().i("Loggg dia diem ${locationResponse.predictions.length}");
       return "Success";
+    }
+
+    return responseBaseModel?.message ?? "";
+  }
+
+  Future<String> getLocation(String address) async {
+    isShow.value = false;
+    isHidden.value = false;
+    ResponseBaseModel? responseBaseModel = await _mapApi.getLocation(address);
+
+    if (responseBaseModel != null && responseBaseModel.message == "Success") {
+      Logger().i("Loggg dia diem ${responseBaseModel.data}");
+      LocationResponse locationResponse =
+          LocationResponse.fromJson(responseBaseModel.data);
+      details.value = locationResponse.results;
+      latitude.value = double.parse(details.value[0].geometry.location.lat);
+      longLatitude.value = double.parse(details.value[0].geometry.location.lng);
+      centerCameraOnCoordinate(latitude.value, longLatitude.value);
+      String address = details.value[0].formattedAddress;
+
+      String latString = latitude.value.toStringAsFixed(4);
+      String lngString = longLatitude.toStringAsFixed(4);
+
+      mainText.value = address;
+      secondText.value = "Tọa độ: $latString, $lngString";
     }
 
     return responseBaseModel?.message ?? "";
@@ -101,17 +127,20 @@ class MapController extends GetxController {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
     gpi.Position position = await geolocator.Geolocator.getCurrentPosition(
         desiredAccuracy: geolocator.LocationAccuracy.high);
     Position getPositon = Position(position.longitude, position.latitude);
-    // Update map camera to current location
+    // Cập nhật vị trí camera
+    centerCameraOnCoordinate(getPositon.lat, getPositon.lng);
+  }
+
+  void centerCameraOnCoordinate(num lat, num longLat) {
+    circleManager.value?.deleteAll();
     mapboxMap.value?.setCamera(CameraOptions(
         center: Point(
-          coordinates: getPositon,
+          coordinates: Position(longLat, lat),
         ).toJson(),
-        zoom: 15));
+        zoom: 12.0));
     mapboxMap.value?.flyTo(
         CameraOptions(
             anchor: ScreenCoordinate(x: 0, y: 0),
@@ -125,32 +154,11 @@ class MapController extends GetxController {
       circleManager.value = value;
       value.create(
         CircleAnnotationOptions(
-          geometry: Point(coordinates: getPositon).toJson(),
+          geometry: Point(coordinates: Position(longLat, lat)).toJson(),
           circleColor: AppColors.orange100.value,
           circleRadius: 12.0,
         ),
       );
     });
-  }
-
-  // void addAnnotation(latLng) {
-  //   // Use circleManager to add annotation
-  // }
-  Future<void> fetchData(String input) async {
-    try {
-      final url = Uri.parse(
-          'https://rsapi.goong.io/Place/AutoComplete?api_key=1D1TShB6BE7zzAKPIlT7GF61V0wa6KnsO8UAnl1P&input=$input');
-
-      var response = await http.get(url);
-
-      final jsonResponse = jsonDecode(response.body);
-      places.value = jsonResponse['predictions'] as List<dynamic>;
-      circleManager.value?.deleteAll();
-      isShow.value = true;
-      isHidden.value = true;
-    } catch (e) {
-      // ignore: avoid_print
-      print('$e');
-    }
   }
 }

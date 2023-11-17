@@ -20,7 +20,8 @@ class AddressInfo extends StatelessWidget {
                 topLeft: Radius.circular(12), topRight: Radius.circular(12))),
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-          child: Column(
+          child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               Text(
                 address,

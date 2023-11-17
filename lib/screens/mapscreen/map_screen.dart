@@ -18,20 +18,18 @@ class MapScreen extends StatelessWidget {
       body: Stack(
         children: [
           SizedBox(
-            child: Obx(
-              () => MapWidget(
-                key: ValueKey(mapController.mapWidgetKey.value++),
-                resourceOptions: ResourceOptions(
-                    accessToken:
-                        "pk.eyJ1IjoidGluaGthaXQiLCJhIjoiY2xoZXhkZmJ4MTB3MzNqczdza2MzcHE2YSJ9.tPQwbEWtA53iWlv3U8O0-g"),
-                cameraOptions: CameraOptions(
-                  center: Point(coordinates: Position(106.702765, 11)).toJson(),
-                  zoom: mapController.zoomLevel.value,
-                ),
-                styleUri: MapboxStyles.SATELLITE_STREETS,
-                textureView: true,
-                onMapCreated: mapController.onMapCreated,
+            child: MapWidget(
+              key: const ValueKey("mapWidget"),
+              resourceOptions: ResourceOptions(
+                  accessToken:
+                      "pk.eyJ1IjoidGluaGthaXQiLCJhIjoiY2xoZXhkZmJ4MTB3MzNqczdza2MzcHE2YSJ9.tPQwbEWtA53iWlv3U8O0-g"),
+              cameraOptions: CameraOptions(
+                center: Point(coordinates: Position(106.702765, 11)).toJson(),
+                zoom: mapController.zoomLevel.value,
               ),
+              styleUri: MapboxStyles.DARK,
+              textureView: true,
+              onMapCreated: mapController.onMapCreated,
             ),
           ),
           Positioned(
