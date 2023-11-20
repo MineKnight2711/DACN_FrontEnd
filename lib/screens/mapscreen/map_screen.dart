@@ -101,7 +101,7 @@ class MapScreen extends StatelessWidget {
                   info: mapController.secondText.value,
                 );
               }
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             },
           ),
         ],

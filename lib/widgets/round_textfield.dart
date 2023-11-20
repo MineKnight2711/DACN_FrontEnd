@@ -10,7 +10,7 @@ class RoundTextfield extends StatefulWidget {
   final bool obscureText;
   final Color? bgColor;
   final Widget? left;
-
+  final Icon? icon;
   const RoundTextfield(
       {super.key,
       required this.hintText,
@@ -19,7 +19,8 @@ class RoundTextfield extends StatefulWidget {
       this.bgColor,
       this.left,
       this.obscureText = false,
-      this.onChanged});
+      this.onChanged,
+      this.icon});
 
   @override
   State<RoundTextfield> createState() => _RoundTextfieldState();
@@ -59,6 +60,11 @@ class _RoundTextfieldState extends State<RoundTextfield> {
             borderRadius: BorderRadius.circular(25)),
         child: Row(
           children: [
+            widget.icon != null
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: widget.icon)
+                : const SizedBox.shrink(),
             if (widget.left != null)
               Padding(
                 padding: const EdgeInsets.only(

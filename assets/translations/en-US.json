@@ -1,4 +1,11 @@
 {
+    "home":{
+        "delivery_to": "Delivery to",
+        "choose_location": "Choose location",
+        "category":"Category",
+        "top_food":"Top food",
+        "search":"Find your favorite food"
+    },
     "View All": "View All",
     "View Less": "View Less",
     "login":{

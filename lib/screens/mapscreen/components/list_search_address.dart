@@ -32,7 +32,7 @@ class ListAddress extends StatelessWidget {
                       color: Colors.black54,
                     ),
                   ),
-                )
+                ),
               ],
             ),
             onTap: () async {

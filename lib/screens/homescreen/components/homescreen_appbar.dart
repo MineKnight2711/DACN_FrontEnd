@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/config/radius.dart';
 
 import 'package:fooddelivery_fe/config/spacing.dart';
@@ -17,7 +18,6 @@ import 'package:get/get.dart';
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final AccountController _accountController = Get.find();
-  // final cartController = Get.find<CartController>();
   CustomHomeAppBar({Key? key, required this.scaffoldKey}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        tr("deliver_to"),
+                        tr("home.delivery_to"),
                         style: TextStyle(
                           color: AppColors.gray100,
                           fontSize: 14.sp,
@@ -58,16 +58,28 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Get.put(MapController());
                       slideInTransition(context, MapScreen());
                     },
-                    child: Text(
-                      "Chọn địa chỉ ->",
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.orange100,
-                      ),
-                      overflow:
-                          TextOverflow.ellipsis, // Truncate text with ellipsis
-                      maxLines: 1, // Limit to one line
+                    child: Row(
+                      children: [
+                        Text(
+                          tr("home.choose_location"),
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.orange100,
+                          ),
+                          overflow: TextOverflow
+                              .ellipsis, // Truncate text with ellipsis
+                          maxLines: 1, // Limit to one line
+                        ),
+                        SizedBox(
+                          width: CustomMediaQuerry.mediaWidth(context, 60),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward,
+                          color: AppColors.orange100,
+                          size: 20,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -78,7 +90,6 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (_accountController.accountSession.value != null) {
               return GestureDetector(
                 onTap: () {
-                  print("hello world");
                   scaffoldKey.currentState?.openEndDrawer();
                 },
                 child: Padding(
@@ -101,7 +112,6 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             }
             return GestureDetector(
               onTap: () {
-                print("hello world");
                 scaffoldKey.currentState?.openEndDrawer();
               },
               child: Padding(

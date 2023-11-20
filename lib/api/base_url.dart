@@ -9,6 +9,7 @@ class ApiUrl {
 
   // static const baseUrl =
   //     'https://testjava-fooddelivery-07101b5575c7.herokuapp.com/api/';
+
   static const baseUrl = "http://26.196.143.193:6969/api/";
   static const apiGetAllAccount = '${baseUrl}account/all';
 
@@ -16,7 +17,7 @@ class ApiUrl {
   static const apiCreateAccount = '${baseUrl}account';
   static const apiLoginWithEmail = '${baseUrl}account/login-by-email';
   static const apiGetAllCategory = '${baseUrl}category';
-
+  static const apiGetAllDish = '${baseUrl}dish';
   static const apiMapListLocation = '${baseUrl}map';
   static const apiMapPredictLocation = '${baseUrl}map/predict';
   // static const apiFindAccountById = '${baseUrl}account';

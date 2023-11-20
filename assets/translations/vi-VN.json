@@ -1,4 +1,11 @@
 {
+    "home":{
+        "delivery_to": "Giao tới",
+        "choose_location": "Chọn địa điểm",
+        "category":"Danh mục",
+        "search":"Hôm nay ăn gì ?",
+        "top_food":"Các món nổi bật?"
+    },
     "View All": "Xem thêm",
     "View Less": "Xem ít hơn",
     "login":{
