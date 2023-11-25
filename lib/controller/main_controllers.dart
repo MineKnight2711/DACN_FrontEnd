@@ -1,18 +1,43 @@
-import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class MainController {
   static initializeControllers() async {
     Get.put(LoginController());
     Get.put(CategoryController());
     Get.put(DishController());
+    Get.put(CartController());
     final AccountController accountController = Get.find();
     accountController.accountSession.value =
         await accountController.getUserFromSharedPreferences();
     // Get.put(HomeScreenController());
+  }
+
+  static WebViewController initController() {
+    late final PlatformWebViewControllerCreationParams params;
+    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
+      params = WebKitWebViewControllerCreationParams(
+        allowsInlineMediaPlayback: true,
+        mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+      );
+    } else {
+      params = const PlatformWebViewControllerCreationParams();
+    }
+
+    final WebViewController controller =
+        WebViewController.fromPlatformCreationParams(params);
+    if (controller.platform is AndroidWebViewController) {
+      AndroidWebViewController.enableDebugging(true);
+      (controller.platform as AndroidWebViewController)
+          .setMediaPlaybackRequiresUserGesture(false);
+    }
+    return controller;
   }
 }

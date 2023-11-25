@@ -2,6 +2,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:get/get.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
@@ -19,6 +20,47 @@ class CustomErrorMessage {
       fontSize: 16.0,
     );
   }
+}
+
+Future<bool> showConfirmDialog(
+    BuildContext context, String title, String confirmMessage) async {
+  bool confirm = false;
+
+  await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            title,
+            style: GoogleFonts.roboto(fontSize: 16),
+          ),
+          content: Text(
+            confirmMessage,
+            style: GoogleFonts.roboto(fontSize: 16),
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                "Huỷ",
+                style: GoogleFonts.roboto(fontSize: 16),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text(
+                "OK",
+                style: GoogleFonts.roboto(fontSize: 16),
+              ),
+              onPressed: () {
+                confirm = true;
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      });
+
+  return confirm;
 }
 
 void showCustomSnackBar(BuildContext context, String title, String message,

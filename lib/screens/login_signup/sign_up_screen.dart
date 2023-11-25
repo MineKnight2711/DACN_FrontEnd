@@ -10,7 +10,7 @@ import 'package:fooddelivery_fe/utils/mediaquery.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/datetime_picker.dart';
 import 'package:fooddelivery_fe/widgets/gender_chose.dart';
-import 'package:fooddelivery_fe/widgets/message.dart';
+import 'package:fooddelivery_fe/widgets/custom_message.dart';
 
 import 'package:fooddelivery_fe/widgets/round_button.dart';
 import 'package:fooddelivery_fe/widgets/round_textfield.dart';

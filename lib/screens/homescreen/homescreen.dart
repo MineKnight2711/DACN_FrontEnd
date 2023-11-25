@@ -1,19 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
+import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 
 import 'package:fooddelivery_fe/model/account_model.dart';
-import 'package:fooddelivery_fe/model/category_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar_controller.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/cart_view.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/homescreen_appbar.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/product_view.dart';
-import 'package:fooddelivery_fe/widgets/round_textfield.dart';
 
 import 'package:get/get.dart';
 
@@ -33,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen>
   final tabBarController = Get.put(BottomTabBarController());
 
   final categoryController = Get.find<CategoryController>();
+  final cartController = Get.find<CartController>();
+
   @override
   void initState() {
     super.initState();
@@ -48,11 +44,12 @@ class _HomeScreenState extends State<HomeScreen>
       endDrawer:
           CustomHomeAppBar(scaffoldKey: scaffoldKey).buildDrawer(context),
       body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: tabBarController.tabController.value,
         children: [
           // Center(child: Text('Home')),
           ProductView(categoryController: categoryController),
-          Center(child: Text('Giỏ hàng')),
+          CartView(cartController: cartController),
           Center(child: Text('Ưu đãi')),
           Center(child: Text('Settings')),
         ],

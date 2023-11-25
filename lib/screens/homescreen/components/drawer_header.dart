@@ -6,7 +6,7 @@ import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/change_image_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/widgets/image_picker/select_image_constant/image_select.dart';
-import 'package:fooddelivery_fe/widgets/message.dart';
+import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:get/get.dart';
 
 class MyDrawerHeader extends StatelessWidget {

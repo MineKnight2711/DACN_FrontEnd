@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/controller/main_controllers.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

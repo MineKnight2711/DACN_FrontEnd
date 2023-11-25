@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AccountController extends GetxController {
   Rx<AccountModel?> accountSession = Rx<AccountModel?>(null);
   User? user = FirebaseAuth.instance.currentUser;
+
+  Future<void> fetchCurrentUser() async {
+    accountSession.value = await getUserFromSharedPreferences();
+  }
 
   Future<void> storedUserToSharedRefererces(
       AccountModel accountResponse) async {

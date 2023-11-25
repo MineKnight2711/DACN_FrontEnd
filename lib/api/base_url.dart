@@ -25,6 +25,7 @@ class ApiUrl {
   // static const apiForgotPassword = '${baseUrl}account/reset-password';
   // static const apiGetProductById = '${baseUrl}product/getById';
   // static const apiGetProductDetailsById = '${baseUrl}productDetail/getById';
+  static const apiCart = '${baseUrl}cart';
   // static const apiUpdateCart = '${baseUrl}cart/update';
   // static const apiClearCart = '${baseUrl}cart/clear-cart';
   // static const apiUpdateFingerPrintAuthen = '${baseUrl}account/fingerprint';

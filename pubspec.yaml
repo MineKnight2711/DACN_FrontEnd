@@ -23,6 +23,7 @@ dependencies:
   firebase_auth: ^4.4.1
   firebase_storage: ^11.1.0
   shared_preferences: ^2.1.0
+  flutter_slidable: ^3.0.1
   flutter_screenutil: ^5.9.0
   fluttertoast: ^8.2.1
   flutter_svg: ^2.0.7
@@ -32,8 +33,13 @@ dependencies:
   mapbox_maps_flutter: ^0.4.3
   flutter_polyline_points: ^1.0.0
   custom_map_markers: ^0.0.2+1
+  cupertino_icons: ^1.0.6
   polyline_do: ^0.1.0
   dio: ^5.1.2
+  webview_flutter: ^4.4.2
+  webview_flutter_android: ^3.12.1
+  webview_flutter_platform_interface: ^2.7.0
+  webview_flutter_wkwebview: ^3.9.4
   
 
 dev_dependencies:

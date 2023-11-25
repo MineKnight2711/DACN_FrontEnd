@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
+import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
 import 'package:fooddelivery_fe/model/category_model.dart';
+import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/round_textfield.dart';
 import 'package:get/get.dart';
 
@@ -120,153 +125,136 @@ class ListDishView extends StatelessWidget {
   final ScrollController outerScrollController;
   ListDishView({super.key, required this.outerScrollController});
   final dishController = Get.find<DishController>();
+  final cartController = Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: CustomMediaQuerry.mediaWidth(context, 1),
-      height: CustomMediaQuerry.mediaHeight(context, 8) *
-          (dishController.listDish.length),
-      child: NotificationListener(onNotification: (notification) {
-        if (notification is ScrollUpdateNotification &&
-            notification.depth == 0 &&
-            notification.metrics.extentBefore == 0) {
-          outerScrollController.animateTo(0,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeOut);
-        }
-        return true;
-      }, child: Obx(
-        () {
-          if (dishController.listDish.isNotEmpty) {
-            return ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: dishController.listDish.length,
-              itemBuilder: (context, index) {
-                final dish = dishController.listDish[index];
-                return Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  width: CustomMediaQuerry.mediaWidth(context, 1),
-                  height: CustomMediaQuerry.mediaHeight(context, 8),
-                  // color: Colors.blueGrey,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 15.w),
-                      Container(
-                        width: 85.w,
-                        height: CustomMediaQuerry.mediaHeight(context, 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                              dish.imageUrl,
+    return Obx(
+      () => SizedBox(
+        width: CustomMediaQuerry.mediaWidth(context, 1),
+        height: CustomMediaQuerry.mediaHeight(context, 8) *
+            (dishController.listDish.value.length),
+        child: NotificationListener(onNotification: (notification) {
+          if (notification is ScrollUpdateNotification &&
+              notification.depth == 0 &&
+              notification.metrics.extentBefore == 0) {
+            outerScrollController.animateTo(0,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut);
+          }
+          return true;
+        }, child: Obx(
+          () {
+            if (dishController.listDish.value.isNotEmpty) {
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: dishController.listDish.value.length,
+                itemBuilder: (context, index) {
+                  final dish = dishController.listDish.value[index];
+                  return Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    width: CustomMediaQuerry.mediaWidth(context, 1),
+                    height: CustomMediaQuerry.mediaHeight(context, 8),
+                    // color: Colors.blueGrey,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: 15.w),
+                        Container(
+                          width: 85.w,
+                          height: CustomMediaQuerry.mediaHeight(context, 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(
+                                dish.imageUrl,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 20.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            dish.dishName,
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          SizedBox(height: 10.h),
-                          Text(
-                            "${dish.price}",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          SizedBox(height: 10.h),
-                          Text(
-                            "${dish.description}",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: FloatingActionButton(
-                          onPressed: () {},
-                          backgroundColor: AppColors.orange100,
-                          mini: true,
-                          child: Icon(Icons.add),
+                        SizedBox(width: 20.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              dish.dishName,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 10.h),
+                            Text(
+                              "${dish.price}",
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 10.h),
+                            Text(
+                              dish.description,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(width: 20.w),
-                    ],
-                  ),
-                );
-              },
-            );
-          }
-          return Text("Không có món ăn");
-        },
-      )),
+                        const Spacer(),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: FloatingActionButton(
+                            onPressed: () async {
+                              if (await showConfirmDialog(
+                                  context,
+                                  "Thêm ${dish.dishName}",
+                                  "Bạn có muốn thêm ${dish.dishName} vào giỏ hàng ?")) {
+                                String? result =
+                                    await cartController.addToCart(dish, 1);
+                                switch (result) {
+                                  case "Success":
+                                    showCustomSnackBar(
+                                        context,
+                                        "Thông báo",
+                                        "Thêm vào giỏ hàng thành công",
+                                        ContentType.success);
+                                    break;
+                                  case "UpdatedCart":
+                                    showCustomSnackBar(
+                                        context,
+                                        "Thông báo",
+                                        "Cập nhật giỏ hàng thành công",
+                                        ContentType.help);
+                                    break;
+                                  case "NoAccount":
+                                    showCustomSnackBar(
+                                        context,
+                                        "Lỗi",
+                                        "Phiên đăng nhập không hợp lệ",
+                                        ContentType.failure);
+                                    break;
+                                  default:
+                                    showCustomSnackBar(
+                                        context,
+                                        "Lỗi",
+                                        "Lỗi chưa xác định: $result",
+                                        ContentType.failure);
+                                    break;
+                                }
+                              }
+                            },
+                            backgroundColor: AppColors.orange100,
+                            mini: true,
+                            child: const Icon(Icons.add),
+                          ),
+                        ),
+                        SizedBox(width: 20.w),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }
+            return const Text("Không có món ăn");
+          },
+        )),
+      ),
     );
   }
 }
-
-// List<DishModel> dishes = [
-//   DishModel(
-//     dishName: 'Spaghetti Carbonara',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FB%C3%A1nh%20m%C3%AC%20th%E1%BB%8Bt%20pate.jpg?alt=media&token=16c58928-c197-4da2-989a-d8b68ed2f93b',
-//     price: 12.99,
-//   ),
-//   DishModel(
-//     dishName: 'Margherita Pizza',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FB%C3%ADt%20t%E1%BA%BFt%20b%C3%B2.jpg?alt=media&token=e3a57815-88e7-4037-9550-4dbbd2bd485f',
-//     price: 9.99,
-//   ),
-//   DishModel(
-//     dishName: 'Chicken Alfredo',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FG%C3%A0%20r%C3%A1n%20truy%E1%BB%81n%20th%E1%BB%91ng.jpg?alt=media&token=440f914f-c5b2-4265-be6a-4b3828407d63',
-//     price: 15.50,
-//   ),
-//   DishModel(
-//     dishName: 'Chicken Alfredo',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FG%C3%A0%20r%C3%A1n%20truy%E1%BB%81n%20th%E1%BB%91ng.jpg?alt=media&token=440f914f-c5b2-4265-be6a-4b3828407d63',
-//     price: 15.50,
-//   ),
-//   DishModel(
-//     dishName: 'Chicken Alfredo',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FG%C3%A0%20r%C3%A1n%20truy%E1%BB%81n%20th%E1%BB%91ng.jpg?alt=media&token=440f914f-c5b2-4265-be6a-4b3828407d63',
-//     price: 15.50,
-//   ),
-//   DishModel(
-//     dishName: 'Chicken Alfredo',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FG%C3%A0%20r%C3%A1n%20truy%E1%BB%81n%20th%E1%BB%91ng.jpg?alt=media&token=440f914f-c5b2-4265-be6a-4b3828407d63',
-//     price: 15.50,
-//   ),
-//   DishModel(
-//     dishName: 'Chicken Alfredo',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FG%C3%A0%20r%C3%A1n%20truy%E1%BB%81n%20th%E1%BB%91ng.jpg?alt=media&token=440f914f-c5b2-4265-be6a-4b3828407d63',
-//     price: 15.50,
-//   ),
-//   DishModel(
-//     dishName: 'Chicken Alfredo',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FG%C3%A0%20r%C3%A1n%20truy%E1%BB%81n%20th%E1%BB%91ng.jpg?alt=media&token=440f914f-c5b2-4265-be6a-4b3828407d63',
-//     price: 15.50,
-//   ),
-//   DishModel(
-//     dishName: 'Chicken Alfredo',
-//     imageUrl:
-//         'https://firebasestorage.googleapis.com/v0/b/fooddeliveryv2-c6f80.appspot.com/o/dishImage%2FG%C3%A0%20r%C3%A1n%20truy%E1%BB%81n%20th%E1%BB%91ng.jpg?alt=media&token=440f914f-c5b2-4265-be6a-4b3828407d63',
-//     price: 15.50,
-//   ),
-//   // Add more dishes as needed
-// ];
 
 class CategoryList extends StatelessWidget {
   final List<CategoryModel>? categories;

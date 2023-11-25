@@ -1,13 +1,11 @@
 import 'package:fooddelivery_fe/api/dish/dish_api.dart';
-import 'package:fooddelivery_fe/model/category_model.dart';
 import 'package:fooddelivery_fe/model/dish_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
-import 'package:fooddelivery_fe/screens/homescreen/components/product_view/product_view.dart';
 import 'package:get/get.dart';
 
 class DishController extends GetxController {
   late DishApi _dishApi;
-  RxList<DishModel> listDish = <DishModel>[].obs;
+  Rx<List<DishModel>> listDish = Rx<List<DishModel>>([]);
   @override
   void onInit() {
     super.onInit();

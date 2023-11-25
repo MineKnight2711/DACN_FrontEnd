@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/category/category_api.dart';
 import 'package:fooddelivery_fe/model/category_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
@@ -8,6 +9,7 @@ class CategoryController extends GetxController {
   Rx<List<CategoryModel>?> listCategory = Rx<List<CategoryModel>?>([]);
   final RxBool showAllCategories = false.obs;
   final RxString currentCategoryId = ''.obs;
+
   @override
   void onInit() {
     super.onInit();

@@ -9,7 +9,7 @@ import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/sign_up_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/message.dart';
+import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/round_button.dart';
 import 'package:fooddelivery_fe/widgets/round_icon_button.dart';
 import 'package:fooddelivery_fe/widgets/round_textfield.dart';
