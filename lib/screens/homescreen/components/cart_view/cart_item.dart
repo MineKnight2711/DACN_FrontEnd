@@ -74,9 +74,9 @@ class CartItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider(
+                  image: Image.network(
                     "${cartItem.dish?.imageUrl}",
-                  ),
+                  ).image,
                 ),
               ),
             ),

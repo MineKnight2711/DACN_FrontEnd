@@ -39,7 +39,11 @@ class RegisterController extends GetxController {
     newAccount.accountID = "";
     newAccount.fullName = textControllers.txtFullNameSignUp.text;
     newAccount.password = textControllers.txtPasswordSignUp.text;
-    newAccount.birthday = selectedBirthDay;
+    if (selectedBirthDay != null) {
+      newAccount.birthday = selectedBirthDay;
+    } else {
+      newAccount.birthday = DateTime.now();
+    }
     newAccount.email = textControllers.txtEmailSignUp.text;
     newAccount.gender = selectedGender.value;
     newAccount.phoneNumber = textControllers.txtPhoneSignUp.text;

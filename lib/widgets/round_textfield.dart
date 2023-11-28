@@ -38,7 +38,7 @@ class _RoundTextfieldState extends State<RoundTextfield> {
     setState(() {
       if (value != '' || value != null) {
         _errorText = widget.onChanged?.call(value);
-        if (_errorText != null) {
+        if (widget.controller.text.isEmpty) {
           _textFieldErrorShakeKey.currentState?.shakeWidget();
         }
       } else {
@@ -91,7 +91,7 @@ class _RoundTextfieldState extends State<RoundTextfield> {
                       fontSize: 14,
                       fontWeight: FontWeight.w500),
                   errorText: _errorText,
-                  focusedErrorBorder: UnderlineInputBorder(
+                  focusedErrorBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.transparent,
                       width: 0,

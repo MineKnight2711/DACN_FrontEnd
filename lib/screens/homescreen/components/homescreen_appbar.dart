@@ -101,9 +101,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     borderRadius: BorderRadius.all(
                       Radius.circular(AppRadius.border12),
                     ),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "${_accountController.accountSession.value?.imageUrl}",
+                    child: Image.network(
+                      "${_accountController.accountSession.value?.imageUrl}",
                       width: 38.w,
                       height: 38.w,
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class CartTotalView extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 90.h,
+        height: 110.h,
         width: 400.w,
         decoration: const BoxDecoration(
           color: AppColors.gray15,

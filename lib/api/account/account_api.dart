@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:fooddelivery_fe/api/base_url.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class AccountApi {
   Future<ResponseBaseModel?> register(AccountModel account) async {
@@ -35,17 +37,19 @@ class AccountApi {
     return responseBase;
   }
 
-  Future<ResponseBaseModel> changeImageUrl(
-      String accountId, String newImageUrl) async {
+  Future<ResponseBaseModel> changeImage(
+      String accountId, File imageFile) async {
     ResponseBaseModel responseBase = ResponseBaseModel();
-    final url = Uri.parse(
-        '${ApiUrl.apiChangeImage}/$accountId?newImageUrl=${Uri.encodeComponent(newImageUrl)}');
+    final url = Uri.parse('${ApiUrl.apiChangeImage}/$accountId');
 
-    final response = await http.put(
-      url,
-    );
+    final request = http.MultipartRequest('PUT', url);
+    MultipartFile pic =
+        await http.MultipartFile.fromPath("image", imageFile.path);
+    request.files.add(pic);
+    final response = await request.send();
     if (response.statusCode == 200) {
-      responseBase = ResponseBaseModel.fromJson(json.decode(response.body));
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(await response.stream.bytesToString()));
       return responseBase;
     } else {
       responseBase.message = 'Fail';

@@ -39,28 +39,29 @@ class MyDrawerHeader extends StatelessWidget {
               child: Obx(
                 () => ImagePickerWidget(
                   onImageSelected: (selectedImage) async {
-                    // showOrderLoadingAnimation(
-                    //     context, "assets/animations/loading_1.json", 180);
-                    String url =
-                        await changeImageController.saveImageToFirebaseStorage(
-                            selectedImage, "${account.accountID}");
-                    // Logger().i("$url log url");
-                    Navigator.pop(context);
-                    if (url.isNotEmpty) {
-                      // showOrderLoadingAnimation(
-                      //     context, "assets/animations/loading_1.json", 180);
+                    showLoadingAnimation(
+                        context, "assets/animations/loading.json", 180);
+                    if (selectedImage != null) {
                       String result = await changeImageController
-                          .changeImageUrl("${account.accountID}", url);
+                          .changeImage("${account.accountID}", selectedImage)
+                          .whenComplete(
+                            () => Navigator.pop(context),
+                          );
+                      print(result);
                       if (result == "Success") {
-                        showCustomSnackBar(context, "Thông báo",
-                            "Cập nhật ảnh thành công!", ContentType.success, 2);
+                        showCustomSnackBar(
+                                context,
+                                "Thông báo",
+                                "Cập nhật ảnh thành công!",
+                                ContentType.success,
+                                2)
+                            .whenComplete(
+                          () => Navigator.pop(context),
+                        );
                       } else {
                         showCustomSnackBar(context, "Cảnh báo", result,
                             ContentType.failure, 2);
                       }
-                    } else {
-                      showCustomSnackBar(context, "Lỗi", "Lỗi không xác định",
-                          ContentType.failure, 2);
                     }
                   },
                   currentImageUrl:

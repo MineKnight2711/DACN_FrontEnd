@@ -113,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
               ),
               Obx(
                 () => RoundButton(
-                    enabled: true,
+                    enabled: registerController.validate.isSignUpValid.value,
                     title: tr("Sign Up"),
                     onPressed: () async {
                       String? result = await registerController.register();

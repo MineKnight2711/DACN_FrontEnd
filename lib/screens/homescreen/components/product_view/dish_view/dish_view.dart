@@ -55,6 +55,7 @@ class ListDishView extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 10),
                       height: 120.h,
+                      width: 400.w - 20,
                       child: Card(
                         elevation: 2,
                         shadowColor: Colors.grey.withOpacity(1),
@@ -70,9 +71,9 @@ class ListDishView extends StatelessWidget {
                               child: SizedBox(
                                 width: 100.w,
                                 height: 120.h,
-                                child: CachedNetworkImage(
+                                child: Image.network(
+                                  dish.imageUrl,
                                   fit: BoxFit.cover,
-                                  imageUrl: dish.imageUrl,
                                 ),
                               ),
                             ),
@@ -86,18 +87,18 @@ class ListDishView extends StatelessWidget {
                                   SizedBox(height: 5.h),
                                   Text(
                                     dish.dishName,
-                                    style: GoogleFonts.roboto(fontSize: 18),
+                                    style: GoogleFonts.roboto(fontSize: 16.r),
                                   ),
                                   SizedBox(height: 10.h),
                                   Text(
                                     DataConvert().formatCurrency(dish.price),
-                                    style: GoogleFonts.roboto(fontSize: 16),
+                                    style: GoogleFonts.roboto(fontSize: 16.r),
                                   ),
                                 ],
                               ),
                             ),
                             SizedBox(
-                              width: 140.w,
+                              width: 100.w,
                             ),
                             Align(
                               alignment: Alignment.bottomRight,
@@ -159,7 +160,6 @@ class ListDishView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            // CachedNetworkImage(imageUrl: dish.imageUrl)
                           ],
                         ),
                       ),

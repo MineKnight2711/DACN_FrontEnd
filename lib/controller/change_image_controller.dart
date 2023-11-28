@@ -17,9 +17,10 @@ class ChangeImageController extends GetxController {
     _accountController = Get.find<AccountController>();
   }
 
-  Future<String> changeImageUrl(String accountId, String newImageUrl) async {
-    final respone = await _accountApi.changeImageUrl(accountId, newImageUrl);
+  Future<String> changeImage(String accountId, File newImage) async {
+    final respone = await _accountApi.changeImage(accountId, newImage);
     if (respone.message == "Success") {
+      print(respone.data);
       AccountModel fetchedAccount = AccountModel.fromJson(respone.data);
 
       await _accountController

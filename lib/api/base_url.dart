@@ -32,6 +32,6 @@ class ApiUrl {
   // static const apiDeleteAddress = '${baseUrl}address/delete';
   // static const apiGetAllReview = '${baseUrl}review';
   // static const apiCreateReview = '${baseUrl}review/create';
-  static const apiChangeImage = '${baseUrl}account/updateImage';
+  static const apiChangeImage = '${baseUrl}account/update-image';
   // static const apiGetAndFetchAllOrder = '${baseUrl}order/testGetOrder';
 }

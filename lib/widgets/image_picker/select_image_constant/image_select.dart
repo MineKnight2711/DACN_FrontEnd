@@ -165,8 +165,8 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
                 ),
                 child: ClipOval(
                   child: widget.currentImageUrl != null
-                      ? CachedNetworkImage(
-                          imageUrl: widget.currentImageUrl!,
+                      ? Image.network(
+                          widget.currentImageUrl!,
                           fit: BoxFit.cover,
                           width: CustomMediaQuerry.mediaWidth(context, 4),
                           height: CustomMediaQuerry.mediaHeight(context, 7),
