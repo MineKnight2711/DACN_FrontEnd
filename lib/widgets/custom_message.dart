@@ -63,24 +63,25 @@ Future<bool> showConfirmDialog(
   return confirm;
 }
 
-void showCustomSnackBar(BuildContext context, String title, String message,
-    ContentType contentType) {
+Future<void> showCustomSnackBar(BuildContext context, String title,
+    String message, ContentType contentType, int? duration) async {
   final snackBar = SnackBar(
-    /// need to set following properties for best effect of awesome_snackbar_content
     elevation: 0,
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
-
     content: AwesomeSnackbarContent(
       title: title,
       message: message,
       contentType: contentType,
     ),
+    duration: Duration(seconds: duration ?? 1),
   );
 
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(snackBar);
+
+  return await Future.delayed(snackBar.duration);
 }
 
 class CustomSuccessMessage {

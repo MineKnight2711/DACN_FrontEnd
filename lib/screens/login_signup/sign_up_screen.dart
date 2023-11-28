@@ -4,9 +4,9 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
-import 'package:fooddelivery_fe/utils/mediaquery.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/datetime_picker.dart';
 import 'package:fooddelivery_fe/widgets/gender_chose.dart';
@@ -68,7 +68,7 @@ class SignUpScreen extends StatelessWidget {
                 onChanged: (value) {
                   registerController.selectedGender.value = value;
                 },
-                size: CustomMediaQuery.mediaAspectRatio(context, 0.27),
+                size: CustomMediaQuerry.mediaAspectRatio(context, 0.27),
               ),
               const SizedBox(
                 height: 25,
@@ -113,17 +113,18 @@ class SignUpScreen extends StatelessWidget {
               ),
               Obx(
                 () => RoundButton(
-                    enabled: registerController.validate.isSignUpValid.value,
+                    enabled: true,
                     title: tr("Sign Up"),
                     onPressed: () async {
                       String? result = await registerController.register();
+                      print(result);
                       if (result == "Success") {
                         showCustomSnackBar(context, "Thông báo",
-                            "Đăng ký thành công!", ContentType.success);
+                            "Đăng ký thành công!", ContentType.success, 2);
                         slideInTransitionReplacement(context, LoginScreen());
                       } else {
                         showCustomSnackBar(context, "Lỗi", "Đăng ký thất bại",
-                            ContentType.failure);
+                            ContentType.failure, 2);
                       }
                     }),
               ),

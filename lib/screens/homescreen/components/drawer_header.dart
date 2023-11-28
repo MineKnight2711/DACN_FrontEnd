@@ -4,7 +4,10 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/change_image_controller.dart';
+import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
+import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/image_picker/select_image_constant/image_select.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:get/get.dart';
@@ -50,14 +53,14 @@ class MyDrawerHeader extends StatelessWidget {
                           .changeImageUrl("${account.accountID}", url);
                       if (result == "Success") {
                         showCustomSnackBar(context, "Thông báo",
-                            "Cập nhật ảnh thành công!", ContentType.success);
+                            "Cập nhật ảnh thành công!", ContentType.success, 2);
                       } else {
-                        showCustomSnackBar(
-                            context, "Cảnh báo", result, ContentType.failure);
+                        showCustomSnackBar(context, "Cảnh báo", result,
+                            ContentType.failure, 2);
                       }
                     } else {
                       showCustomSnackBar(context, "Lỗi", "Lỗi không xác định",
-                          ContentType.failure);
+                          ContentType.failure, 2);
                     }
                   },
                   currentImageUrl:
@@ -101,8 +104,8 @@ class NoUserDrawer extends StatelessWidget {
         ListTile(
           title: const Text('Đăng nhập'),
           onTap: () {
-            // Get.put(ChangePasswordController());
-            // slideinTransition(context, ChangePasswordScreen());
+            Get.put(LoginController());
+            slideInTransition(context, LoginScreen());
           },
         ),
         ListTile(

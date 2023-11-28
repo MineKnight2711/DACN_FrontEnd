@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/widgets/shake_widget.dart';
 
 class AddressTextField extends StatefulWidget {
   final TextEditingController controller;

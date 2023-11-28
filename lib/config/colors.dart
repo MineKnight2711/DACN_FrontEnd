@@ -33,6 +33,7 @@ class AppColors {
   static const Color gray80 = Color(0xffA8ACB9);
   static const Color gray50 = Color(0xffC4C7D0);
   static const Color gray20 = Color(0xffEBEBEB);
+  static const Color gray15 = Color.fromARGB(223, 235, 235, 235);
   static const Color gray5 = Color(0xffF5F5F5);
 }
 

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
-import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/drawer_header.dart';
-import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
-import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:get/get.dart';
 
 class UserDrawer extends StatelessWidget {
@@ -98,29 +95,31 @@ class UserDrawer extends StatelessWidget {
   }
 }
 
-class NoUserDrawer extends StatelessWidget {
-  const NoUserDrawer({super.key});
+// class NoUserDrawer extends StatelessWidget {
+//   const NoUserDrawer({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          title: const Text('Đăng nhập'),
-          onTap: () {
-            Navigator.pop(context);
-            Get.put(LoginController());
-            slideInTransition(context, LoginScreen());
-          },
-        ),
-        ListTile(
-          title: const Text('Thoát'),
-          onTap: () {
-            // controller.logout();
-            // Navigator.pop(context);
-          },
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         ListTile(
+//           title: const Text('Đăng nhập'),
+//           onTap: () {
+//             Navigator.pop(context);
+//             Get.put(LoginController());
+//             // Navigator.push(context,
+//             //     MaterialPageRoute(builder: (context) => LoginScreen()));
+//             slideInTransition(context, LoginScreen());
+//           },
+//         ),
+//         ListTile(
+//           title: const Text('Thoát'),
+//           onTap: () {
+//             // controller.logout();
+//             // Navigator.pop(context);
+//           },
+//         ),
+//       ],
+//     );
+//   }
+// }

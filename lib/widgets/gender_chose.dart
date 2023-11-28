@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:fooddelivery_fe/utils/mediaquery.dart';
+import 'package:fooddelivery_fe/config/mediquerry.dart';
 
 class GenderSelectionWidget extends StatefulWidget {
   final String? gender;
@@ -30,7 +30,7 @@ class GenderSelectionWidgetState extends State<GenderSelectionWidget> {
       children: [
         Transform.scale(
           scale:
-              widget.size ?? 1 / CustomMediaQuery.mediaAspectRatio(context, 2),
+              widget.size ?? 1 / CustomMediaQuerry.mediaAspectRatio(context, 2),
           child: Radio(
             value: 'Nam',
             groupValue: _selectedGender,
@@ -52,10 +52,10 @@ class GenderSelectionWidgetState extends State<GenderSelectionWidget> {
             color: Colors.grey[800],
           ),
         ),
-        SizedBox(width: CustomMediaQuery.mediaWidth(context, 3.5)),
+        SizedBox(width: CustomMediaQuerry.mediaWidth(context, 3.5)),
         Transform.scale(
           scale:
-              widget.size ?? 1 / CustomMediaQuery.mediaAspectRatio(context, 2),
+              widget.size ?? 1 / CustomMediaQuerry.mediaAspectRatio(context, 2),
           child: Radio(
             value: 'Nữ',
             groupValue: _selectedGender,

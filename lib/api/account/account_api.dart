@@ -9,7 +9,7 @@ class AccountApi {
   Future<ResponseBaseModel?> register(AccountModel account) async {
     final response = await http.post(
       Uri.parse(ApiUrl.apiCreateAccount),
-      body: account.toJson(),
+      body: account.googleRegisterToJson(),
     );
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (response.statusCode == 200) {

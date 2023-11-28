@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 
@@ -14,7 +15,7 @@ import 'package:get/get.dart';
 class HomeScreen extends StatefulWidget {
   final AccountModel? accountModel;
 
-  HomeScreen({super.key, this.accountModel});
+  const HomeScreen({super.key, this.accountModel});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen>
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final tabBarController = Get.put(BottomTabBarController());
-
+  final accountController = Get.find<AccountController>();
   final categoryController = Get.find<CategoryController>();
   final cartController = Get.find<CartController>();
 
@@ -49,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           // Center(child: Text('Home')),
           ProductView(categoryController: categoryController),
+          // Center(child: Text('Cart')),
           CartView(cartController: cartController),
           Center(child: Text('Ưu đãi')),
           Center(child: Text('Settings')),

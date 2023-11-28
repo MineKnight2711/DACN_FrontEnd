@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:get/get.dart';
@@ -21,18 +20,10 @@ class AccountController extends GetxController {
     await prefs.setString('current_account', accountJsonEncode);
   }
 
-  Future<AccountModel?> loadUserInfo() async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonString = prefs.getString('current_account') ?? '';
-    if (jsonString.isNotEmpty) {
-      return AccountModel.fromJson(jsonDecode(jsonString));
-    }
-    return null;
-  }
-
   Future<AccountModel?> getUserFromSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString('current_account') ?? '';
+    print(jsonString);
     if (jsonString.isNotEmpty) {
       return AccountModel.fromJson(jsonDecode(jsonString));
     }

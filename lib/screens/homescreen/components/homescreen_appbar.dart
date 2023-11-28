@@ -10,6 +10,7 @@ import 'package:fooddelivery_fe/config/radius.dart';
 import 'package:fooddelivery_fe/config/spacing.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/map_controller.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/drawer_header.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/user_drawer.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/map_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
@@ -157,7 +158,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 accounts: accounts,
               );
             }
-            return const NoUserDrawer();
+            return NoUserDrawer();
           }),
         ],
       ),

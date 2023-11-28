@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/map_controller.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/address_info.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/address_textfield.dart';
@@ -39,20 +42,15 @@ class MapScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                FloatingActionButton(
-                  onPressed: mapController.zoomIn,
-                  child: const Icon(Icons.add),
-                ),
-                const SizedBox(height: 16), // Khoảng cách giữa 2 button
-                FloatingActionButton(
-                  onPressed: mapController.zoomOut,
-                  child: const Icon(Icons.remove),
-                ),
-                const SizedBox(height: 16),
-                FloatingActionButton(
-                  onPressed: mapController.findCurrentLocation,
-                  child: const Icon(Icons.location_on),
-                ),
+                MapNavigateButton(
+                    onPressed: mapController.zoomIn,
+                    iconData: CupertinoIcons.zoom_in),
+                MapNavigateButton(
+                    onPressed: mapController.zoomOut,
+                    iconData: CupertinoIcons.zoom_out),
+                MapNavigateButton(
+                    onPressed: mapController.findCurrentLocation,
+                    iconData: CupertinoIcons.location)
               ],
             ),
           ),
@@ -62,7 +60,7 @@ class MapScreen extends StatelessWidget {
               if (mapController.isShow.value) {
                 return Container(
                   height: 120,
-                  margin: const EdgeInsets.fromLTRB(10, 60, 10, 0),
+                  margin: const EdgeInsets.only(top: 80, left: 20, right: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
@@ -74,10 +72,10 @@ class MapScreen extends StatelessWidget {
           ),
           //Text field địa chỉ
           Container(
-            height: 70,
+            height: 70.h,
             alignment: Alignment.topLeft,
-            margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            margin: const EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: AddressTextField(
               hintText: "Mời nhập địa chỉ",
               controller: mapController.searchController,
@@ -105,6 +103,36 @@ class MapScreen extends StatelessWidget {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MapNavigateButton extends StatelessWidget {
+  final Function()? onPressed;
+  final IconData iconData;
+  const MapNavigateButton({
+    super.key,
+    this.onPressed,
+    required this.iconData,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          shape: const CircleBorder(),
+          backgroundColor: AppColors.orange100, // Make the button circular
+          padding: const EdgeInsets.all(18),
+        ),
+        child: Icon(
+          iconData,
+          size: 22,
+          color: AppColors.white100,
+        ),
       ),
     );
   }

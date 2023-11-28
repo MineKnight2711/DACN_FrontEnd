@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooddelivery_fe/utils/mediaquery.dart';
+import 'package:fooddelivery_fe/config/mediquerry.dart';
 
 class LoginScreenHeader extends StatelessWidget {
   const LoginScreenHeader({super.key});
@@ -10,7 +10,7 @@ class LoginScreenHeader extends StatelessWidget {
       children: [
         // Background Image
         Container(
-          height: CustomMediaQuery.mediaHeight(context, 3),
+          height: CustomMediaQuerry.mediaHeight(context, 3),
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/LTM.jpg'),

@@ -11,7 +11,7 @@ class ApiUrl {
   //     'https://testjava-fooddelivery-07101b5575c7.herokuapp.com/api/';
 
   static const baseUrl = "http://26.196.143.193:6969/api/";
-  static const apiGetAllAccount = '${baseUrl}account/all';
+  // static const apiGetAllAccount = '${baseUrl}account/all';
 
   ///// Api của Đạt-------------------------------------------------
   static const apiCreateAccount = '${baseUrl}account';

@@ -1,6 +1,5 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
@@ -106,12 +105,21 @@ class LoginController extends GetxController {
       if (accountReceived == "AccountNotFound" ||
           accountReceived != "Success") {
         final registerController = Get.put(RegisterController());
+
         registerController.textControllers.txtFullNameSignUp.text =
             "${user.displayName}";
         registerController.textControllers.txtEmailSignUp.text =
             "${user.email}";
         registerController.imageUrl = "${user.photoURL}";
-        return "SignUpSuccess";
+        AccountModel newAccount = AccountModel();
+        newAccount.fullName = "${user.displayName}";
+        newAccount.email = "${user.email}";
+        newAccount.imageUrl = "${user.photoURL}";
+        final responseModel = await _accountApi.register(newAccount);
+        if (responseModel?.message == "Success") {
+          return "SignUpSuccess";
+        }
+        return "Fail";
       } else if (accountReceived == "Success") {
         return "LoginSuccess";
       }

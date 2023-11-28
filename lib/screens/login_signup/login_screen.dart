@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
@@ -123,28 +122,26 @@ class LoginScreen extends StatelessWidget {
               ),
               RoundIconButton(
                 icon: "assets/images/google_logo.png",
-                title: "Login with Google",
+                title: "Tiếp tục với google",
                 color: const Color(0xffDD4B39),
                 onPressed: () async {
-                  String? result = await loginController.signInWithGoogle();
-
+                  showLoadingAnimation(
+                      context, "assets/animations/loading_1.json", 180);
+                  String? result = await loginController
+                      .signInWithGoogle()
+                      .whenComplete(() => Navigator.pop(context));
+                  print(result);
                   switch (result) {
                     case "LoginSuccess":
                       showCustomSnackBar(context, "Thông báo",
-                          "Đăng nhập thành công", ContentType.success);
-                      fadeInTransitionReplacement(context, HomeScreen());
-                      break;
-                    case "SignUpSuccess":
-                      showCustomSnackBar(
-                          context,
-                          "Thông báo",
-                          "Thành công\nVui lòng nhập đầy đủ thông tin để tiếp tục!",
-                          ContentType.help);
-                      slideInTransition(context, SignUpScreen());
+                          "Đăng nhập thành công", ContentType.success, 2);
+                      slideInTransitionNoBack(context, const HomeScreen());
                       break;
                     default:
                       showCustomSnackBar(context, "Lỗi", "Có lỗi xảy ra!",
-                          ContentType.failure);
+                              ContentType.failure, 2)
+                          .whenComplete(() => Navigator.pop(context));
+                      Navigator.pop(context);
                       break;
                   }
                 },

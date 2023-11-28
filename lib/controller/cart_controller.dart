@@ -18,19 +18,34 @@ class CartController extends GetxController {
     _accountController = Get.find<AccountController>();
   }
 
+  RxDouble calculateTotal() {
+    RxDouble total = 0.0.obs;
+    total.value = listCart.value.fold(0.0, (total, item) {
+      if (item.quantity != null && item.dish?.price != null) {
+        double itemTotal = item.quantity! * item.dish!.price;
+
+        return total + itemTotal;
+      }
+
+      return total;
+    });
+    return total;
+  }
+
   Future<void> getAccountCart() async {
     _accountController.fetchCurrentUser();
     if (_accountController.accountSession.value != null) {
       ResponseBaseModel? responseBaseModel = await cartApi.getCartByAccount(
           "${_accountController.accountSession.value?.accountID}");
-      Logger().i("Logger cart : ${responseBaseModel?.data}");
-      final categoryReceived = responseBaseModel?.data as List<dynamic>;
-      List<CartModel> categoriesList = categoryReceived
-          .map(
-            (categoryMap) => CartModel.fromJson(categoryMap),
-          )
-          .toList();
-      listCart.value = categoriesList;
+      if (responseBaseModel?.message == "Success") {
+        final categoryReceived = responseBaseModel?.data as List<dynamic>;
+        List<CartModel> categoriesList = categoryReceived
+            .map(
+              (categoryMap) => CartModel.fromJson(categoryMap),
+            )
+            .toList();
+        listCart.value = categoriesList;
+      }
     }
   }
 
@@ -45,6 +60,7 @@ class CartController extends GetxController {
           await cartApi.addToCart(newCartItem);
       Logger().i("Logger cart : ${responseBaseModel?.data}");
       if (responseBaseModel?.message == "Success") {
+        calculateTotal();
         return "Success";
       }
       return responseBaseModel?.message;
@@ -56,6 +72,7 @@ class CartController extends GetxController {
     ResponseBaseModel? responseBaseModel = await cartApi.deleteItem(cartItemId);
     Logger().i("Logger cart : ${responseBaseModel?.data}");
     if (responseBaseModel?.message == "Success") {
+      calculateTotal();
       return "Success";
     }
     return responseBaseModel?.message;
