@@ -16,8 +16,9 @@ class AccountController extends GetxController {
   Future<void> storedUserToSharedRefererces(
       AccountModel accountResponse) async {
     final prefs = await SharedPreferences.getInstance();
+
     final accountJsonEncode = jsonEncode(accountResponse.toJson());
-    await prefs.setString('current_account', accountJsonEncode);
+    await prefs.setString("current_account", accountJsonEncode);
   }
 
   Future<AccountModel?> getUserFromSharedPreferences() async {

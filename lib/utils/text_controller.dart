@@ -9,6 +9,10 @@ class TextControllers {
   final txtPhoneSignUp = TextEditingController();
   final txtEmailLogin = TextEditingController();
   final txtPhoneLogin = TextEditingController();
+
+  final txtFullNameUpdateController = TextEditingController();
+  final txtPhoneNumberUpdateController = TextEditingController();
+
   void clearText() {
     txtFullNameSignUp.clear();
     txtPasswordSignUp.clear();
@@ -18,5 +22,10 @@ class TextControllers {
     txtPhoneSignUp.clear();
     txtEmailLogin.clear();
     txtPhoneLogin.clear();
+  }
+
+  void clearUpdateText() {
+    txtFullNameUpdateController.clear();
+    txtPhoneNumberUpdateController.clear();
   }
 }

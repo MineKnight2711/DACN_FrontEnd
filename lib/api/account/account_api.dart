@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class AccountApi {
-  Future<ResponseBaseModel?> register(AccountModel account) async {
+  Future<ResponseBaseModel?> registerGoogle(AccountModel account) async {
     final response = await http.post(
       Uri.parse(ApiUrl.apiCreateAccount),
       body: account.googleRegisterToJson(),
@@ -19,7 +19,22 @@ class AccountApi {
           jsonDecode(utf8.decode(response.bodyBytes)));
       return responseBase;
     }
-    responseBase.message = 'Error';
+    responseBase.message = 'ConnectError';
+    return responseBase;
+  }
+
+  Future<ResponseBaseModel?> register(AccountModel account) async {
+    final response = await http.post(
+      Uri.parse(ApiUrl.apiCreateAccount),
+      body: account.toJson(),
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'ConnectError';
     return responseBase;
   }
 
@@ -33,7 +48,7 @@ class AccountApi {
           jsonDecode(utf8.decode(response.bodyBytes)));
       return responseBase;
     }
-    responseBase.message = 'Error';
+    responseBase.message = 'ConnectError';
     return responseBase;
   }
 
@@ -52,8 +67,23 @@ class AccountApi {
           jsonDecode(await response.stream.bytesToString()));
       return responseBase;
     } else {
-      responseBase.message = 'Fail';
+      responseBase.message = 'ConnectError';
       return responseBase;
     }
+  }
+
+  Future<ResponseBaseModel> updateAccount(AccountModel account) async {
+    final response = await http.put(
+      Uri.parse(ApiUrl.apiUpdateAccount),
+      body: account.updateToJson(),
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'ConnectError';
+    return responseBase;
   }
 }

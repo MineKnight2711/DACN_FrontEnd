@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/controller/update_profile_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
+import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
+import 'package:fooddelivery_fe/screens/homescreen/address_screen/address_screen.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/drawer_header.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:get/get.dart';
 
 class UserDrawer extends StatelessWidget {
@@ -26,12 +30,12 @@ class UserDrawer extends StatelessWidget {
         ListTile(
           title: const Text('Cập nhật thông tin'),
           onTap: () {
-            // Navigator.pop(context);
-            // Get.put(UpdateProfileController(accounts));
-            // slideInTransition(
-            //   context,
-            //   ChangeInfo(account: accounts),
-            // );
+            Navigator.pop(context);
+            Get.put(UpdateProfileController());
+            slideInTransition(
+              context,
+              ProfileScreen(),
+            );
           },
         ),
         ListTile(
@@ -40,10 +44,10 @@ class UserDrawer extends StatelessWidget {
             // Navigator.pop(context);
             // final addressController = Get.put(AddressController());
             // addressController.getListAddress();
-            // slideInTransition(
-            //   context,
-            //   AddressListScreen(),
-            // );
+            slideInTransition(
+              context,
+              AddressScreen(),
+            );
           },
         ),
         ListTile(

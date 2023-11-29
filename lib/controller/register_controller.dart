@@ -16,7 +16,6 @@ class RegisterController extends GetxController {
 
   RxString selectedGender = "".obs;
   DateTime? selectedBirthDay;
-  String imageUrl = "";
 
   @override
   void onInit() {
@@ -27,7 +26,6 @@ class RegisterController extends GetxController {
 
   @override
   void refresh() {
-    imageUrl = "";
     selectedGender.value = "";
     selectedBirthDay = null;
     textControllers.clearText();
@@ -38,7 +36,6 @@ class RegisterController extends GetxController {
     AccountModel newAccount = AccountModel();
     newAccount.accountID = "";
     newAccount.fullName = textControllers.txtFullNameSignUp.text;
-    newAccount.password = textControllers.txtPasswordSignUp.text;
     if (selectedBirthDay != null) {
       newAccount.birthday = selectedBirthDay;
     } else {
@@ -47,7 +44,6 @@ class RegisterController extends GetxController {
     newAccount.email = textControllers.txtEmailSignUp.text;
     newAccount.gender = selectedGender.value;
     newAccount.phoneNumber = textControllers.txtPhoneSignUp.text;
-    newAccount.imageUrl = imageUrl;
     ResponseBaseModel? responseBaseModel =
         await _accountApi.register(newAccount);
     if (responseBaseModel?.message == "Success") {

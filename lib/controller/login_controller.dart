@@ -104,18 +104,11 @@ class LoginController extends GetxController {
       String accountReceived = await getAccountFromDatabase("${user.email}");
       if (accountReceived == "AccountNotFound" ||
           accountReceived != "Success") {
-        final registerController = Get.put(RegisterController());
-
-        registerController.textControllers.txtFullNameSignUp.text =
-            "${user.displayName}";
-        registerController.textControllers.txtEmailSignUp.text =
-            "${user.email}";
-        registerController.imageUrl = "${user.photoURL}";
         AccountModel newAccount = AccountModel();
         newAccount.fullName = "${user.displayName}";
         newAccount.email = "${user.email}";
         newAccount.imageUrl = "${user.photoURL}";
-        final responseModel = await _accountApi.register(newAccount);
+        final responseModel = await _accountApi.registerGoogle(newAccount);
         if (responseModel?.message == "Success") {
           return "SignUpSuccess";
         }

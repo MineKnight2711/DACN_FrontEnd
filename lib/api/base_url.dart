@@ -15,6 +15,7 @@ class ApiUrl {
 
   ///// Api của Đạt-------------------------------------------------
   static const apiCreateAccount = '${baseUrl}account';
+  static const apiUpdateAccount = '${baseUrl}account/update-account';
   static const apiLoginWithEmail = '${baseUrl}account/login-by-email';
   static const apiGetAllCategory = '${baseUrl}category';
   static const apiGetAllDish = '${baseUrl}dish';

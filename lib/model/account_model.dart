@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 class AccountModel {
   String? accountID;
@@ -28,7 +29,7 @@ class AccountModel {
       fullName: json['fullName'],
       birthday: (birthdayString != "" && birthdayString != null)
           ? DateFormat('yyyy-MM-dd').parse(birthdayString)
-          : null,
+          : DateTime.now(),
       email: json['email'],
       gender: json['gender'] as String?,
       imageUrl: json['imageUrl'],
@@ -41,11 +42,23 @@ class AccountModel {
     return {
       'accountID': accountID,
       'fullName': fullName,
-      'birthday':
-          birthday != null ? DateFormat("yyyy-MM-dd").format(birthday!) : '',
+      'birthday': birthday != null
+          ? DateFormat("yyyy-MM-dd").format(birthday!)
+          : DateTime.now(),
       'email': email,
       'gender': gender,
-      'imageUrl': imageUrl,
+      'imageUrl': imageUrl ?? "",
+      'phoneNumber': phoneNumber,
+    };
+  }
+
+  Map<String, dynamic> updateToJson() {
+    return {
+      'accountID': accountID,
+      'fullName': fullName,
+      'birthday': birthday != null
+          ? DateFormat("yyyy-MM-dd").format(birthday!)
+          : DateTime.now(),
       'phoneNumber': phoneNumber,
     };
   }

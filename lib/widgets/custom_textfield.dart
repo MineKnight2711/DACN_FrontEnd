@@ -187,3 +187,77 @@ class RoundTitleTextfield extends StatelessWidget {
     );
   }
 }
+
+class ProfileInputTextField extends StatefulWidget {
+  const ProfileInputTextField({
+    Key? key,
+    this.hintText,
+    this.focusNode,
+    this.nextfocusNode,
+    this.labelText,
+    this.validator,
+    required this.controller,
+    this.onChanged,
+    this.textInputType,
+  }) : super(key: key);
+  final String? Function(String?)? validator;
+  final Function(String?)? onChanged;
+  final String? hintText;
+  final TextInputType? textInputType;
+  final String? labelText;
+  final FocusNode? focusNode;
+  final FocusNode? nextfocusNode;
+  final TextEditingController controller;
+  @override
+  State<ProfileInputTextField> createState() => _ProfileInputTextFieldState();
+}
+
+class _ProfileInputTextFieldState extends State<ProfileInputTextField> {
+  late TextEditingController _controller;
+  String? _errorText;
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller;
+  }
+
+  void checkOnchangedValidate(String? value) {
+    setState(() {
+      if (value != '' || value != null) {
+        _errorText = widget.onChanged?.call(value);
+      } else {
+        _errorText = null;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      focusNode: widget.focusNode,
+      onFieldSubmitted: (value) {
+        if (widget.nextfocusNode != null) {
+          widget.focusNode?.unfocus();
+          FocusScope.of(context).requestFocus(widget.nextfocusNode);
+        }
+      },
+      keyboardType: widget.textInputType,
+      onChanged: checkOnchangedValidate,
+      validator: widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      controller: _controller,
+      cursorColor: Colors.black,
+      decoration: InputDecoration(
+        hintText: widget.hintText,
+        labelText: widget.labelText,
+        border: InputBorder.none,
+        errorText: _errorText,
+      ),
+    );
+  }
+}

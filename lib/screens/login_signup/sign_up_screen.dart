@@ -13,7 +13,7 @@ import 'package:fooddelivery_fe/widgets/gender_chose.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
 
 import 'package:fooddelivery_fe/widgets/round_button.dart';
-import 'package:fooddelivery_fe/widgets/round_textfield.dart';
+import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {

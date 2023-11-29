@@ -11,7 +11,7 @@ import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/round_button.dart';
 import 'package:fooddelivery_fe/widgets/round_icon_button.dart';
-import 'package:fooddelivery_fe/widgets/round_textfield.dart';
+import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {

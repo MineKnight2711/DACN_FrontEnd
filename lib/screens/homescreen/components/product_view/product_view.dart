@@ -3,10 +3,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fooddelivery_fe/config/mediquerry.dart';
+import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/model/category_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/category_view/category_view.dart';
-import 'package:fooddelivery_fe/widgets/round_textfield.dart';
+import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
 import 'dish_view/dish_view.dart';
@@ -19,8 +21,7 @@ class ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => SingleChildScrollView(
-        controller: outerScrollController.value,
+      () => NoGlowingScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

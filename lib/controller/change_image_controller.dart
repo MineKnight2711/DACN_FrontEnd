@@ -25,8 +25,7 @@ class ChangeImageController extends GetxController {
 
       await _accountController
           .storedUserToSharedRefererces(fetchedAccount)
-          .whenComplete(
-              () => _accountController.accountSession.value = fetchedAccount);
+          .whenComplete(() => _accountController.fetchCurrentUser());
       return "Success";
     }
     return respone.message!;

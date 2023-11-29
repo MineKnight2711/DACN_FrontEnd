@@ -10,14 +10,14 @@ class DishController extends GetxController {
   void onInit() {
     super.onInit();
     _dishApi = DishApi();
-    getAllCategory();
+    getAllDish();
   }
 
-  Future<void> getAllCategory() async {
+  Future<void> getAllDish() async {
     ResponseBaseModel? responseBaseModel = await _dishApi.getAllDish();
     if (responseBaseModel?.message == "Success") {
-      final categoryReceived = responseBaseModel?.data as List<dynamic>;
-      List<DishModel> dishList = categoryReceived
+      final dishesReceived = responseBaseModel?.data as List<dynamic>;
+      List<DishModel> dishList = dishesReceived
           .map(
             (dishMap) => DishModel.fromJson(dishMap),
           )

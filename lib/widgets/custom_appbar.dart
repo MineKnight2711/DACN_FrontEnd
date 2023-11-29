@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
-  final bool showLeading;
+  final bool showLeading, centeredTitle;
   final VoidCallback? onPressed;
   final PreferredSizeWidget? bottom;
   final List<Widget>? actions;
@@ -18,14 +18,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.bottom,
       this.actions,
       this.backGroundColor,
-      this.leadingColor});
+      this.leadingColor,
+      this.centeredTitle = true});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: backGroundColor ?? Colors.white,
       elevation: 0,
-      centerTitle: true,
+      centerTitle: centeredTitle,
       leading: showLeading
           ? Padding(
               padding: const EdgeInsets.all(10),

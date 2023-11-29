@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
+import 'package:fooddelivery_fe/controller/dish_controller.dart';
 
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar.dart';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen>
   final tabBarController = Get.put(BottomTabBarController());
   final accountController = Get.find<AccountController>();
   final categoryController = Get.find<CategoryController>();
+  final dishController = Get.find<DishController>();
   final cartController = Get.find<CartController>();
 
   @override
@@ -35,6 +37,11 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
 
     tabBarController.initTabController(this);
+  }
+
+  Future<void> refresh() async {
+    await categoryController.getAllCategory();
+    await dishController.getAllDish();
   }
 
   @override
@@ -49,7 +56,10 @@ class _HomeScreenState extends State<HomeScreen>
         controller: tabBarController.tabController.value,
         children: [
           // Center(child: Text('Home')),
-          ProductView(categoryController: categoryController),
+          RefreshIndicator(
+              onRefresh: () => refresh(),
+              displacement: 40.0,
+              child: ProductView(categoryController: categoryController)),
           // Center(child: Text('Cart')),
           CartView(cartController: cartController),
           Center(child: Text('Ưu đãi')),
