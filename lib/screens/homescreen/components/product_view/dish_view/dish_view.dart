@@ -10,6 +10,7 @@ import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/image_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -65,15 +66,25 @@ class ListDishView extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                              child: SizedBox(
-                                width: 100.w,
-                                height: 120.h,
-                                child: Image.network(
-                                  dish.imageUrl,
-                                  fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return ImageViewer(imageUrl: dish.imageUrl);
+                                  },
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                child: SizedBox(
+                                  width: 100.w,
+                                  height: 120.h,
+                                  child: Image.network(
+                                    dish.imageUrl,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

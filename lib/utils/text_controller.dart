@@ -24,8 +24,26 @@ class TextControllers {
     txtPhoneLogin.clear();
   }
 
+  void clearLoginText() {
+    txtEmailLogin.clear();
+    txtPasswordLogin.clear();
+  }
+
   void clearUpdateText() {
     txtFullNameUpdateController.clear();
     txtPhoneNumberUpdateController.clear();
+  }
+}
+
+class AddressTextController {
+  final txtProvince = TextEditingController();
+  final txtDistrict = TextEditingController();
+  final txtWard = TextEditingController();
+  final txtDetails = TextEditingController();
+  void clearText() {
+    txtProvince.clear();
+    txtDistrict.clear();
+    txtWard.clear();
+    txtDetails.clear();
   }
 }

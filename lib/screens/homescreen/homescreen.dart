@@ -10,6 +10,7 @@ import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bot
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/cart_view.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/homescreen_appbar.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/product_view.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/setting_view.dart';
 
 import 'package:get/get.dart';
 
@@ -47,10 +48,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      appBar: CustomHomeAppBar(scaffoldKey: scaffoldKey),
-      endDrawer:
-          CustomHomeAppBar(scaffoldKey: scaffoldKey).buildDrawer(context),
+      appBar: CustomHomeAppBar(),
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabBarController.tabController.value,
@@ -63,7 +61,8 @@ class _HomeScreenState extends State<HomeScreen>
           // Center(child: Text('Cart')),
           CartView(cartController: cartController),
           Center(child: Text('Ưu đãi')),
-          Center(child: Text('Settings')),
+          // Center(child: Text('Settings')),
+          SettingsView(),
         ],
       ),
       bottomNavigationBar: BottomNavigationTabBar(

@@ -22,8 +22,7 @@ class ListAddress extends StatelessWidget {
                   color: Colors.blue,
                   size: 20,
                 ),
-                SizedBox(
-                  width: 320,
+                Expanded(
                   child: Text(
                     perdictionAddress.description,
                     overflow: TextOverflow.ellipsis,

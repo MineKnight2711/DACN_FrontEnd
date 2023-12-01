@@ -67,6 +67,7 @@ class AccountModel {
     return {
       'fullName': fullName,
       'email': email,
+      'birthday': DateFormat("yyyy-MM-dd").format(DateTime.now()),
       'imageUrl': imageUrl,
     };
   }

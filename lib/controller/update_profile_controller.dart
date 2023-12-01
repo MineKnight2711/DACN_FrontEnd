@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
@@ -17,6 +18,9 @@ class UpdateProfileController extends GetxController {
   final isFullNameDropdown = false.obs;
   final isPhoneNumberDropDown = false.obs;
   final isBirthDayDropDown = false.obs;
+  final birthDayExpansionTileController = ExpansionTileController();
+  final phoneNumberExpansionTileController = ExpansionTileController();
+  final fullnameExpansionTileController = ExpansionTileController();
 
   late AccountApi _accountApi;
   late AccountController _accountController;
@@ -27,6 +31,35 @@ class UpdateProfileController extends GetxController {
     _accountController = Get.find<AccountController>();
     _accountApi = AccountApi();
     fetchCurrent();
+  }
+
+  void observeDropdowns() {
+    isFullNameDropdown.listen((expanded) {
+      if (expanded) {
+        isPhoneNumberDropDown.value = false;
+        isBirthDayDropDown.value = false;
+        birthDayExpansionTileController.collapse();
+        phoneNumberExpansionTileController.collapse();
+      }
+    });
+
+    isPhoneNumberDropDown.listen((expanded) {
+      if (expanded) {
+        isFullNameDropdown.value = false;
+        isBirthDayDropDown.value = false;
+        birthDayExpansionTileController.collapse();
+        fullnameExpansionTileController.collapse();
+      }
+    });
+
+    isBirthDayDropDown.listen((expanded) {
+      if (expanded) {
+        isFullNameDropdown.value = false;
+        isPhoneNumberDropDown.value = false;
+        fullnameExpansionTileController.collapse();
+        phoneNumberExpansionTileController.collapse();
+      }
+    });
   }
 
   Future<void> fetchCurrent() async {

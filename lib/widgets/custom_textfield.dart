@@ -11,16 +11,19 @@ class RoundTextfield extends StatefulWidget {
   final Color? bgColor;
   final Widget? left;
   final Icon? icon;
-  const RoundTextfield(
-      {super.key,
-      required this.hintText,
-      required this.controller,
-      this.keyboardType,
-      this.bgColor,
-      this.left,
-      this.obscureText = false,
-      this.onChanged,
-      this.icon});
+  final bool enable;
+  const RoundTextfield({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    this.keyboardType,
+    this.bgColor,
+    this.left,
+    this.obscureText = false,
+    this.onChanged,
+    this.icon,
+    this.enable = true,
+  });
 
   @override
   State<RoundTextfield> createState() => _RoundTextfieldState();
@@ -74,6 +77,7 @@ class _RoundTextfieldState extends State<RoundTextfield> {
               ),
             Expanded(
               child: TextFormField(
+                enabled: widget.enable,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: widget.controller,
                 obscureText: widget.obscureText,
@@ -85,6 +89,7 @@ class _RoundTextfieldState extends State<RoundTextfield> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   errorBorder: InputBorder.none,
+                  border: InputBorder.none,
                   hintText: widget.hintText,
                   hintStyle: TextStyle(
                       color: TextColor.placeholder,

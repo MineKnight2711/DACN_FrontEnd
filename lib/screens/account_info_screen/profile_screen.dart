@@ -13,10 +13,11 @@ import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/expansion_tile.dart';
 import 'package:get/get.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends GetView {
   ProfileScreen({super.key});
   final profileController = Get.find<UpdateProfileController>();
   final accountController = Get.find<AccountController>();
+
   @override
   Widget build(BuildContext context) {
     profileController.fetchCurrent();
@@ -52,6 +53,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             Obx(
               () => InputExpandTile(
+                controller: profileController.fullnameExpansionTileController,
                 title: 'Họ và tên',
                 content: "${accountController.accountSession.value?.fullName}",
                 textController: profileController
@@ -61,6 +63,7 @@ class ProfileScreen extends StatelessWidget {
                 textFieldOnChanged: profileController.validateFullname,
                 onExpansionChanged: (isExpanded) {
                   profileController.isFullNameDropdown.value = isExpanded;
+                  profileController.observeDropdowns();
                 },
                 onSavePressed: () async {
                   doUpdate(context);
@@ -69,11 +72,16 @@ class ProfileScreen extends StatelessWidget {
             ),
             Obx(
               () => DatePickerExpandTile(
+                controller: profileController.birthDayExpansionTileController,
                 title: "Ngày sinh",
                 currentBirthday:
                     accountController.accountSession.value?.birthday ??
                         DateTime.now(),
                 updateProfileController: profileController,
+                onExpansionChanged: (value) {
+                  profileController.isBirthDayDropDown.value = value;
+                  profileController.observeDropdowns();
+                },
                 onSavePressed: () async {
                   doUpdate(context);
                 },
@@ -84,6 +92,8 @@ class ProfileScreen extends StatelessWidget {
             ),
             Obx(
               () => InputExpandTile(
+                controller:
+                    profileController.phoneNumberExpansionTileController,
                 title: 'Số điện thoại',
                 content:
                     "${accountController.accountSession.value?.phoneNumber}",
@@ -95,6 +105,7 @@ class ProfileScreen extends StatelessWidget {
                 textFieldOnChanged: profileController.validatePhonenumber,
                 onExpansionChanged: (isExpanded) {
                   profileController.isPhoneNumberDropDown.value = isExpanded;
+                  profileController.observeDropdowns();
                 },
                 onSavePressed: () async {
                   doUpdate(context);

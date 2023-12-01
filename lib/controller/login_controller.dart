@@ -2,7 +2,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
-import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
@@ -11,6 +10,7 @@ import 'package:fooddelivery_fe/utils/validate_input.dart';
 
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 
 class LoginController extends GetxController {
   TextControllers textControllers = TextControllers();
@@ -108,6 +108,7 @@ class LoginController extends GetxController {
         newAccount.fullName = "${user.displayName}";
         newAccount.email = "${user.email}";
         newAccount.imageUrl = "${user.photoURL}";
+
         final responseModel = await _accountApi.registerGoogle(newAccount);
         if (responseModel?.message == "Success") {
           return "SignUpSuccess";

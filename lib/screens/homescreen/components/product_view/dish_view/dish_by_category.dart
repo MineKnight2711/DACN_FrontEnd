@@ -42,7 +42,7 @@ class DishItemByCategoryView extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                slideInTransition(context, TestWidget());
+                // slideInTransition(context, TestWidget());
               },
               child: Align(
                 alignment: Alignment.center,

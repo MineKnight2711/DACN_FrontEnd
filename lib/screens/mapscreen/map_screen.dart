@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
-class MapScreen extends StatelessWidget {
+class MapScreen extends GetView {
   MapScreen({super.key});
   final mapController = Get.find<MapController>();
 

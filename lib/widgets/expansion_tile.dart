@@ -12,18 +12,24 @@ class DatePickerExpandTile extends StatelessWidget {
   final DateTime? currentBirthday;
   final UpdateProfileController updateProfileController;
   final Function()? onSavePressed;
-  const DatePickerExpandTile(
-      {super.key,
-      required this.title,
-      required this.currentBirthday,
-      required this.updateProfileController,
-      this.onSavePressed});
+  final Function(bool)? onExpansionChanged;
+  final ExpansionTileController controller;
+  const DatePickerExpandTile({
+    super.key,
+    required this.title,
+    required this.currentBirthday,
+    required this.updateProfileController,
+    this.onSavePressed,
+    this.onExpansionChanged,
+    required this.controller,
+  });
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Theme(
         data: ThemeData().copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          controller: controller,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -46,9 +52,7 @@ class DatePickerExpandTile extends StatelessWidget {
               ),
             ),
           ),
-          onExpansionChanged: (bool value) {
-            updateProfileController.isBirthDayDropDown.value = value;
-          },
+          onExpansionChanged: onExpansionChanged,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -77,6 +81,7 @@ class DatePickerExpandTile extends StatelessWidget {
                   onPressed: onSavePressed,
                   child: const Text(
                     'Lưu',
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
               ],
@@ -98,6 +103,7 @@ class InputExpandTile extends StatelessWidget {
   final bool isValid;
   final Function(bool)? onExpansionChanged;
   final Function()? onSavePressed;
+  final ExpansionTileController controller;
   const InputExpandTile(
       {super.key,
       required this.title,
@@ -108,7 +114,8 @@ class InputExpandTile extends StatelessWidget {
       required this.isExpanded,
       this.onExpansionChanged,
       this.onSavePressed,
-      required this.isValid});
+      required this.isValid,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +123,7 @@ class InputExpandTile extends StatelessWidget {
       Theme(
         data: ThemeData().copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          controller: controller,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

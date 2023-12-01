@@ -53,11 +53,11 @@ class CategoryItem extends StatelessWidget {
         child: Column(
           children: [
             CircleAvatar(
-              radius: 32.r,
+              radius: 28.r,
               backgroundColor: Colors.transparent,
-              backgroundImage: CachedNetworkImageProvider(
+              backgroundImage: Image.network(
                 categoryModel.imageUrl.toString(),
-              ),
+              ).image,
             ),
             SizedBox(
               height: 8.w,
@@ -72,7 +72,7 @@ class CategoryItem extends StatelessWidget {
                       ? const Color.fromARGB(255, 75, 75, 75)
                       : Colors.black26,
                   fontWeight: FontWeight.w500,
-                  fontSize: 9.5.sp,
+                  fontSize: 12.sp,
                 ),
               ),
             ),

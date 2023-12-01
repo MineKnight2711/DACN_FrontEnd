@@ -13,6 +13,7 @@ class AppColors {
   static const Color white21 = Color(0x36ffffff);
   static const Color white10 = Color(0x1Affffff);
 
+  static Color lightOrange = Colors.orange.withOpacity(0.5);
   static const Color orange100 = Color(0xffFE724C);
   static const Color orange80 = Color(0xffFE8160);
   static const Color orange50 = Color(0xffFEA58D);

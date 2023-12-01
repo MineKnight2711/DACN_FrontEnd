@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 
 class AddressInfo extends StatelessWidget {
@@ -10,7 +11,7 @@ class AddressInfo extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: CustomMediaQuerry.mediaHeight(context, 9),
+        height: 90.h,
         margin: const EdgeInsets.fromLTRB(0, 200, 0, 0),
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
         alignment: Alignment.topLeft,
@@ -18,10 +19,11 @@ class AddressInfo extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12), topRight: Radius.circular(12))),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-          child: ListView(
-            physics: const NeverScrollableScrollPhysics(),
+        child: Container(
+          margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 address,

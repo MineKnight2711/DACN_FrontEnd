@@ -3,35 +3,40 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
-import 'package:fooddelivery_fe/utils/transition_animation.dart';
+import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/datetime_picker.dart';
 import 'package:fooddelivery_fe/widgets/gender_chose.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
 
-import 'package:fooddelivery_fe/widgets/round_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_button.dart';
 import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends GetView {
   SignUpScreen({super.key});
   final registerController = Get.find<RegisterController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        backGroundColor: AppColors.orange100,
+      ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          margin: const EdgeInsets.only(top: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 64,
-              ),
               Text(
                 "Sign Up",
                 style: TextStyle(
@@ -112,7 +117,8 @@ class SignUpScreen extends StatelessWidget {
                 height: 25,
               ),
               Obx(
-                () => RoundButton(
+                () => RoundIconButton(
+                    size: 80.r,
                     enabled: registerController.validate.isSignUpValid.value,
                     title: tr("Sign Up"),
                     onPressed: () async {
@@ -121,7 +127,8 @@ class SignUpScreen extends StatelessWidget {
                       if (result == "Success") {
                         showCustomSnackBar(context, "Thông báo",
                             "Đăng ký thành công!", ContentType.success, 2);
-                        slideInTransitionReplacement(context, LoginScreen());
+                        Get.off(LoginScreen(),
+                            transition: Transition.leftToRight);
                       } else {
                         showCustomSnackBar(context, "Lỗi", "Đăng ký thất bại",
                             ContentType.failure, 2);
@@ -133,7 +140,7 @@ class SignUpScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  slideInTransitionReplacement(context, LoginScreen());
+                  Get.off(LoginScreen(), transition: Transition.leftToRight);
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

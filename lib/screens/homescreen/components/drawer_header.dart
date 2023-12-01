@@ -106,7 +106,7 @@ class NoUserDrawer extends StatelessWidget {
           title: const Text('Đăng nhập'),
           onTap: () {
             Get.put(LoginController());
-            slideInTransition(context, LoginScreen());
+            Get.to(LoginScreen(), transition: Transition.rightToLeft);
           },
         ),
         ListTile(
