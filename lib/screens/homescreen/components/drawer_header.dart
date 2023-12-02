@@ -32,45 +32,6 @@ class MyDrawerHeader extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              // padding: EdgeInsets.only(bottom: 30),
-              height: CustomMediaQuerry.mediaHeight(context, 6.5),
-              width: CustomMediaQuerry.mediaWidth(context, 3.5),
-              child: Obx(
-                () => ImagePickerWidget(
-                  onImageSelected: (selectedImage) async {
-                    showLoadingAnimation(
-                        context, "assets/animations/loading.json", 180);
-                    if (selectedImage != null) {
-                      String result = await changeImageController
-                          .changeImage("${account.accountID}", selectedImage)
-                          .whenComplete(
-                            () => Navigator.pop(context),
-                          );
-                      print(result);
-                      if (result == "Success") {
-                        showCustomSnackBar(
-                                context,
-                                "Thông báo",
-                                "Cập nhật ảnh thành công!",
-                                ContentType.success,
-                                2)
-                            .whenComplete(
-                          () => Navigator.pop(context),
-                        );
-                      } else {
-                        showCustomSnackBar(context, "Cảnh báo", result,
-                            ContentType.failure, 2);
-                      }
-                    }
-                  },
-                  currentImageUrl:
-                      changeImageController.newImageUrl.value.isNotEmpty
-                          ? changeImageController.newImageUrl.value
-                          : account.imageUrl,
-                ),
-              ),
-            ),
             SizedBox(height: CustomMediaQuerry.mediaHeight(context, 150)),
             Text(
               "${account.fullName}",

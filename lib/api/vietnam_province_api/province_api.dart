@@ -26,6 +26,7 @@ class ProvinceApi extends GetxController {
     listProvince.clear();
     listDistrict.clear();
     listWard.clear();
+    details.value = "";
     selectedProvince.value = selectedDistrict.value = selectedWard.value = null;
     getAllProvine();
   }

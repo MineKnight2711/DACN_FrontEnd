@@ -30,6 +30,7 @@ class ApiUrl {
   // static const apiUpdateCart = '${baseUrl}cart/update';
   // static const apiClearCart = '${baseUrl}cart/clear-cart';
   // static const apiUpdateFingerPrintAuthen = '${baseUrl}account/fingerprint';
+  static const apiAddress = '${baseUrl}address';
   // static const apiDeleteAddress = '${baseUrl}address/delete';
   // static const apiGetAllReview = '${baseUrl}review';
   // static const apiCreateReview = '${baseUrl}review/create';

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProvinceDropdown extends StatefulWidget {
   final String title;
@@ -48,11 +51,16 @@ class _ProvinceDropdownState extends State<ProvinceDropdown>
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        RoundIconButton(
-          size: 100.r,
-          title: widget.title,
-          onPressed: widget.enable ? toggleDropdown : null,
+        SizedBox(
+          width: 400.w,
+          child: RoundIconButton(
+            enabled: widget.enable,
+            size: 80.r,
+            title: widget.title,
+            onPressed: widget.enable ? toggleDropdown : null,
+          ),
         ),
         SizeTransition(
           sizeFactor: _animation,
@@ -65,21 +73,37 @@ class _ProvinceDropdownState extends State<ProvinceDropdown>
   Widget _buildProvinceList() {
     return SizedBox(
       height: 300.h,
-      width: 200.w,
-      child: ListView.builder(
-        itemCount: widget.listDropDown.length,
-        itemBuilder: (context, index) {
-          final item = widget.listDropDown[index];
-          return ListTile(
-              onTap: () {
-                _animationController
-                    .reverse()
-                    .whenComplete(() => setState(() {}));
-                widget.onItemSelected(item);
-              },
-              leading: const Icon(Icons.location_on),
-              title: Text(item.name));
-        },
+      width: 400.w,
+      child: NoGlowingScrollView(
+        child: Column(
+          children: widget.listDropDown
+              .map(
+                (item) => ListTile(
+                  onTap: () {
+                    _animationController
+                        .reverse()
+                        .whenComplete(() => setState(() {}));
+                    widget.onItemSelected(item);
+                  },
+                  leading: const Icon(Icons.location_on),
+                  title: Text(
+                    item.name,
+                    style: GoogleFonts.nunito(
+                      fontSize: 14.r,
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+        // ListView.builder(
+        //   physics: const NeverScrollableScrollPhysics(),
+        //   itemCount: widget.listDropDown.length,
+        //   itemBuilder: (context, index) {
+        //     final item = widget.listDropDown[index];
+        //     return
+        //   },
+        // ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/controller/change_image_controller.dart';
 import 'package:fooddelivery_fe/controller/update_profile_controller.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
@@ -13,11 +14,14 @@ import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/expansion_tile.dart';
 import 'package:get/get.dart';
 
+import 'components/account_avatar.dart';
+
 class ProfileScreen extends GetView {
   ProfileScreen({super.key});
-  final profileController = Get.find<UpdateProfileController>();
-  final accountController = Get.find<AccountController>();
 
+  final accountController = Get.find<AccountController>();
+  final profileController = Get.put(UpdateProfileController());
+  final changeImageController = Get.put(ChangeImageController());
   @override
   Widget build(BuildContext context) {
     profileController.fetchCurrent();
@@ -25,6 +29,7 @@ class ProfileScreen extends GetView {
       appBar: CustomAppBar(
         onPressed: () {
           Get.delete<UpdateProfileController>();
+          Get.delete<ChangeImageController>();
           profileController.onClose();
           Navigator.pop(context);
         },
@@ -37,8 +42,18 @@ class ProfileScreen extends GetView {
             SizedBox(
               height: CustomMediaQuerry.mediaHeight(context, 40),
             ),
-            AccountAvatar(
-                imageUrl: accountController.accountSession.value?.imageUrl),
+            Obx(
+              () {
+                if (accountController.accountSession.value != null) {
+                  return AccountAvatar(
+                      account: accountController.accountSession.value!,
+                      changeImageController: changeImageController,
+                      imageUrl:
+                          accountController.accountSession.value?.imageUrl);
+                }
+                return const SizedBox.shrink();
+              },
+            ),
             SizedBox(
               height: CustomMediaQuerry.mediaHeight(context, 40),
             ),
@@ -146,21 +161,5 @@ class ProfileScreen extends GetView {
         Navigator.pop(context);
       });
     }
-  }
-}
-
-class AccountAvatar extends StatelessWidget {
-  final String? imageUrl;
-  const AccountAvatar({
-    super.key,
-    this.imageUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: 80,
-      backgroundImage: Image.network("$imageUrl").image,
-    );
   }
 }

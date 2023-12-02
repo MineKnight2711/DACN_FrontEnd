@@ -2,42 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/api/vietnam_province_api/province_api.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/screens/address_screen/components/list_ward_district_province.dart';
 import 'package:fooddelivery_fe/screens/address_screen/components/province_dropdown.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_button.dart';
 import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
-import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 
-class DropdownManager {
-  String? _openDropdownTag;
-
-  void openDropdown(String dropDownTag) {
-    if (_openDropdownTag != null) {
-      // Close the previously open one
-      // (Logic to do this later)
-    }
-
-    _openDropdownTag = dropDownTag;
-
-    // Open logic
-  }
-
-  void closeDropdown(String dropDownTag) {
-    _openDropdownTag = null;
-
-    // Close logic
-  }
-
-  bool isOpen(String dropDownTag) {
-    return _openDropdownTag == dropDownTag;
-  }
-}
-
-class AddressScreen extends GetView {
-  AddressScreen({super.key});
+class AddAddressScreen extends GetView {
+  AddAddressScreen({super.key});
   final provinceApi = Get.find<ProvinceApi>();
-  final dropDownManager = DropdownManager();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +46,7 @@ class AddressScreen extends GetView {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -86,7 +60,6 @@ class AddressScreen extends GetView {
             // ),
             Container(
               alignment: Alignment.center,
-              width: 350.w,
               child: Obx(
                 () => ProvinceDropdown(
                   enable: provinceApi.selectedProvince.value == null,
@@ -102,11 +75,10 @@ class AddressScreen extends GetView {
               ),
             ),
             SizedBox(
-              height: 10.h,
+              height: 30.h,
             ),
-            Container(
+            Align(
               alignment: Alignment.center,
-              width: 350.w,
               child: Obx(
                 () => ProvinceDropdown(
                   enable: provinceApi.selectedDistrict.value == null &&
@@ -122,11 +94,10 @@ class AddressScreen extends GetView {
               ),
             ),
             SizedBox(
-              height: 10.h,
+              height: 30.h,
             ),
-            Container(
+            Align(
               alignment: Alignment.center,
-              width: 350.w,
               child: Obx(
                 () => ProvinceDropdown(
                   enable: provinceApi.selectedProvince.value != null &&
@@ -144,94 +115,54 @@ class AddressScreen extends GetView {
               ),
             ),
 
-            // Obx(
-            //   () {
-            //     if (provinceApi.listProvince.isNotEmpty) {
-            //       return Container(
-            //         height: 120,
-            //         margin: const EdgeInsets.only(top: 5),
-            //         decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.circular(10),
-            //             color: AppColors.gray15),
-            //         child: ListProvince(provinceApi: provinceApi),
-            //       );
-            //     }
-            //     return const SizedBox.shrink();
-            //   },
-            // ),
-
-            // Obx(
-            //   () => RoundTextfield(
-            //     enable: provinceApi.selectedProvince.value != null &&
-            //         provinceApi.selectedDistrict.value == null,
-            //     hintText: "Nhập quận..",
-            //     controller: provinceApi.textControllers.value.txtDistrict,
-            //     onChanged: provinceApi.searchDistrict,
-            //   ),
-            // ),
-            // Obx(
-            //   () {
-            //     if (provinceApi.listDistrict.isNotEmpty) {
-            //       return Container(
-            //         height: 120,
-            //         margin: const EdgeInsets.only(top: 5),
-            //         decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.circular(10),
-            //             color: AppColors.gray15),
-            //         child: ListDistrict(provinceApi: provinceApi),
-            //       );
-            //     }
-            //     return const SizedBox.shrink();
-            //   },
-            // ),
-            // SizedBox(
-            //   height: 10.h,
-            // ),
-            // Obx(
-            //   () => RoundTextfield(
-            //     enable: provinceApi.selectedProvince.value != null &&
-            //         provinceApi.selectedDistrict.value != null &&
-            //         provinceApi.selectedWard.value == null,
-            //     hintText: "Nhập phường..",
-            //     controller: provinceApi.textControllers.value.txtWard,
-            //     onChanged: provinceApi.searchWard,
-            //   ),
-            // ),
-            // Obx(
-            //   () {
-            //     if (provinceApi.listWard.isNotEmpty) {
-            //       return Container(
-            //         height: 120,
-            //         margin: const EdgeInsets.only(top: 5),
-            //         decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.circular(10),
-            //             color: AppColors.gray15),
-            //         child: ListWard(provinceApi: provinceApi),
-            //       );
-            //     }
-            //     return const SizedBox.shrink();
-            //   },
-            // ),
             SizedBox(
               height: 30.h,
             ),
             Obx(
-              () => Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: RoundTextfield(
-                  enable: provinceApi.selectedProvince.value != null &&
-                      provinceApi.selectedDistrict.value != null &&
-                      provinceApi.selectedWard.value != null,
-                  hintText: "Nhập số nhà/ đường..",
-                  controller: provinceApi.textControllers.value.txtDetails,
-                  onChanged: (value) {
-                    provinceApi.details.value = value ?? "";
-                  },
-                ),
+              () => RoundTextfield(
+                enable: provinceApi.selectedProvince.value != null &&
+                    provinceApi.selectedDistrict.value != null &&
+                    provinceApi.selectedWard.value != null,
+                hintText: "Nhập số nhà/ đường..",
+                controller: provinceApi.textControllers.value.txtDetails,
+                onChanged: (value) {
+                  provinceApi.details.value = value ?? "";
+                },
               ),
             ),
-            Obx(() => Text(
-                "${provinceApi.details.value}, ${provinceApi.selectedWard.value?.name}, ${provinceApi.selectedDistrict.value?.name}, ${provinceApi.selectedProvince.value?.name}"))
+            SizedBox(
+              height: 30.h,
+            ),
+            Obx(
+              () => RoundTextfield(
+                enable: provinceApi.selectedProvince.value != null &&
+                    provinceApi.selectedDistrict.value != null &&
+                    provinceApi.selectedWard.value != null,
+                hintText: "Nhập tên địa chỉ..",
+                controller: provinceApi.textControllers.value.txtDetails,
+                onChanged: (value) {
+                  provinceApi.details.value = value ?? "";
+                },
+              ),
+            ),
+            Obx(
+              () => Text(
+                  "${provinceApi.details.value}, ${provinceApi.selectedWard.value?.name}, ${provinceApi.selectedDistrict.value?.name}, ${provinceApi.selectedProvince.value?.name}"),
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            Obx(
+              () => RoundIconButton(
+                enabled: provinceApi.selectedProvince.value != null &&
+                    provinceApi.selectedDistrict.value != null &&
+                    provinceApi.selectedWard.value != null &&
+                    provinceApi.details.value != "",
+                size: 90.r,
+                title: "Lưu",
+                onPressed: () {},
+              ),
+            ),
           ],
         ),
       ),

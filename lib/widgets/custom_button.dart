@@ -7,6 +7,7 @@ class RoundIconButton extends StatelessWidget {
   final Function()? onPressed;
   final String title;
   final Color? color;
+  final Color? titleColor;
   final double fontSize, size;
   final FontWeight fontWeight;
   final bool enabled;
@@ -20,7 +21,8 @@ class RoundIconButton extends StatelessWidget {
       required this.onPressed,
       this.size = 40,
       this.enabled = true,
-      this.iconPath = ''});
+      this.iconPath = '',
+      this.titleColor});
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +36,13 @@ class RoundIconButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        onPressed: onPressed,
+        onPressed: enabled ? onPressed : null,
         child: iconPath == ''
             ? Text(
                 title,
                 style: GoogleFonts.roboto(
-                  fontSize: 18.r,
-                ),
+                    fontSize: 16.r,
+                    color: enabled ? AppColors.white100 : AppColors.dark80),
               )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

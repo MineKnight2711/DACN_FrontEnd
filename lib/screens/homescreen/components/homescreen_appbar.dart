@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,12 +10,9 @@ import 'package:fooddelivery_fe/config/spacing.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/controller/map_controller.dart';
-import 'package:fooddelivery_fe/controller/update_profile_controller.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
-import 'package:fooddelivery_fe/screens/homescreen/components/drawer_header.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/map_screen.dart';
-import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:get/get.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -93,7 +89,6 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (_accountController.accountSession.value != null) {
               return GestureDetector(
                 onTap: () {
-                  Get.put(UpdateProfileController());
                   Get.to(ProfileScreen(), transition: Transition.rightToLeft);
                 },
                 child: Padding(

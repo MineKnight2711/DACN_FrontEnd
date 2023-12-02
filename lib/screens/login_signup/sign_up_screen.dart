@@ -130,8 +130,12 @@ class SignUpScreen extends GetView {
                         Get.off(LoginScreen(),
                             transition: Transition.leftToRight);
                       } else {
-                        showCustomSnackBar(context, "Lỗi", "Đăng ký thất bại",
-                            ContentType.failure, 2);
+                        showCustomSnackBar(
+                            context,
+                            "Lỗi",
+                            "Đăng ký thất bại\n Chi tiết:$result",
+                            ContentType.failure,
+                            2);
                       }
                     }),
               ),

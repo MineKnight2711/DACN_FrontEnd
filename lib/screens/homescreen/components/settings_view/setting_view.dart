@@ -4,10 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/api/vietnam_province_api/province_api.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
-import 'package:fooddelivery_fe/controller/update_profile_controller.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
-import 'package:fooddelivery_fe/screens/address_screen/address_screen.dart';
+import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
+import 'package:fooddelivery_fe/screens/address_screen/add_address_screen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
@@ -55,7 +56,6 @@ class SettingsView extends StatelessWidget {
                       children: [
                         ListTile(
                           onTap: () {
-                            Get.put(UpdateProfileController());
                             Get.to(ProfileScreen(),
                                 transition: Transition.rightToLeft);
                           },
@@ -75,8 +75,12 @@ class SettingsView extends StatelessWidget {
                         ListTile(
                           onTap: () {
                             final provinceApi = Get.put(ProvinceApi());
+                            final addressController =
+                                Get.put(AddressController());
                             provinceApi.getAllProvine();
-                            Get.to(AddressScreen(),
+                            addressController.getListAddressByAccountId(
+                                "${accountController.accountSession.value?.accountID}");
+                            Get.to(AddressListScreen(),
                                 transition: Transition.rightToLeft);
                           },
                           splashColor: AppColors.lightOrange,

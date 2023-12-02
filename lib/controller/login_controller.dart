@@ -10,7 +10,6 @@ import 'package:fooddelivery_fe/utils/validate_input.dart';
 
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:logger/logger.dart';
 
 class LoginController extends GetxController {
   TextControllers textControllers = TextControllers();
@@ -76,7 +75,7 @@ class LoginController extends GetxController {
           AccountModel.fromJson(responseBaseModel?.data);
       await _accountController.storedUserToSharedRefererces(
           AccountModel.fromJson(responseBaseModel?.data));
-
+      textControllers.clearLoginText();
       return "Success";
     }
     return responseBaseModel?.message ?? "";

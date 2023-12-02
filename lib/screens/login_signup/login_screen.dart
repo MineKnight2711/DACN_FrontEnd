@@ -76,7 +76,8 @@ class LoginScreen extends GetView {
               Obx(
                 () => RoundIconButton(
                   size: 80.r,
-                  enabled: loginController.validate.isLoginValid.value,
+                  enabled: loginController.validate.isValidEmailLogin.value &&
+                      loginController.validate.isValidPasswordLogin.value,
                   title: "Login",
                   onPressed: () async {
                     String? result = await loginController.login(
@@ -134,6 +135,7 @@ class LoginScreen extends GetView {
                 height: 30,
               ),
               RoundIconButton(
+                enabled: true,
                 iconPath: "assets/images/google.png",
                 title: "Tiếp tục với google",
                 size: 80.r,

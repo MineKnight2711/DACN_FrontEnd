@@ -15,11 +15,6 @@ class ValidateInput {
   RxBool isValidFullnameUpdate = true.obs;
   RxBool isValidPhonenumberUpdate = true.obs;
 
-  RxBool get isLoginValid {
-    _isLoginValid.value = isValidEmailLogin.value && isValidPasswordLogin.value;
-    return _isLoginValid;
-  }
-
   RxBool get isSignUpValid {
     _isSignUpValid.value = isValidEmailSignUp.value &&
         isValidPasswordSignUp.value &&
