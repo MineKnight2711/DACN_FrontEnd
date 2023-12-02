@@ -86,7 +86,7 @@ class AddressScreen extends GetView {
             // ),
             Container(
               alignment: Alignment.center,
-              width: 200.w,
+              width: 350.w,
               child: Obx(
                 () => ProvinceDropdown(
                   enable: provinceApi.selectedProvince.value == null,
@@ -106,7 +106,7 @@ class AddressScreen extends GetView {
             ),
             Container(
               alignment: Alignment.center,
-              width: 200.w,
+              width: 350.w,
               child: Obx(
                 () => ProvinceDropdown(
                   enable: provinceApi.selectedDistrict.value == null &&
@@ -126,7 +126,7 @@ class AddressScreen extends GetView {
             ),
             Container(
               alignment: Alignment.center,
-              width: 200.w,
+              width: 350.w,
               child: Obx(
                 () => ProvinceDropdown(
                   enable: provinceApi.selectedProvince.value != null &&

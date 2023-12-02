@@ -50,7 +50,7 @@ class _ProvinceDropdownState extends State<ProvinceDropdown>
     return Column(
       children: [
         RoundIconButton(
-          size: 80.r,
+          size: 100.r,
           title: widget.title,
           onPressed: widget.enable ? toggleDropdown : null,
         ),
