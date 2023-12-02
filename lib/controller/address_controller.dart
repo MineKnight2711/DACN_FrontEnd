@@ -1,15 +1,24 @@
 import 'package:fooddelivery_fe/api/address_api/address_api.dart';
+import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 class AddressController extends GetxController {
   RxList<AddressModel> listAddress = <AddressModel>[].obs;
+  final accountController = Get.find<AccountController>();
   late AddressApi addressApi;
   @override
   void onInit() {
     super.onInit();
     addressApi = AddressApi();
+  }
+
+  void getAllAddress() {
+    if (accountController.accountSession.value != null) {
+      getListAddressByAccountId(
+          "${accountController.accountSession.value?.accountID}");
+    }
   }
 
   Future<List<AddressModel>?> getListAddressByAccountId(
@@ -26,5 +35,16 @@ class AddressController extends GetxController {
       return listAddress;
     }
     return null;
+  }
+
+  Future<String?> saveAddress(AddressModel address) async {
+    final response = await addressApi.saveAddress(
+        "${accountController.accountSession.value?.accountID}", address);
+    return response.message;
+  }
+
+  Future<String?> deleteAddress(String addressID) async {
+    final response = await addressApi.deleteAddress(addressID);
+    return response.message;
   }
 }

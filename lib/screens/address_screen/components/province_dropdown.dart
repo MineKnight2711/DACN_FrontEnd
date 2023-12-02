@@ -96,14 +96,6 @@ class _ProvinceDropdownState extends State<ProvinceDropdown>
               )
               .toList(),
         ),
-        // ListView.builder(
-        //   physics: const NeverScrollableScrollPhysics(),
-        //   itemCount: widget.listDropDown.length,
-        //   itemBuilder: (context, index) {
-        //     final item = widget.listDropDown[index];
-        //     return
-        //   },
-        // ),
       ),
     );
   }

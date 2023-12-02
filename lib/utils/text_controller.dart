@@ -40,10 +40,16 @@ class AddressTextController {
   final txtDistrict = TextEditingController();
   final txtWard = TextEditingController();
   final txtDetails = TextEditingController();
+  final txtAddressName = TextEditingController();
+  final txtReceiverName = TextEditingController();
+  final txtReceiverPhone = TextEditingController();
   void clearText() {
     txtProvince.clear();
     txtDistrict.clear();
     txtWard.clear();
     txtDetails.clear();
+    txtAddressName.clear();
+    txtReceiverName.clear();
+    txtReceiverPhone.clear();
   }
 }

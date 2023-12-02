@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fooddelivery_fe/api/vietnam_province_api/province_api.dart';
+import 'package:fooddelivery_fe/controller/vietname_province_controller/province_api_controller.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
-import 'package:fooddelivery_fe/screens/address_screen/add_address_screen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
@@ -74,12 +73,11 @@ class SettingsView extends StatelessWidget {
                         ),
                         ListTile(
                           onTap: () {
-                            final provinceApi = Get.put(ProvinceApi());
+                            final provinceApi = Get.put(ProvinceController());
                             final addressController =
                                 Get.put(AddressController());
                             provinceApi.getAllProvine();
-                            addressController.getListAddressByAccountId(
-                                "${accountController.accountSession.value?.accountID}");
+                            addressController.getAllAddress();
                             Get.to(AddressListScreen(),
                                 transition: Transition.rightToLeft);
                           },

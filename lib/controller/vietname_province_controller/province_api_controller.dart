@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:fooddelivery_fe/api/vietnam_province_api/model/province_model.dart';
+import 'package:fooddelivery_fe/controller/vietname_province_controller/model/province_model.dart';
 import 'package:fooddelivery_fe/utils/text_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-class ProvinceApi extends GetxController {
+class ProvinceController extends GetxController {
   RxList<Province> listProvince = <Province>[].obs;
   RxList<District> listDistrict = <District>[].obs;
   RxList<Ward> listWard = <Ward>[].obs;
@@ -16,33 +16,25 @@ class ProvinceApi extends GetxController {
   Rx<Ward?> selectedWard = Rx<Ward?>(null);
   Rx<AddressTextController> textControllers = AddressTextController().obs;
 
-  RxBool isProvinceDropDown = false.obs;
-  RxBool isDistrictDropDown = false.obs;
-  RxBool isWardDropDown = false.obs;
+  RxBool isDefaultAddress = false.obs;
+
   RxString details = "".obs;
+  RxString addressName = "".obs;
+  RxString receiverName = "".obs;
+  RxString receiverPhone = "".obs;
+
   @override
   void refresh() {
     textControllers.value.clearText();
     listProvince.clear();
     listDistrict.clear();
     listWard.clear();
-    details.value = "";
+    isDefaultAddress.value = false;
+    details.value =
+        addressName.value = receiverName.value = receiverPhone.value = "";
     selectedProvince.value = selectedDistrict.value = selectedWard.value = null;
     getAllProvine();
   }
-
-  String? searchWard(String? ward) {
-    if (selectedDistrict.value != null) {
-      getWard(ward.toString(), selectedDistrict.value!.code);
-      return null;
-    }
-    return "Vui lòng chọn quận!";
-  }
-
-  // String? searchProvince(String? province) {
-  //   getProvine(province.toString());
-  //   return null;
-  // }
 
   Future<void> getAllProvine() async {
     String url = 'https://provinces.open-api.vn/api/p/';
