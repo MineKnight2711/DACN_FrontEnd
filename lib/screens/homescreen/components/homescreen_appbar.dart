@@ -29,61 +29,57 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(left: 14.w),
-            child: SingleChildScrollView(
-              // Wrap the Column with SingleChildScrollView
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      tr("home.delivery_to"),
+                      style: TextStyle(
+                        color: AppColors.gray100,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    SvgPicture.asset("assets/icons/arrow_down.svg"),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.put(MapController());
+                    Get.offAll(() => MapScreen(), transition: Transition.zoom);
+                  },
+                  child: Row(
                     children: [
                       Text(
-                        tr("home.delivery_to"),
+                        tr("home.choose_location"),
                         style: TextStyle(
-                          color: AppColors.gray100,
-                          fontSize: 14.sp,
+                          fontSize: 13.sp,
                           fontWeight: FontWeight.w500,
+                          color: AppColors.orange100,
                         ),
+                        overflow: TextOverflow
+                            .ellipsis, // Truncate text with ellipsis
+                        maxLines: 1, // Limit to one line
                       ),
                       SizedBox(
-                        width: 5.w,
+                        width: CustomMediaQuerry.mediaWidth(context, 60),
                       ),
-                      SvgPicture.asset("assets/icons/arrow_down.svg"),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: AppColors.orange100,
+                        size: 20,
+                      ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.put(MapController());
-                      Get.offAll(() => MapScreen(),
-                          transition: Transition.zoom);
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          tr("home.choose_location"),
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.orange100,
-                          ),
-                          overflow: TextOverflow
-                              .ellipsis, // Truncate text with ellipsis
-                          maxLines: 1, // Limit to one line
-                        ),
-                        SizedBox(
-                          width: CustomMediaQuerry.mediaWidth(context, 60),
-                        ),
-                        const Icon(
-                          Icons.arrow_forward,
-                          color: AppColors.orange100,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Obx(() {

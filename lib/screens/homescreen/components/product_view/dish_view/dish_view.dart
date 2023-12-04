@@ -8,17 +8,29 @@ import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
+import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/image_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListDishView extends StatelessWidget {
+class ListDishView extends StatefulWidget {
   final ScrollController outerScrollController;
-  ListDishView({super.key, required this.outerScrollController});
+  const ListDishView({super.key, required this.outerScrollController});
+
+  @override
+  State<ListDishView> createState() => _ListDishViewState();
+}
+
+class _ListDishViewState extends State<ListDishView> {
   final dishController = Get.find<DishController>();
+
   final cartController = Get.find<CartController>();
+
+  final favoriteController = Get.find<FavoriteController>();
+
   double _calculateGridViewHeight(BuildContext context, int itemCount) {
     double gridHeight = 0;
 
@@ -41,7 +53,7 @@ class ListDishView extends StatelessWidget {
                   if (notification is ScrollUpdateNotification &&
                       notification.depth == 0 &&
                       notification.metrics.extentBefore == 0) {
-                    outerScrollController.animateTo(0,
+                    widget.outerScrollController.animateTo(0,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeOut);
                   }
@@ -117,9 +129,87 @@ class ListDishView extends StatelessWidget {
                                 SizedBox(
                                   height: 5.h,
                                 ),
-                                FavoriteIcon(),
+                                Obx(() {
+                                  return FutureBuilder(
+                                    future: favoriteController
+                                        .getAccountFavoriteDish(dish.dishID),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.data != null) {
+                                        final favorite = snapshot.data;
+                                        print(favorite?.favoriteID);
+                                        return FavoriteIcon(
+                                          onFavorite: () async {
+                                            showLoadingAnimation(
+                                                context,
+                                                "assets/animations/loading.json",
+                                                180);
+                                            String result =
+                                                await favoriteController
+                                                    .unFavorite(dish.dishID)
+                                                    .whenComplete(() {
+                                              Navigator.pop(context);
+                                              setState(() {});
+                                            });
+                                            if (result == "Success") {
+                                              showCustomSnackBar(
+                                                  context,
+                                                  "Thông báo",
+                                                  "Đã bỏ thích",
+                                                  ContentType.help,
+                                                  2);
+                                            } else {
+                                              showCustomSnackBar(
+                                                  context,
+                                                  "Lỗi",
+                                                  "Có lỗi xảy ra\nChi tiết : $result",
+                                                  ContentType.failure,
+                                                  2);
+                                            }
+                                          },
+                                          color: Colors.red,
+                                          iconData: CupertinoIcons.heart_fill,
+                                        );
+                                      }
+                                      return FavoriteIcon(
+                                        onFavorite: () async {
+                                          showLoadingAnimation(
+                                              context,
+                                              "assets/animations/loading.json",
+                                              180);
+                                          String result =
+                                              await favoriteController
+                                                  .addToFavorite(dish)
+                                                  .whenComplete(() {
+                                            favoriteController
+                                                .getAccountFavoriteDish(
+                                                    dish.dishID);
+                                            Navigator.pop(context);
+                                            setState(() {});
+                                          });
+                                          if (result == "Success") {
+                                            showCustomSnackBar(
+                                                context,
+                                                "Thông báo",
+                                                "Đã lưu vào yêu thích",
+                                                ContentType.success,
+                                                2);
+                                          } else {
+                                            showCustomSnackBar(
+                                                context,
+                                                "Lỗi",
+                                                "Có lỗi xảy ra\nChi tiết : $result",
+                                                ContentType.failure,
+                                                2);
+                                          }
+                                        },
+                                        color: AppColors.dark100,
+                                        iconData: CupertinoIcons.heart,
+                                      );
+                                    },
+                                  );
+                                }),
                                 SizedBox(
-                                  height: 30.h,
+                                  height: 15.h,
                                 ),
                                 ElevatedButton(
                                   onPressed: () async {
@@ -198,13 +288,21 @@ class ListDishView extends StatelessWidget {
 }
 
 class FavoriteIcon extends StatelessWidget {
-  const FavoriteIcon({super.key});
+  final Function()? onFavorite;
+  final Color? color;
+  final IconData? iconData;
+  const FavoriteIcon({super.key, this.onFavorite, this.color, this.iconData});
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      CupertinoIcons.heart,
-      size: 25.r,
+    return IconButton(
+      splashRadius: 20.r,
+      onPressed: onFavorite,
+      icon: Icon(
+        iconData,
+        size: 25.r,
+        color: color,
+      ),
     );
   }
 }

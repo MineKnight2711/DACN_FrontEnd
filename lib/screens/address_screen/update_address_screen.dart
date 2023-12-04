@@ -8,7 +8,6 @@ import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/components/list_search_address.dart';
-import 'package:fooddelivery_fe/screens/mapscreen/components/list_predict_address.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/custom_button.dart';
@@ -215,8 +214,7 @@ class UpdateAddressScreen extends StatelessWidget {
                 showCustomSnackBar(context, "Thông báo",
                     "Cập nhật địa chỉ thành công", ContentType.success, 2);
                 addressController.getAllAddress();
-                Get.off(AddressListScreen(),
-                    transition: Transition.upToDown, popGesture: true);
+                Get.back();
                 addressController.refresh();
               } else {
                 showCustomSnackBar(
