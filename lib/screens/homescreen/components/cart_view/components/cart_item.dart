@@ -9,8 +9,8 @@ import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/components/quantity_dialog.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CartItem extends StatelessWidget {
@@ -66,9 +66,14 @@ class CartItem extends StatelessWidget {
             onPressed: (slideContext) async {
               if (await showConfirmDialog(context, "Lời nhắc",
                   "Bạn có chắc muốn xoá ${cartItem.dish?.dishName}")) {
+                showLoadingAnimation(
+                    context, "assets/animations/loading.json", 180);
                 String? result = await cartController
                     .deleteCartItem(cartItem)
-                    .whenComplete(() => cartController.getAccountCart());
+                    .whenComplete(() {
+                  Navigator.pop(context);
+                  cartController.getAccountCart();
+                });
                 if (result == "Success") {
                   showCustomSnackBar(context, "Thông báo", "Đã xoá sản phẩm",
                       ContentType.success, 2);

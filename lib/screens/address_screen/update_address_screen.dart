@@ -125,6 +125,9 @@ class UpdateAddressScreen extends StatelessWidget {
             controller:
                 addressController.updateAddressTextControllers.txtDetails,
             hintText: "Mời nhập số nhà , đường",
+            onChanged: (details) {
+              address.details = details;
+            },
           ),
           SizedBox(
             height: 20.h,
@@ -136,6 +139,9 @@ class UpdateAddressScreen extends StatelessWidget {
             controller:
                 addressController.updateAddressTextControllers.txtAddressName,
             hintText: "Mời nhập tên địa chỉ",
+            onChanged: (addressName) {
+              address.addressName = addressName;
+            },
           ),
           SizedBox(
             height: 20.h,
@@ -147,7 +153,9 @@ class UpdateAddressScreen extends StatelessWidget {
             controller:
                 addressController.updateAddressTextControllers.txtReceiverName,
             hintText: "Mời nhập người nhận",
-            onChanged: (receiverName) {},
+            onChanged: (receiverName) {
+              address.receiverName = receiverName;
+            },
           ),
           SizedBox(
             height: 20.h,
@@ -159,6 +167,9 @@ class UpdateAddressScreen extends StatelessWidget {
             controller:
                 addressController.updateAddressTextControllers.txtReceiverPhone,
             hintText: "Mời nhập số điện thoại người nhận",
+            onChanged: (receiverPhone) {
+              address.receiverPhone = receiverPhone;
+            },
           ),
           SizedBox(
             height: 20.h,
@@ -172,12 +183,15 @@ class UpdateAddressScreen extends StatelessWidget {
                     style: GoogleFonts.roboto(fontSize: 16.r)),
                 Transform.scale(
                   scale: 1.2,
-                  child: Switch(
-                    activeColor: AppColors.orange100,
-                    value: address.defaultAddress ?? false,
-                    onChanged: (value) {
-                      addressController.isDefaultAddress.value = value;
-                    },
+                  child: Obx(
+                    () => Switch(
+                      activeColor: AppColors.orange100,
+                      value: addressController.isDefaultAddress.value,
+                      onChanged: (value) {
+                        addressController.isDefaultAddress.value = value;
+                        address.defaultAddress = value;
+                      },
+                    ),
                   ),
                 ),
               ],

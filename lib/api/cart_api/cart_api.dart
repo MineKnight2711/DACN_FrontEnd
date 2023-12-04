@@ -48,4 +48,23 @@ class CartApi {
     responseBase.message = 'Error';
     return responseBase;
   }
+
+  Future<ResponseBaseModel> clearCart(List<String> listCartId) async {
+    print(jsonEncode(listCartId));
+    final response = await http.delete(
+      Uri.parse(ApiUrl.apiClearCart),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(listCartId),
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'Error';
+    return responseBase;
+  }
 }

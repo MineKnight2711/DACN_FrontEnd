@@ -10,7 +10,7 @@ import 'package:logger/logger.dart';
 class CartController extends GetxController {
   late CartApi cartApi;
   late AccountController _accountController;
-  Rx<List<CartModel>> listCart = Rx<List<CartModel>>([]);
+  RxList<CartModel> listCart = <CartModel>[].obs;
 
   @override
   void onInit() {
@@ -33,7 +33,7 @@ class CartController extends GetxController {
 
   RxDouble calculateTotal() {
     RxDouble total = 0.0.obs;
-    total.value = listCart.value.fold(0.0, (total, item) {
+    total.value = listCart.fold(0.0, (total, item) {
       if (item.quantity != null && item.dish?.price != null) {
         double itemTotal = item.quantity! * item.dish!.price;
 
@@ -48,18 +48,18 @@ class CartController extends GetxController {
   RxDouble calculateListCartHeight() {
     RxDouble listCartHeight = 0.0.obs;
 
-    listCartHeight.value = ((listCart.value.length + 1) * (80.h + 20.h)) + 50.h;
+    listCartHeight.value = ((listCart.length + 1) * (80.h + 20.h)) + 50.h;
     return listCartHeight;
   }
 
   void updateCart(CartModel cart, int newQuantity) {
     final cartFound =
-        listCart.value.firstWhereOrNull((item) => item.cartID == cart.cartID);
+        listCart.firstWhereOrNull((item) => item.cartID == cart.cartID);
 
     if (cartFound != null) {
       cartFound.quantity = newQuantity;
-      final index = listCart.value.indexOf(cartFound);
-      listCart.value[index] = cartFound;
+      final index = listCart.indexOf(cartFound);
+      listCart[index] = cartFound;
       listCart.refresh();
     }
   }
@@ -93,6 +93,7 @@ class CartController extends GetxController {
           await cartApi.addToCart(newCartItem);
       Logger().i("Logger cart : ${responseBaseModel?.data}");
       if (responseBaseModel?.message == "Success") {
+        getAccountCart();
         calculateTotal();
         return "Success";
       }
@@ -106,11 +107,22 @@ class CartController extends GetxController {
         await cartApi.deleteItem("${cart.cartID}");
     Logger().i("Logger cart : ${responseBaseModel?.data}");
     if (responseBaseModel?.message == "Success") {
-      listCart.value.remove(cart);
+      listCart.remove(cart);
       getAccountCart();
       calculateTotal();
       return "Success";
     }
     return responseBaseModel?.message;
+  }
+
+  Future<String?> clearCart() async {
+    List<String> listCartID = listCart.map((cart) => "${cart.cartID}").toList();
+    final responseBaseModel = await cartApi.clearCart(listCartID);
+    if (responseBaseModel.message == "Success") {
+      listCart.clear();
+
+      return responseBaseModel.message;
+    }
+    return responseBaseModel.message;
   }
 }

@@ -203,5 +203,6 @@ class AddressController extends GetxController {
     updateAddressTextControllers.txtReceiverName.text = add.receiverName ?? "";
     updateAddressTextControllers.txtReceiverPhone.text =
         add.receiverPhone ?? "";
+    isDefaultAddress.value = add.defaultAddress ?? false;
   }
 }

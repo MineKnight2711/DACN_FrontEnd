@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -110,65 +111,77 @@ class ListDishView extends StatelessWidget {
                             SizedBox(
                               width: 100.w,
                             ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  if (await showConfirmDialog(
-                                      context,
-                                      "Thêm ${dish.dishName}",
-                                      "Bạn có muốn thêm ${dish.dishName} vào giỏ hàng ?")) {
-                                    String? result =
-                                        await cartController.addToCart(dish, 1);
-                                    switch (result) {
-                                      case "Success":
-                                        showCustomSnackBar(
-                                            context,
-                                            "Thông báo",
-                                            "Thêm vào giỏ hàng thành công",
-                                            ContentType.success,
-                                            2);
-                                        break;
-                                      case "UpdatedCart":
-                                        showCustomSnackBar(
-                                            context,
-                                            "Thông báo",
-                                            "Cập nhật giỏ hàng thành công",
-                                            ContentType.help,
-                                            2);
-                                        break;
-                                      case "NoAccount":
-                                        showCustomSnackBar(
-                                            context,
-                                            "Lỗi",
-                                            "Bạn phải đăng nhập để thêm sản phẩm vào giỏ hàng",
-                                            ContentType.failure,
-                                            2);
-                                        break;
-                                      default:
-                                        showCustomSnackBar(
-                                            context,
-                                            "Lỗi",
-                                            "Lỗi chưa xác định: $result",
-                                            ContentType.failure,
-                                            2);
-                                        break;
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                FavoriteIcon(),
+                                SizedBox(
+                                  height: 30.h,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    if (await showConfirmDialog(
+                                        context,
+                                        "Thêm ${dish.dishName}",
+                                        "Bạn có muốn thêm ${dish.dishName} vào giỏ hàng ?")) {
+                                      String? result = await cartController
+                                          .addToCart(dish, 1);
+                                      switch (result) {
+                                        case "Success":
+                                          showCustomSnackBar(
+                                              context,
+                                              "Thông báo",
+                                              "Thêm vào giỏ hàng thành công",
+                                              ContentType.success,
+                                              2);
+                                          break;
+                                        case "UpdatedCart":
+                                          showCustomSnackBar(
+                                              context,
+                                              "Thông báo",
+                                              "Cập nhật giỏ hàng thành công",
+                                              ContentType.help,
+                                              2);
+                                          break;
+                                        case "NoAccount":
+                                          showCustomSnackBar(
+                                              context,
+                                              "Lỗi",
+                                              "Bạn phải đăng nhập để thêm sản phẩm vào giỏ hàng",
+                                              ContentType.failure,
+                                              2);
+                                          break;
+                                        default:
+                                          showCustomSnackBar(
+                                              context,
+                                              "Lỗi",
+                                              "Lỗi chưa xác định: $result",
+                                              ContentType.failure,
+                                              2);
+                                          break;
+                                      }
                                     }
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  shape: const CircleBorder(),
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: const CircleBorder(),
 
-                                  backgroundColor: AppColors
-                                      .orange100, // Make the button circular
-                                  padding: const EdgeInsets.all(12),
+                                    backgroundColor: AppColors
+                                        .orange100, // Make the button circular
+                                    padding: const EdgeInsets.all(12),
+                                  ),
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.white, // Set the icon's color
+                                    size: 18, // Set the icon's size
+                                  ),
                                 ),
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white, // Set the icon's color
-                                  size: 18, // Set the icon's size
+                                SizedBox(
+                                  height: 5.h,
                                 ),
-                              ),
+                              ],
                             ),
                           ],
                         ),
@@ -184,13 +197,14 @@ class ListDishView extends StatelessWidget {
   }
 }
 
-class TestWidget extends StatelessWidget {
-  const TestWidget({super.key});
+class FavoriteIcon extends StatelessWidget {
+  const FavoriteIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: [Text("123456789")]),
+    return Icon(
+      CupertinoIcons.heart,
+      size: 25.r,
     );
   }
 }

@@ -13,12 +13,12 @@ class CartTotalView extends StatelessWidget {
   final double cartTotal;
   final bool checkOutEnable;
   final VoidCallback checkoutPressed;
-  final VoidCallback deleteCartPressed;
+  final VoidCallback? deleteCartPressed;
   const CartTotalView({
     super.key,
     required this.cartTotal,
     required this.checkoutPressed,
-    required this.deleteCartPressed,
+    this.deleteCartPressed,
     required this.checkOutEnable,
   });
 
@@ -67,24 +67,26 @@ class CartTotalView extends StatelessWidget {
                 // SizedBox(
                 //   width: 30.w,
                 // ),
-                Material(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.transparent,
-                  child: SizedBox(
-                    width: 40.w,
-                    height: 50.h,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(50),
-                      splashColor: AppColors.dark5,
-                      onTap: deleteCartPressed,
-                      child: Icon(
-                        CupertinoIcons.delete_simple,
-                        color: AppColors.orange100,
-                        size: 25.r,
-                      ),
-                    ),
-                  ),
-                ),
+                deleteCartPressed != null
+                    ? Material(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.transparent,
+                        child: SizedBox(
+                          width: 40.w,
+                          height: 50.h,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(50),
+                            splashColor: AppColors.dark5,
+                            onTap: deleteCartPressed,
+                            child: Icon(
+                              CupertinoIcons.delete_simple,
+                              color: AppColors.orange100,
+                              size: 25.r,
+                            ),
+                          ),
+                        ),
+                      )
+                    : const Card(),
               ],
             ),
           ),
@@ -93,18 +95,10 @@ class CartTotalView extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(bottom: 10),
               child: RoundIconButton(
-                enabled: checkOutEnable,
-                size: 75.r,
-                title: "Đặt mua",
-                onPressed: () {
-                  final paymentController = Get.put(PaymentController());
-                  paymentController.getAllListPayment();
-                  Get.to(
-                    () => PaymentMethodScreen(),
-                    transition: Transition.downToUp,
-                  );
-                },
-              ),
+                  enabled: checkOutEnable,
+                  size: 75.r,
+                  title: "Đặt mua",
+                  onPressed: checkoutPressed),
             ),
           ),
         ],

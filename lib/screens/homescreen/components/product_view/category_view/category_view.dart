@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
+import 'package:fooddelivery_fe/controller/dish_by_category_controller.dart';
 import 'package:fooddelivery_fe/model/category_model.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/product_view/dish_by_category_screen.dart';
 import 'package:get/get.dart';
 
 class CategoryList extends StatelessWidget {
   final List<CategoryModel>? categories;
-  final CategoryController categeryController;
+  final CategoryController categoryController;
   const CategoryList(
-      {super.key, this.categories, required this.categeryController});
+      {super.key, this.categories, required this.categoryController});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CategoryList extends StatelessWidget {
           children: List.generate(categories!.length, (index) {
             final CategoryModel item = categories![index];
             return CategoryItem(
-              categeryController: categeryController,
+              categoryController: categoryController,
               categoryModel: item,
             );
           }),
@@ -32,18 +34,29 @@ class CategoryList extends StatelessWidget {
 
 class CategoryItem extends StatelessWidget {
   final CategoryModel categoryModel;
-  final CategoryController categeryController;
+  final CategoryController categoryController;
 
   const CategoryItem(
       {super.key,
       required this.categoryModel,
-      required this.categeryController});
+      required this.categoryController});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        categeryController.onSelectCategory("${categoryModel.categoryID}");
+        categoryController.onSelectCategory("${categoryModel.categoryID}");
+        final controller = Get.put(DishByCategoryController());
+        controller
+            .loadDishByCategory("${categoryModel.categoryID}")
+            .whenComplete(
+              () => Get.to(
+                DishByCategoryScreen(categoryModel),
+              ),
+            );
+        if (categoryController.showAllCategories.value) {
+          categoryController.toggleShowAllCategories();
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 20),
@@ -66,7 +79,7 @@ class CategoryItem extends StatelessWidget {
                 "${categoryModel.categoryName}",
                 maxLines: 1,
                 style: TextStyle(
-                  color: categeryController.currentCategoryId.value ==
+                  color: categoryController.currentCategoryId.value ==
                           categoryModel.categoryID
                       ? const Color.fromARGB(255, 75, 75, 75)
                       : Colors.black26,

@@ -18,7 +18,8 @@ class ApiUrl {
   static const apiUpdateAccount = '${baseUrl}account/update-account';
   static const apiLoginWithEmail = '${baseUrl}account/login-by-email';
   static const apiGetAllCategory = '${baseUrl}category';
-  static const apiGetAllDish = '${baseUrl}dish';
+  static const apiDish = '${baseUrl}dish';
+  static const apiGetDishesByCategoryID = '$apiDish/get-by-categoryId';
   static const apiMapListLocation = '${baseUrl}map';
   static const apiPayment = '${baseUrl}payment';
   static const apiMapPredictLocation = '${baseUrl}map/predict';
@@ -28,8 +29,10 @@ class ApiUrl {
   // static const apiGetProductById = '${baseUrl}product/getById';
   // static const apiGetProductDetailsById = '${baseUrl}productDetail/getById';
   static const apiCart = '${baseUrl}cart';
+  static const apiClearCart = '$apiCart/delete-many-cart';
+
   // static const apiUpdateCart = '${baseUrl}cart/update';
-  // static const apiClearCart = '${baseUrl}cart/clear-cart';
+
   // static const apiUpdateFingerPrintAuthen = '${baseUrl}account/fingerprint';
   static const apiAddress = '${baseUrl}address';
 

@@ -1,11 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
+import 'package:fooddelivery_fe/controller/payment_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/components/cart_item.dart';
+import 'package:fooddelivery_fe/screens/payment_screen/payment_screen.dart';
+import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -60,8 +64,37 @@ class CartView extends StatelessWidget {
           () => CartTotalView(
             checkOutEnable: cartController.listCart.value.isNotEmpty,
             cartTotal: cartController.calculateTotal().value,
-            deleteCartPressed: () {},
-            checkoutPressed: () {},
+            deleteCartPressed: cartController.listCart.value.isNotEmpty
+                ? () async {
+                    bool result = await showConfirmDialog(context,
+                        "Xoá giỏ hàng", "Bạn có chắc muốn xoá giỏ hàng?");
+                    if (result) {
+                      String? result =
+                          await cartController.clearCart().whenComplete(
+                                () => cartController.getAccountCart(),
+                              );
+                      if (result == "Success") {
+                        showCustomSnackBar(context, "Thông báo",
+                            "Đã xoá giỏ hàng", ContentType.success, 1);
+                      } else {
+                        showCustomSnackBar(
+                            context,
+                            "Thông báo",
+                            "Có lỗi xảy ra!\nChi tiết :$result",
+                            ContentType.failure,
+                            2);
+                      }
+                    }
+                  }
+                : null,
+            checkoutPressed: () {
+              final paymentController = Get.put(PaymentController());
+              paymentController.getAllListPayment();
+              Get.to(
+                () => PaymentMethodScreen(),
+                transition: Transition.downToUp,
+              );
+            },
           ),
         ),
       ),

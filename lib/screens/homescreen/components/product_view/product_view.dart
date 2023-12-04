@@ -91,7 +91,7 @@ class ProductView extends StatelessWidget {
 
                 return CategoryList(
                     categories: displayedCategories,
-                    categeryController: categoryController);
+                    categoryController: categoryController);
               }
               return const Center(
                   child: Padding(
