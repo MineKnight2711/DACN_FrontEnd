@@ -1,26 +1,10 @@
 // ignore_for_file: deprecated_member_use
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fooddelivery_fe/config/colors.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:get/get.dart';
-// import 'package:url_launcher/url_launcher.dart';
-
-// import '../../controller/login_controller.dart';
-
-class CustomErrorMessage {
-  static Future<void> showMessage(String message) async {
-    await Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: const Color.fromARGB(255, 255, 0, 0),
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-  }
-}
 
 Future<bool> showConfirmDialog(
     BuildContext context, String title, String confirmMessage) async {
@@ -30,6 +14,8 @@ Future<bool> showConfirmDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: Text(
             title,
             style: GoogleFonts.roboto(fontSize: 16),
@@ -42,14 +28,15 @@ Future<bool> showConfirmDialog(
             TextButton(
               child: Text(
                 "Huỷ",
-                style: GoogleFonts.roboto(fontSize: 16),
+                style: GoogleFonts.roboto(fontSize: 16.r),
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
               child: Text(
                 "OK",
-                style: GoogleFonts.roboto(fontSize: 16),
+                style: GoogleFonts.roboto(
+                    fontSize: 16.r, color: AppColors.orange100),
               ),
               onPressed: () {
                 confirm = true;
@@ -82,20 +69,6 @@ Future<void> showCustomSnackBar(BuildContext context, String title,
     ..showSnackBar(snackBar);
 
   return await Future.delayed(snackBar.duration);
-}
-
-class CustomSuccessMessage {
-  static Future<void> showMessage(String message) async {
-    await Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: const Color.fromARGB(255, 0, 255, 55),
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-  }
 }
 
 class CustomSnackBar {

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fooddelivery_fe/controller/vietname_province_controller/province_api_controller.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
@@ -73,10 +72,9 @@ class SettingsView extends StatelessWidget {
                         ),
                         ListTile(
                           onTap: () {
-                            final provinceApi = Get.put(ProvinceController());
                             final addressController =
                                 Get.put(AddressController());
-                            provinceApi.getAllProvine();
+                            addressController.getAllProvine();
                             addressController.getAllAddress();
                             Get.to(AddressListScreen(),
                                 transition: Transition.rightToLeft);

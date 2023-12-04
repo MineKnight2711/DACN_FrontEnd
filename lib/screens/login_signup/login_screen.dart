@@ -80,9 +80,14 @@ class LoginScreen extends GetView {
                       loginController.validate.isValidPasswordLogin.value,
                   title: "Login",
                   onPressed: () async {
-                    String? result = await loginController.login(
-                        loginController.textControllers.txtEmailLogin.text,
-                        loginController.textControllers.txtPasswordLogin.text);
+                    showLoadingAnimation(
+                        context, "assets/animations/loading.json", 180);
+                    String? result = await loginController
+                        .login(
+                            loginController.textControllers.txtEmailLogin.text,
+                            loginController
+                                .textControllers.txtPasswordLogin.text)
+                        .whenComplete(() => Navigator.pop(context));
                     if (result == "Success") {
                       showCustomSnackBar(context, "Thông báo",
                               "Đăng nhập thành công!", ContentType.success, 1)
@@ -92,10 +97,15 @@ class LoginScreen extends GetView {
                             transition: Transition.fadeIn);
                       });
                     } else if (result == "AccountNotFound") {
-                      CustomErrorMessage.showMessage(
-                          "Không tìm thấy tài khoản!");
+                      showCustomSnackBar(context, "Lỗi",
+                          "Không tìm thấy tài khoản!", ContentType.failure, 2);
                     } else {
-                      CustomErrorMessage.showMessage("Lỗi : $result");
+                      showCustomSnackBar(
+                          context,
+                          "Lỗi",
+                          "Có lỗi xảy ra\nChi tiết: $result",
+                          ContentType.failure,
+                          2);
                     }
                   },
                   color: AppColors.orange100,

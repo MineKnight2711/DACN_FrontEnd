@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backGroundColor ?? Colors.white,
+      backgroundColor: backGroundColor ?? AppColors.orange100,
       elevation: 0,
       centerTitle: centeredTitle,
       leading: showLeading
@@ -35,8 +36,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     () {
                       Navigator.pop(context);
                     },
-                child:
-                    Icon(Icons.arrow_back, color: leadingColor ?? Colors.black),
+                child: Icon(Icons.arrow_back,
+                    color: leadingColor ?? AppColors.white100),
               ),
             )
           : null,
@@ -44,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title ?? "",
         style: GoogleFonts.nunito(
-          color: Colors.black,
+          color: AppColors.white100,
           fontSize: CustomMediaQuerry.mediaAspectRatio(context, 1 / 37),
           fontWeight: FontWeight.w500,
         ),

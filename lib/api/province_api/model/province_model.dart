@@ -46,3 +46,20 @@ class Ward {
     );
   }
 }
+
+class SearchedProvinceDistrictWard {
+  int code;
+  String name;
+
+  SearchedProvinceDistrictWard({
+    required this.code,
+    required this.name,
+  });
+
+  factory SearchedProvinceDistrictWard.fromJson(Map<String, dynamic> json) {
+    return SearchedProvinceDistrictWard(
+      code: json['code'] as int,
+      name: json['name'] as String,
+    );
+  }
+}

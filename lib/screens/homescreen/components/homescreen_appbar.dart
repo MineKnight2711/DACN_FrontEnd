@@ -55,7 +55,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   GestureDetector(
                     onTap: () {
                       Get.put(MapController());
-                      Get.to(MapScreen(), transition: Transition.zoom);
+                      Get.offAll(() => MapScreen(),
+                          transition: Transition.zoom);
                     },
                     child: Row(
                       children: [

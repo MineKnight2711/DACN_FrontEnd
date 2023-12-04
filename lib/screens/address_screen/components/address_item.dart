@@ -10,6 +10,7 @@ import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
+import 'package:fooddelivery_fe/screens/address_screen/update_address_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,14 @@ class AddressItem extends StatelessWidget {
               label: "Sửa",
               backgroundColor: Colors.green,
               icon: CupertinoIcons.pencil_ellipsis_rectangle,
-              onPressed: (con) {},
+              onPressed: (con) {
+                Get.to(
+                    UpdateAddressScreen(
+                      address: add,
+                    ),
+                    transition: Transition.rightToLeft);
+                addressController.fetchCurrent(add);
+              },
             ),
             SlidableAction(
               label: "Xoá",
@@ -115,13 +123,32 @@ class AddressItem extends StatelessWidget {
                           ),
                           const Spacer(),
                           add.defaultAddress ?? false
-                              ? Text(
-                                  "Mặc định",
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 14.r,
-                                    color: AppColors.orange100,
+                              ? Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 5.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        30.0), // Adjust the circular shape
+                                    border: Border.all(
+                                      color: AppColors.orange100,
+                                      width: 1.0.r,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Mặc định',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 14.r,
+                                      color: AppColors.orange100,
+                                    ),
                                   ),
                                 )
+                              // Text(
+                              //     "Mặc định",
+                              //     style: GoogleFonts.roboto(
+                              //       fontSize: 14.r,
+                              //       color: AppColors.orange100,
+                              //     ),
+                              //   )
                               : const SizedBox.shrink(),
                         ],
                       ),

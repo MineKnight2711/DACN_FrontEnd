@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar_controller.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BottomNavigationTabBar extends StatelessWidget {
   final BottomTabBarController bottomTabBarController;
@@ -15,18 +19,34 @@ class BottomNavigationTabBar extends StatelessWidget {
           .map((tab) => SizedBox(
               width: CustomMediaQuerry.mediaWidth(context, 4.5),
               height: CustomMediaQuerry.mediaHeight(context, 12),
-              child: Tab(icon: Image.asset(tab.imagePath), text: tab.name)))
+              child: Tab(
+                  icon: Stack(
+                    children: [
+                      Align(
+                          alignment: Alignment.center,
+                          child: Image.asset(tab.imagePath)),
+                      tab.tag == "Cart"
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Obx(
+                                () => Text(
+                                  "${bottomTabBarController.cartController.listCart.value.length}",
+                                  style: GoogleFonts.roboto(fontSize: 16.r),
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
+                  text: tab.name)))
           .toList(),
-      labelStyle: const TextStyle(fontSize: 16.0),
-      unselectedLabelStyle: const TextStyle(fontSize: 14.0),
-      labelColor: Colors.black87,
-      unselectedLabelColor: const Color.fromRGBO(0, 0, 0, 0.5),
-      isScrollable: true,
+      labelStyle: GoogleFonts.roboto(fontSize: 14.r),
+      unselectedLabelStyle: GoogleFonts.roboto(fontSize: 12.r),
+      labelColor: AppColors.dark100,
+      unselectedLabelColor: AppColors.dark20,
       controller: bottomTabBarController.tabController.value,
-      indicatorPadding: EdgeInsets.symmetric(
-          horizontal: CustomMediaQuerry.mediaWidth(context, 80)),
-      labelPadding: EdgeInsets.symmetric(
-          horizontal: CustomMediaQuerry.mediaWidth(context, 80)),
+      indicatorPadding: EdgeInsets.symmetric(horizontal: 5.w),
+      labelPadding: EdgeInsets.symmetric(horizontal: 5.w),
     );
   }
 }

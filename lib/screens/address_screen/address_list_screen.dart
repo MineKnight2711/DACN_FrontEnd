@@ -24,7 +24,7 @@ class AddressListScreen extends GetView {
       appBar: CustomAppBar(
         onPressed: () {
           Get.delete<AddressController>();
-          Navigator.pop(context);
+          Get.back();
         },
         showLeading: true,
         title: "Địa chỉ của bạn",

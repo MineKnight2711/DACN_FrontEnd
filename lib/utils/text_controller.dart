@@ -36,6 +36,19 @@ class TextControllers {
 }
 
 class AddressTextController {
+  final txtDetails = TextEditingController();
+  final txtAddressName = TextEditingController();
+  final txtReceiverName = TextEditingController();
+  final txtReceiverPhone = TextEditingController();
+  void clearText() {
+    txtDetails.clear();
+    txtAddressName.clear();
+    txtReceiverName.clear();
+    txtReceiverPhone.clear();
+  }
+}
+
+class UpdateAddressTextController {
   final txtProvince = TextEditingController();
   final txtDistrict = TextEditingController();
   final txtWard = TextEditingController();

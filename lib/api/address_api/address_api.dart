@@ -15,7 +15,7 @@ class AddressApi {
           jsonDecode(utf8.decode(response.bodyBytes)));
       return responseBase;
     }
-    responseBase.message = 'Error';
+    responseBase.message = 'ConnectError';
     return responseBase;
   }
 
@@ -31,7 +31,7 @@ class AddressApi {
           jsonDecode(utf8.decode(response.bodyBytes)));
       return responseBase;
     }
-    responseBase.message = 'Error';
+    responseBase.message = 'ConnectError';
     return responseBase;
   }
 
@@ -45,7 +45,25 @@ class AddressApi {
           jsonDecode(utf8.decode(response.bodyBytes)));
       return responseBase;
     }
-    responseBase.message = 'Error';
+    responseBase.message = 'ConnectError';
+    return responseBase;
+  }
+
+  Future<ResponseBaseModel> updateAddress(
+      String accountId, AddressModel address) async {
+    final updateAddress = address.toJson();
+    updateAddress["accountID"] = accountId;
+    final response = await http.put(
+        Uri.parse("${ApiUrl.apiAddress}/${address.addressID}"),
+        body: updateAddress);
+
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'ConnectError';
     return responseBase;
   }
 }

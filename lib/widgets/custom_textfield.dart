@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 class RoundTextfield extends StatefulWidget {
   final TextEditingController controller;
   final Function(String?)? onChanged;
+  final Function()? onTap;
   final String hintText;
   final TextInputType? keyboardType;
   final bool obscureText;
@@ -25,6 +26,7 @@ class RoundTextfield extends StatefulWidget {
     this.onChanged,
     this.icon,
     this.enable = true,
+    this.onTap,
   });
 
   @override
@@ -79,6 +81,7 @@ class _RoundTextfieldState extends State<RoundTextfield> {
               ),
             Expanded(
               child: TextFormField(
+                onTap: widget.onTap,
                 enabled: widget.enable,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: widget.controller,

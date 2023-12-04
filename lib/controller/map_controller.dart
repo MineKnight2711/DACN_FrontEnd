@@ -99,32 +99,33 @@ class MapController extends GetxController {
   void findCurrentLocation() async {
     bool serviceEnabled;
     geolocator.LocationPermission permission;
-    // Test if location services are enabled.
+
     serviceEnabled = await geolocator.Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing position and request users of the
-      // App to enable the location services.
-      return Future.error('Location services are disabled.');
-    }
+    if (!serviceEnabled) {}
 
     permission = await geolocator.Geolocator.checkPermission();
     if (permission == geolocator.LocationPermission.denied) {
-      permission = await geolocator.Geolocator.requestPermission();
       if (permission == geolocator.LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == geolocator.LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return Logger().i(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      Get.dialog(AlertDialog(
+        title: const Text("Enable Location!"),
+        content: const Text(
+            "Please enable location services to access your location!"),
+        actions: [
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              geolocator.Geolocator.openLocationSettings();
+              Get.back();
+            },
+          )
+        ],
+      ));
+      return;
     }
 
     gpi.Position position = await geolocator.Geolocator.getCurrentPosition(

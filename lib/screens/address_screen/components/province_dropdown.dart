@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/widgets/custom_button.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,7 +63,9 @@ class _ProvinceDropdownState extends State<ProvinceDropdown>
         ),
         SizeTransition(
           sizeFactor: _animation,
-          child: _isOpen ? _buildProvinceList() : Container(),
+          child: _isOpen && widget.listDropDown.isNotEmpty
+              ? _buildProvinceList()
+              : Container(),
         ),
       ],
     );
