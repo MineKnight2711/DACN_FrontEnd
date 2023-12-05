@@ -153,8 +153,8 @@ const List<ExtensionCard> extensionsCard = [
     title: 'Đánh giá đơn hàng',
   ),
   ExtensionCard(
-    icon: Icons.chat,
-    title: 'Liên hệ và góp ý',
+    icon: CupertinoIcons.heart_circle_fill,
+    title: 'Món yêu thích',
   ),
 ];
 

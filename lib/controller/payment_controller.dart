@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 class PaymentController extends GetxController {
   late PaymentApi paymentApi;
   RxList<PaymentModel> listPayment = <PaymentModel>[].obs;
-  Rx<PaymentModel> selectedPayment = PaymentModel().obs;
 
   @override
   void onInit() {
@@ -16,7 +15,6 @@ class PaymentController extends GetxController {
   @override
   void refresh() {
     super.refresh();
-    selectedPayment.value = PaymentModel();
   }
 
   Future<void> getAllListPayment() async {

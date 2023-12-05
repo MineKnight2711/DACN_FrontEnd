@@ -7,6 +7,7 @@ import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/payment_controller.dart';
+import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/components/cart_item.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/payment_screen.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
@@ -40,9 +41,9 @@ class CartView extends StatelessWidget {
                 ),
                 Obx(
                   () {
-                    if (cartController.listCart.value.isNotEmpty) {
+                    if (cartController.listCart.isNotEmpty) {
                       return Column(
-                        children: cartController.listCart.value
+                        children: cartController.listCart
                             .map((cartItem) => CartItem(
                                   cartItem: cartItem,
                                   cartController: cartController,
@@ -62,9 +63,9 @@ class CartView extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: Obx(
           () => CartTotalView(
-            checkOutEnable: cartController.listCart.value.isNotEmpty,
+            checkOutEnable: cartController.listCart.isNotEmpty,
             cartTotal: cartController.calculateTotal().value,
-            deleteCartPressed: cartController.listCart.value.isNotEmpty
+            deleteCartPressed: cartController.listCart.isNotEmpty
                 ? () async {
                     bool result = await showConfirmDialog(context,
                         "Xoá giỏ hàng", "Bạn có chắc muốn xoá giỏ hàng?");
@@ -89,9 +90,11 @@ class CartView extends StatelessWidget {
                 : null,
             checkoutPressed: () {
               final paymentController = Get.put(PaymentController());
+              final transactionController = Get.put(TransactionController());
               paymentController.getAllListPayment();
+              transactionController.getAccountListAddress();
               Get.to(
-                () => PaymentMethodScreen(),
+                () => CheckoutScreen(cartController.listCart),
                 transition: Transition.downToUp,
               );
             },

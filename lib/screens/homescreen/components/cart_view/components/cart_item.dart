@@ -62,7 +62,6 @@ class CartItem extends StatelessWidget {
             label: 'Sửa',
           ),
           SlidableAction(
-            // flex: 2,
             onPressed: (slideContext) async {
               if (await showConfirmDialog(context, "Lời nhắc",
                   "Bạn có chắc muốn xoá ${cartItem.dish?.dishName}")) {

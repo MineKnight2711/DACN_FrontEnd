@@ -100,9 +100,6 @@ class _ListDishViewState extends State<ListDishView> {
                                 ),
                               ),
                             ),
-                            // SizedBox(
-                            //   width: 10.w,
-                            // ),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,9 +117,6 @@ class _ListDishViewState extends State<ListDishView> {
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              width: 100.w,
-                            ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -135,8 +129,6 @@ class _ListDishViewState extends State<ListDishView> {
                                         .getAccountFavoriteDish(dish.dishID),
                                     builder: (context, snapshot) {
                                       if (snapshot.data != null) {
-                                        final favorite = snapshot.data;
-                                        print(favorite?.favoriteID);
                                         return FavoriteIcon(
                                           onFavorite: () async {
                                             showLoadingAnimation(
@@ -208,9 +200,7 @@ class _ListDishViewState extends State<ListDishView> {
                                     },
                                   );
                                 }),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
+                                const Expanded(child: Card()),
                                 ElevatedButton(
                                   onPressed: () async {
                                     if (await showConfirmDialog(
@@ -260,7 +250,7 @@ class _ListDishViewState extends State<ListDishView> {
 
                                     backgroundColor: AppColors
                                         .orange100, // Make the button circular
-                                    padding: const EdgeInsets.all(12),
+                                    padding: EdgeInsets.all(6.w),
                                   ),
                                   child: const Icon(
                                     Icons.add,
