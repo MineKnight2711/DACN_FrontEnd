@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 class FavoriteController extends GetxController {
   late FavoriteApi _favoriteApi;
   late AccountController _accountController;
+  RxList<FavoriteModel> listFavorite = <FavoriteModel>[].obs;
   @override
   void onInit() {
     super.onInit();
@@ -24,6 +25,18 @@ class FavoriteController extends GetxController {
       return null;
     }
     return null;
+  }
+
+  Future<void> getAccountListFavoriteDish() async {
+    if (_accountController.accountSession.value != null) {
+      final response = await _favoriteApi.getAccountListFavorite(
+          "${_accountController.accountSession.value?.accountID}");
+      if (response.message == "Success") {
+        final favoritesJson = response.data as List<dynamic>;
+        listFavorite.value =
+            favoritesJson.map((f) => FavoriteModel.fromJson(f)).toList();
+      }
+    }
   }
 
   Future<String> addToFavorite(DishModel dish) async {

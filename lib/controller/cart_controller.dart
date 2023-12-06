@@ -8,14 +8,14 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 class CartController extends GetxController {
-  late CartApi cartApi;
+  late CartApi _cartApi;
   late AccountController _accountController;
   RxList<CartModel> listCart = <CartModel>[].obs;
-
+  RxInt selectedQuantity = 1.obs;
   @override
   void onInit() {
     super.onInit();
-    cartApi = CartApi();
+    _cartApi = CartApi();
     _accountController = Get.find<AccountController>();
   }
 
@@ -47,7 +47,10 @@ class CartController extends GetxController {
 
   RxDouble calculateListCartHeight() {
     RxDouble listCartHeight = 0.0.obs;
-
+    if (listCart.isEmpty) {
+      listCartHeight.value = 600.h;
+      return listCartHeight;
+    }
     listCartHeight.value = ((listCart.length + 1) * (80.h + 20.h)) + 50.h;
     return listCartHeight;
   }
@@ -64,10 +67,15 @@ class CartController extends GetxController {
     }
   }
 
+  Future<String> updateCartApi(String cartId, int newQuantity) async {
+    final response = await _cartApi.updateCart(cartId, newQuantity);
+    return response.message ?? '';
+  }
+
   Future<void> getAccountCart() async {
     _accountController.fetchCurrentUser();
     if (_accountController.accountSession.value != null) {
-      ResponseBaseModel? responseBaseModel = await cartApi.getCartByAccount(
+      ResponseBaseModel? responseBaseModel = await _cartApi.getCartByAccount(
           "${_accountController.accountSession.value?.accountID}");
       if (responseBaseModel?.message == "Success") {
         final categoryReceived = responseBaseModel?.data as List<dynamic>;
@@ -82,7 +90,7 @@ class CartController extends GetxController {
     }
   }
 
-  Future<String?> addToCart(DishModel dish, int quantity) async {
+  Future<String?> addToCart(DishModel? dish, int quantity) async {
     _accountController.fetchCurrentUser();
     if (_accountController.accountSession.value != null) {
       CartModel newCartItem = CartModel();
@@ -90,7 +98,7 @@ class CartController extends GetxController {
       newCartItem.dish = dish;
       newCartItem.account = _accountController.accountSession.value;
       ResponseBaseModel? responseBaseModel =
-          await cartApi.addToCart(newCartItem);
+          await _cartApi.addToCart(newCartItem);
       Logger().i("Logger cart : ${responseBaseModel?.data}");
       if (responseBaseModel?.message == "Success") {
         getAccountCart();
@@ -104,7 +112,7 @@ class CartController extends GetxController {
 
   Future<String?> deleteCartItem(CartModel cart) async {
     ResponseBaseModel? responseBaseModel =
-        await cartApi.deleteItem("${cart.cartID}");
+        await _cartApi.deleteItem("${cart.cartID}");
     Logger().i("Logger cart : ${responseBaseModel?.data}");
     if (responseBaseModel?.message == "Success") {
       listCart.remove(cart);
@@ -117,7 +125,7 @@ class CartController extends GetxController {
 
   Future<String?> clearCart() async {
     List<String> listCartID = listCart.map((cart) => "${cart.cartID}").toList();
-    final responseBaseModel = await cartApi.clearCart(listCartID);
+    final responseBaseModel = await _cartApi.clearCart(listCartID);
     if (responseBaseModel.message == "Success") {
       listCart.clear();
 

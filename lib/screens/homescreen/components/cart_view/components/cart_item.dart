@@ -52,6 +52,17 @@ class CartItem extends StatelessWidget {
                   } else {
                     cartController.updateCart(cartItem, 1);
                   }
+                } else {
+                  String updateResult = await cartController.updateCartApi(
+                      "${cartItem.cartID}", cartItem.quantity ?? 0);
+                  if (updateResult != "UpdatedCart") {
+                    showCustomSnackBar(
+                        context,
+                        "Lỗi",
+                        "Có lỗi xảy ra\nChi tiết : $updateResult",
+                        ContentType.failure,
+                        2);
+                  }
                 }
               });
             },

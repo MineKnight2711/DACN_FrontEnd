@@ -1,16 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/payment_controller.dart';
 import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/components/cart_item.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/payment_screen.dart';
 import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/empty_widget.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,7 +49,9 @@ class CartView extends StatelessWidget {
                             .toList(),
                       );
                     }
-                    return const Center(child: Text("No cart"));
+                    return const EmptyWidget(
+                        tilte: "Giỏ hàng trống..",
+                        assetsAnimations: "person_empty_box");
                   },
                 ),
               ],

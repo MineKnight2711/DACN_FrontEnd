@@ -23,6 +23,21 @@ class FavoriteApi {
     return responseBase;
   }
 
+  Future<ResponseBaseModel> getAccountListFavorite(String accountId) async {
+    final Uri uri = Uri.parse('${ApiUrl.apiGetListFavorite}/$accountId');
+    final response = await http.get(
+      uri,
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'Error';
+    return responseBase;
+  }
+
   Future<ResponseBaseModel> addToFavorite(FavoriteModel favorite) async {
     final response = await http.post(
       Uri.parse(ApiUrl.apiFavorite),

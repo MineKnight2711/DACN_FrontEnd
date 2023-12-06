@@ -35,6 +35,19 @@ class CartApi {
     return responseBase;
   }
 
+  Future<ResponseBaseModel> updateCart(String cartId, int newQuantity) async {
+    Uri uri = Uri.parse('${ApiUrl.apiCart}/$cartId?newQuantity=$newQuantity');
+    final response = await http.put(uri);
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'Error';
+    return responseBase;
+  }
+
   Future<ResponseBaseModel?> deleteItem(String cartItemId) async {
     final response = await http.delete(
       Uri.parse("${ApiUrl.apiCart}/$cartItemId"),

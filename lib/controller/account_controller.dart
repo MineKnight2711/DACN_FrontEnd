@@ -24,7 +24,6 @@ class AccountController extends GetxController {
   Future<AccountModel?> getUserFromSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString('current_account') ?? '';
-    print(jsonString);
     if (jsonString.isNotEmpty) {
       return AccountModel.fromJson(jsonDecode(jsonString));
     }

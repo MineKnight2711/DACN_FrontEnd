@@ -2,11 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/controller/payment_controller.dart';
-import 'package:fooddelivery_fe/screens/payment_screen/payment_screen.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/widgets/custom_button.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CartTotalView extends StatelessWidget {

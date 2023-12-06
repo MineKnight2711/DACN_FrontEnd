@@ -4,9 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
+import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
+import 'package:fooddelivery_fe/screens/favorite_screen/favorite_screen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
@@ -139,20 +141,28 @@ class SettingsView extends StatelessWidget {
   }
 }
 
-const List<ExtensionCard> extensionsCard = [
+List<ExtensionCard> extensionsCard = [
   ExtensionCard(
+    onPressed: () {},
     icon: CupertinoIcons.square_list,
     title: 'Lịch sử đơn hàng',
   ),
   ExtensionCard(
+    onPressed: () {},
     icon: Icons.discount,
     title: 'Nhận mã ưu đãi',
   ),
   ExtensionCard(
+    onPressed: () {},
     icon: Icons.star,
     title: 'Đánh giá đơn hàng',
   ),
   ExtensionCard(
+    onPressed: () {
+      final favoriteController = Get.find<FavoriteController>();
+      favoriteController.getAccountListFavoriteDish();
+      Get.to(() => FavoriteScreen(), transition: Transition.upToDown);
+    },
     icon: CupertinoIcons.heart_circle_fill,
     title: 'Món yêu thích',
   ),
@@ -161,7 +171,9 @@ const List<ExtensionCard> extensionsCard = [
 class ExtensionCard extends StatelessWidget {
   final IconData icon;
   final String title;
-  const ExtensionCard({super.key, required this.icon, required this.title});
+  final Function()? onPressed;
+  const ExtensionCard(
+      {super.key, required this.icon, required this.title, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +187,7 @@ class ExtensionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
         splashColor: AppColors.lightOrange,
         highlightColor: Colors.transparent,
-        onTap: () {},
+        onTap: onPressed,
         child: Container(
           margin: EdgeInsets.all(16.r),
           height: 20.h,

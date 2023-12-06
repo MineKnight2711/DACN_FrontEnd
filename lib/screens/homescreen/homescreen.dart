@@ -45,6 +45,10 @@ class _HomeScreenState extends State<HomeScreen>
     await dishController.getAllDish();
   }
 
+  Future<void> cartRefresh() async {
+    await cartController.getAccountCart();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,15 +57,17 @@ class _HomeScreenState extends State<HomeScreen>
         physics: const NeverScrollableScrollPhysics(),
         controller: tabBarController.tabController.value,
         children: [
-          // Center(child: Text('Home')),
           RefreshIndicator(
-              onRefresh: () => refresh(),
-              displacement: 40.0,
-              child: ProductView(categoryController: categoryController)),
-          // Center(child: Text('Cart')),
-          CartView(cartController: cartController),
+            onRefresh: () => refresh(),
+            displacement: 40.0,
+            child: ProductView(categoryController: categoryController),
+          ),
+          RefreshIndicator(
+            onRefresh: () => cartRefresh(),
+            displacement: 40.0,
+            child: CartView(cartController: cartController),
+          ),
           Center(child: Text('Ưu đãi')),
-          // Center(child: Text('Settings')),
           SettingsView(),
         ],
       ),
