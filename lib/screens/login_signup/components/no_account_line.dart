@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../config/constant.dart';
 
 class NoAccountLine extends StatelessWidget {
   final Function() onTap;
@@ -31,7 +30,7 @@ class NoAccountLine extends StatelessWidget {
             "Đăng ký",
             style: GoogleFonts.roboto(
               fontSize: 20,
-              color: mainButtonColor,
+              color: AppColors.orange100,
               fontWeight: FontWeight.w500,
             ),
           ),

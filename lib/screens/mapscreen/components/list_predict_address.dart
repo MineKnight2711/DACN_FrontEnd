@@ -35,7 +35,7 @@ class ListAddress extends StatelessWidget {
               ],
             ),
             onTap: () async {
-              await mapController.getLocation(perdictionAddress.description);
+              await mapController.getLocation(perdictionAddress.placeId);
             },
           );
         },

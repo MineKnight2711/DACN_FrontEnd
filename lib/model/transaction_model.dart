@@ -1,17 +1,12 @@
 import 'dart:convert';
 
-import 'package:fooddelivery_fe/model/cart_model.dart';
-import 'package:fooddelivery_fe/model/dish_model.dart';
-
-class Order {
-  String? status;
+class OrderDTO {
   int? quantity;
   DateTime? orderDate;
   String? deliveryInfo;
   List<DishItem>? dishes;
 
-  Order({
-    this.status,
+  OrderDTO({
     this.quantity,
     this.orderDate,
     this.deliveryInfo,
@@ -31,11 +26,10 @@ class Order {
   // }
   Map<String, dynamic> toJson() {
     return {
-      'status': status,
       'quantity': quantity,
-      'orderDate': DateTime.now(),
+      'orderDate': DateTime.now().toIso8601String(),
       'deliveryInfo': deliveryInfo,
-      'dishes': jsonEncode(dishes),
+      'dishes': dishes?.map((e) => e.toJson()).toList(),
     };
   }
 }
@@ -65,15 +59,12 @@ class DishItem {
 
 class PaymentDetails {
   String? paymentId;
-  String? info;
-  String? status;
-  int? amount;
+
+  double? amount;
   String? paidTime;
 
   PaymentDetails({
     this.paymentId,
-    this.info,
-    this.status,
     this.amount,
     this.paidTime,
   });
@@ -81,16 +72,14 @@ class PaymentDetails {
   Map<String, dynamic> toJson() {
     return {
       'paymentId': paymentId,
-      'info': info,
-      'status': status,
       'amount': amount,
-      'paidTime': DateTime.now(),
+      'paidTime': DateTime.now().toIso8601String(),
     };
   }
 }
 
 class PaymentRequestBody {
-  int? amount;
+  double? amount;
   String? cancelUrl;
   String? returnUrl;
   String? description;
@@ -114,7 +103,7 @@ class PaymentRequestBody {
 
 class TransactionModel {
   String? accountId;
-  Order? ordersDTO;
+  OrderDTO? ordersDTO;
   PaymentDetails? paymentDetailsDTO;
   PaymentRequestBody? paymentRequestBody;
 
@@ -126,7 +115,7 @@ class TransactionModel {
   });
   Map<String, dynamic> toJson() {
     return {
-      'amount': accountId,
+      'accountId': accountId,
       'ordersDTO': ordersDTO?.toJson(),
       'paymentDetailsDTO': paymentDetailsDTO?.toJson(),
       'paymentRequestBody': paymentDetailsDTO?.toJson(),

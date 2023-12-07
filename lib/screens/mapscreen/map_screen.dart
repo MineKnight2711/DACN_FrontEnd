@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +10,9 @@ import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/address_info.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/address_textfield.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/list_predict_address.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
+import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:geolocator/geolocator.dart' as geolocator;
 
 import 'package:get/get.dart';
 
@@ -42,8 +48,7 @@ class MapScreen extends GetView {
               ),
             ),
             Positioned(
-              bottom:
-                  130, // Điều chỉnh vị trí lên trên ở đây (ví dụ: bottom: 120)
+              bottom: 130,
               right: 16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -55,12 +60,60 @@ class MapScreen extends GetView {
                       onPressed: mapController.zoomOut,
                       iconData: CupertinoIcons.zoom_out),
                   MapNavigateButton(
-                      onPressed: mapController.findCurrentLocation,
+                      onPressed: () async {
+                        String result =
+                            await mapController.findCurrentLocation();
+                        switch (result) {
+                          case "Success":
+                            showDelayedLoadingAnimation(context,
+                                "assets/animations/loading.json", 160, 1);
+                            break;
+                          case "DeniedForever":
+                            Get.dialog(AlertDialog(
+                              title: const Text("Enable Location!"),
+                              content: const Text(
+                                  "Please enable location services to access your location!"),
+                              actions: [
+                                TextButton(
+                                  child: const Text("OK"),
+                                  onPressed: () {
+                                    geolocator.Geolocator
+                                        .openLocationSettings();
+                                    Get.back();
+                                  },
+                                )
+                              ],
+                            ));
+                            break;
+                          case "Denied":
+                            showCustomSnackBar(
+                                context,
+                                "Thông báo",
+                                "Vui lòng bật cài đặt vị trí",
+                                ContentType.warning,
+                                2);
+                          case "NotEnable":
+                            if (!await geolocator.Geolocator
+                                .isLocationServiceEnabled()) {
+                              showCustomSnackBar(
+                                      context,
+                                      "Thông báo",
+                                      "Vui lòng bật cài đặt vị trí",
+                                      ContentType.warning,
+                                      2)
+                                  .whenComplete(
+                                      () => mapController.getCurrentPosition());
+                            }
+                            break;
+                          default:
+                            break;
+                        }
+                      },
                       iconData: CupertinoIcons.location)
                 ],
               ),
             ),
-            //list địa chỉ
+
             Obx(
               () {
                 if (mapController.isShow.value) {
@@ -83,16 +136,17 @@ class MapScreen extends GetView {
               margin: const EdgeInsets.only(top: 30),
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: AddressTextField(
+                bgColor: AppColors.white100,
                 hintText: "Mời nhập địa chỉ",
                 controller: mapController.searchController,
-                onChanged: (text) {
-                  // print('First text field: $text');
-                  if (text != null) {
+                onChanged: (text) async {
+                  if (text != null && text.isNotEmpty) {
                     mapController.searchText.value = text;
-                    // mapController.fetchData(text);
-                    mapController.predictLocation(text);
+                    await mapController.predictLocation(text);
+                  } else {
+                    mapController.isShow.value = false;
+                    mapController.isHidden.value = true;
                   }
-                  mapController.isHidden.value = true;
                 },
               ),
             ),

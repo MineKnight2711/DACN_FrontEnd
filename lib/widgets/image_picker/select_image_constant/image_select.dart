@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fooddelivery_fe/config/constant.dart';
+import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -139,7 +139,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
                     showSelectPhotoOptions(context);
                   },
                   child: CircleAvatar(
-                    backgroundColor: mainButtonColor,
+                    backgroundColor: AppColors.orange100,
                     radius: CustomMediaQuerry.mediaAspectRatio(context, 1 / 37),
                     child: Icon(
                       Icons.camera_alt,
@@ -159,7 +159,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
                 height: CustomMediaQuerry.mediaHeight(context, 7),
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainAppThemeColor,
+                  color: AppColors.orange100,
                 ),
                 child: ClipOval(
                   child: widget.currentImageUrl != null
@@ -184,7 +184,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
                     showSelectPhotoOptions(context);
                   },
                   child: CircleAvatar(
-                    backgroundColor: mainButtonColor,
+                    backgroundColor: AppColors.orange100,
                     radius: CustomMediaQuerry.mediaAspectRatio(context, 1 / 37),
                     child: Icon(
                       Icons.camera_alt,

@@ -1,12 +1,13 @@
+import 'package:fooddelivery_fe/model/map/predict_location_model.dart';
+
 class LocationResponse {
-  List<Result> results;
+  Result results;
   String status;
 
   LocationResponse({required this.results, required this.status});
   factory LocationResponse.fromJson(Map<String, dynamic> json) {
     return LocationResponse(
-        results:
-            (json['results'] as List).map((p) => Result.fromJson(p)).toList(),
+        results: Result.fromJson(json['result']),
         status: json['status'] as String);
   }
 }
@@ -15,19 +16,20 @@ class Result {
   String formattedAddress;
   Geometry geometry;
   String name;
-  String address;
+  Compound compound;
 
-  Result(
-      {required this.formattedAddress,
-      required this.geometry,
-      required this.name,
-      required this.address});
+  Result({
+    required this.formattedAddress,
+    required this.geometry,
+    required this.name,
+    required this.compound,
+  });
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
         formattedAddress: json['formatted_address'] as String,
         name: json['name'] as String,
-        address: json['address'] as String,
-        geometry: Geometry.fromJson(json['geometry']));
+        geometry: Geometry.fromJson(json['geometry']),
+        compound: Compound.fromJson(json['compound']));
   }
 }
 
@@ -41,14 +43,14 @@ class Geometry {
 }
 
 class Location {
-  String lat;
-  String lng;
+  double lat;
+  double lng;
 
   Location({required this.lat, required this.lng});
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
-      lat: json['lat'],
-      lng: json['lng'],
+      lat: json['lat'] as double,
+      lng: json['lng'] as double,
     );
   }
 }

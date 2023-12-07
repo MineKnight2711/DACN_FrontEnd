@@ -50,21 +50,23 @@ class _AddressTextFieldState extends State<AddressTextField> {
               child: widget.left!,
             ),
           Expanded(
-            child: TextFormField(
-              onChanged: widget.onChanged,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: widget.controller,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                hintText: widget.hintText,
-                hintStyle: TextStyle(
-                    color: TextColor.placeholder,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
+            child: Container(
+              child: TextFormField(
+                onChanged: widget.onChanged,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: widget.controller,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  hintText: widget.hintText,
+                  hintStyle: TextStyle(
+                      color: TextColor.placeholder,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
             ),
           ),

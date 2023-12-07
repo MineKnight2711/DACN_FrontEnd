@@ -142,15 +142,3 @@ class CartView extends StatelessWidget {
 //     child: Text('Show Flutter homepage'),
 //   ),
 // ],
-class WebView extends StatelessWidget {
-  final WebViewController webViewController;
-  const WebView({super.key, required this.webViewController});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Simple Example')),
-      body: WebViewWidget(controller: webViewController),
-    );
-  }
-}

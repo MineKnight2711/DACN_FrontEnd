@@ -5,7 +5,7 @@ class PredictLocationResponse {
   PredictLocationResponse({required this.predictions, required this.status});
   factory PredictLocationResponse.fromJson(Map<String, dynamic> json) {
     return PredictLocationResponse(
-        predictions: (json['predictions'] as List)
+        predictions: (json['predictions'] as List<dynamic>)
             .map((p) => Prediction.fromJson(p))
             .toList(),
         status: json['status'] as String);
@@ -14,13 +14,20 @@ class PredictLocationResponse {
 
 class Prediction {
   String description;
+  String placeId;
   Compound compound;
 
-  Prediction({required this.description, required this.compound});
+  Prediction({
+    required this.description,
+    required this.compound,
+    required this.placeId,
+  });
   factory Prediction.fromJson(Map<String, dynamic> json) {
     return Prediction(
-        description: json['description'] as String,
-        compound: Compound.fromJson(json['compound']));
+      placeId: json['place_id'] as String,
+      description: json['description'] as String,
+      compound: Compound.fromJson(json['compound']),
+    );
   }
 }
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/map/map_api.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -25,12 +27,12 @@ class MapController extends GetxController {
   RxString searchText = "".obs;
   RxString mainText = "".obs;
   RxString secondText = "".obs;
-  RxDouble latitude = 0.0.obs;
-  RxDouble longLatitude = 0.0.obs;
+  RxString latitude = "".obs;
+  RxString longLatitude = "".obs;
 
   Rx<List<Prediction>> places = Rx<List<Prediction>>([]);
   final TextEditingController searchController = TextEditingController();
-  Rx<List<Result>> details = Rx<List<Result>>([]);
+  Rx<Result?> details = Rx<Result?>(null);
 
   @override
   void onInit() {
@@ -45,110 +47,116 @@ class MapController extends GetxController {
   void zoomIn() {
     print("Zoom level $zoomLevel");
     zoomLevel.value++;
-    mapboxMap.value?.setCamera(CameraOptions(zoom: zoomLevel.value + 1));
+    mapboxMap.value?.flyTo(
+        CameraOptions(
+            anchor: ScreenCoordinate(x: 0, y: 0),
+            zoom: zoomLevel.value,
+            bearing: 0,
+            pitch: 0),
+        MapAnimationOptions(duration: 2000, startDelay: 0));
   }
 
   void zoomOut() {
     print("Zoom level $zoomLevel");
     zoomLevel.value--;
-    mapboxMap.value?.setCamera(CameraOptions(zoom: zoomLevel.value - 1));
+    mapboxMap.value?.flyTo(
+        CameraOptions(
+            anchor: ScreenCoordinate(x: 0, y: 0),
+            zoom: zoomLevel.value,
+            bearing: 0,
+            pitch: 0),
+        MapAnimationOptions(duration: 2000, startDelay: 0));
   }
 
   Future<String> predictLocation(String predictString) async {
-    ResponseBaseModel? responseBaseModel =
+    ResponseBaseModel responseBaseModel =
         await _mapApi.getPredictLocation(predictString);
 
-    if (responseBaseModel != null && responseBaseModel.message == "Success") {
+    if (responseBaseModel.message == "Success") {
       PredictLocationResponse locationResponse =
           PredictLocationResponse.fromJson(responseBaseModel.data);
       places.value = locationResponse.predictions;
       isShow.value = true;
       isHidden.value = true;
-      Logger().i("Loggg dia diem ${locationResponse.predictions.length}");
+
       return "Success";
     }
 
-    return responseBaseModel?.message ?? "";
+    return responseBaseModel.message ?? "";
   }
 
-  Future<String> getLocation(String address) async {
+  Future<String> getLocation(String placesID) async {
     isShow.value = false;
     isHidden.value = false;
-    ResponseBaseModel? responseBaseModel = await _mapApi.getLocation(address);
+    ResponseBaseModel responseBaseModel =
+        await _mapApi.getLocationByID(placesID);
 
-    if (responseBaseModel != null && responseBaseModel.message == "Success") {
-      Logger().i("Loggg dia diem ${responseBaseModel.data}");
-      LocationResponse locationResponse =
+    if (responseBaseModel.message == "Success") {
+      LocationResponse locationResult =
           LocationResponse.fromJson(responseBaseModel.data);
-      details.value = locationResponse.results;
-      latitude.value = double.parse(details.value[0].geometry.location.lat);
-      longLatitude.value = double.parse(details.value[0].geometry.location.lng);
-      centerCameraOnCoordinate(latitude.value, longLatitude.value);
-      String address = details.value[0].formattedAddress;
-
-      String latString = latitude.value.toStringAsFixed(4);
-      String lngString = longLatitude.toStringAsFixed(4);
+      details.value = locationResult.results;
+      latitude.value = "${details.value?.geometry.location.lat}";
+      longLatitude.value = "${details.value?.geometry.location.lng}";
+      centerCameraOnCoordinate(
+          double.parse(latitude.value), double.parse(longLatitude.value));
+      String address = "${details.value?.formattedAddress}";
 
       mainText.value = address;
-      secondText.value = "Tọa độ: $latString, $lngString";
+      secondText.value = "Tọa độ: ${latitude.value}, ${longLatitude.value}";
     }
 
-    return responseBaseModel?.message ?? "";
+    return responseBaseModel.message ?? "";
   }
 
-  void findCurrentLocation() async {
+  Future<String> findCurrentLocation() async {
     bool serviceEnabled;
-    geolocator.LocationPermission permission;
 
     serviceEnabled = await geolocator.Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {}
-
-    permission = await geolocator.Geolocator.checkPermission();
-    if (permission == geolocator.LocationPermission.denied) {
-      if (permission == geolocator.LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
+    if (!serviceEnabled) {
+      return "NotEnable";
+    } else {
+      return await getCurrentPosition();
     }
-
-    if (permission == geolocator.LocationPermission.deniedForever) {
-      Get.dialog(AlertDialog(
-        title: const Text("Enable Location!"),
-        content: const Text(
-            "Please enable location services to access your location!"),
-        actions: [
-          TextButton(
-            child: const Text("OK"),
-            onPressed: () {
-              geolocator.Geolocator.openLocationSettings();
-              Get.back();
-            },
-          )
-        ],
-      ));
-      return;
-    }
-
-    gpi.Position position = await geolocator.Geolocator.getCurrentPosition(
-        desiredAccuracy: geolocator.LocationAccuracy.high);
-    Position getPositon = Position(position.longitude, position.latitude);
-    // Cập nhật vị trí camera
-    centerCameraOnCoordinate(getPositon.lat, getPositon.lng);
   }
 
-  void centerCameraOnCoordinate(num lat, num longLat) {
+  Future<String> getCurrentPosition() async {
+    gpi.Position position = await geolocator.Geolocator.getCurrentPosition(
+        desiredAccuracy: geolocator.LocationAccuracy.high);
+    String result = "";
+    geolocator.LocationPermission permission =
+        await geolocator.Geolocator.checkPermission();
+    if (permission == geolocator.LocationPermission.denied) {
+      result = 'Denied';
+    } else if (permission == geolocator.LocationPermission.deniedForever) {
+      result = "DeniedForever";
+    } else if (permission == geolocator.LocationPermission.whileInUse ||
+        permission == geolocator.LocationPermission.always) {
+      Position getPositon = Position(position.longitude, position.latitude);
+      centerCameraOnCoordinate(
+          getPositon.lat.toDouble(), getPositon.lng.toDouble());
+      return "Success";
+    }
+
+    return result;
+  }
+
+  void centerCameraOnCoordinate(double lat, double longLat) {
+    Logger().i("Lng $longLatitude - Lat $lat");
+
     circleManager.value?.deleteAll();
     mapboxMap.value?.setCamera(CameraOptions(
         center: Point(
           coordinates: Position(longLat, lat),
         ).toJson(),
         zoom: 12.0));
+
     mapboxMap.value?.flyTo(
         CameraOptions(
             anchor: ScreenCoordinate(x: 0, y: 0),
             zoom: 15,
-            bearing: 0,
-            pitch: 0),
-        MapAnimationOptions(duration: 2000, startDelay: 0));
+            bearing: 180,
+            pitch: 30),
+        MapAnimationOptions(duration: 3000, startDelay: 0));
     mapboxMap.value?.annotations
         .createCircleAnnotationManager()
         .then((value) async {

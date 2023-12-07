@@ -59,7 +59,7 @@ class PaymentDialog extends StatelessWidget {
                                   payment;
                             },
                             isSelected: transactionController
-                                    .selectedPayment.value.paymentID ==
+                                    .selectedPayment.value?.paymentID ==
                                 payment.paymentID,
                             paymentMethod: payment,
                             imagePath: 'assets/images/card.jpg',

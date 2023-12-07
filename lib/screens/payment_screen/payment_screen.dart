@@ -1,22 +1,32 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fooddelivery_fe/api/base_url.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
+import 'package:fooddelivery_fe/controller/main_controllers.dart';
 import 'package:fooddelivery_fe/controller/payment_controller.dart';
 import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/model/cart_model.dart';
+import 'package:fooddelivery_fe/model/transaction_response.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/payment_method_choose.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/choose_address_screen.dart';
+import 'package:fooddelivery_fe/screens/payment_screen/components/payment_webview.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
 
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class CheckoutScreen extends GetView {
   final List<CartModel> listItem;
@@ -105,7 +115,90 @@ class CheckoutScreen extends GetView {
               SizedBox(height: 25.h),
               RoundIconButton(
                 size: 80.r,
-                onPressed: () {},
+                onPressed: () async {
+                  showLoadingAnimation(
+                      context, "assets/animations/loading.json", 140.w);
+                  if (transactionController.selectedPayment.value == null) {
+                    showCustomSnackBar(
+                            context,
+                            "Thông báo",
+                            "Vui lòng chọn phương thức thanh toán!",
+                            ContentType.failure,
+                            2)
+                        .whenComplete(() => Get.back());
+                    return;
+                  }
+                  final result = await transactionController
+                      .performTransaction(
+                          listItem, cartController.calculateTotal().value)
+                      .whenComplete(() => Get.back());
+                  TransactionResponseModel response =
+                      result.data as TransactionResponseModel;
+                  if (result.message == "Success") {
+                    showCustomSnackBar(
+                        context,
+                        "Thông báo",
+                        "Kết quả giao dịch :\n Đã tạo mã qr",
+                        ContentType.success,
+                        2);
+                    final webViewController = MainController.initController();
+                    webViewController
+                      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                      ..setBackgroundColor(AppColors.white100)
+                      ..setNavigationDelegate(
+                        NavigationDelegate(
+                          onProgress: (int progress) {
+                            // Update loading bar.
+                          },
+                          onPageStarted: (String url) {},
+                          onPageFinished: (String url) {},
+                          onWebResourceError: (WebResourceError error) {},
+                          onNavigationRequest:
+                              (NavigationRequest request) async {
+                            if (request.url
+                                .contains("/api/transaction/success")) {
+                              String result =
+                                  await transactionController.updateTransaction(
+                                      response.orderId,
+                                      response.paymentDetailsId);
+                              if (result == "Success") {
+                                showCustomSnackBar(
+                                    context,
+                                    "Thông báo",
+                                    "Thanh toán thành công",
+                                    ContentType.success,
+                                    2);
+                                Get.back();
+                              } else {
+                                showCustomSnackBar(
+                                    context,
+                                    "Có lỗi xảy ra",
+                                    "Thanh toán thất bại\nChi tiết $result",
+                                    ContentType.failure,
+                                    2);
+                              }
+                              return NavigationDecision.prevent;
+                            }
+                            return NavigationDecision.navigate;
+                          },
+                        ),
+                      )
+                      ..loadRequest(
+                          Uri.parse(response.paymentResponse.data.checkoutUrl));
+                    Get.to(
+                        () => PaymentWebView(
+                              webViewController: webViewController,
+                            ),
+                        transition: Transition.downToUp);
+                  } else {
+                    showCustomSnackBar(
+                        context,
+                        "Lỗi",
+                        "Có lỗi xảy ra :\nChi tiết :${result.message}",
+                        ContentType.success,
+                        2);
+                  }
+                },
                 title: "Thanh toán",
               ),
             ],
@@ -292,9 +385,13 @@ class PaymentMethodAndVoucher extends StatelessWidget {
                   paymentController: paymentController),
             );
           },
-          label: Text(
-            "Chọn phương thức thanh toán",
-            style: GoogleFonts.roboto(fontSize: 14.r),
+          label: Obx(
+            () => Text(
+              transactionController.selectedPayment.value != null
+                  ? "${transactionController.selectedPayment.value?.paymentMethod}"
+                  : "Chọn phương thức thanh toán",
+              style: GoogleFonts.roboto(fontSize: 14.r),
+            ),
           ),
           icon: const Icon(CupertinoIcons.creditcard),
         ),
