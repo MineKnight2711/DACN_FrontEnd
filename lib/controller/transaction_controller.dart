@@ -15,7 +15,7 @@ class TransactionController extends GetxController {
   late AccountController _accountController;
   late AddressController _addressController;
   RxList<AddressModel> listAddress = <AddressModel>[].obs;
-  Rx<AddressModel> selectedAddress = AddressModel().obs;
+  Rx<AddressModel?> selectedAddress = Rx<AddressModel?>(null);
   Rx<PaymentModel?> selectedPayment = Rx<PaymentModel?>(null);
   @override
   void onInit() {
@@ -23,6 +23,13 @@ class TransactionController extends GetxController {
     _transactionApi = TransactionApi();
     _accountController = Get.find<AccountController>();
     _addressController = Get.put(AddressController());
+  }
+
+  @override
+  void refresh() {
+    super.refresh();
+    selectedAddress.value = null;
+    selectedPayment.value = null;
   }
 
   Future<void> getAccountListAddress() async {
@@ -55,11 +62,11 @@ class TransactionController extends GetxController {
       List<CartModel> dishes, double amount) async {
     ResponseBaseModel responseBaseModel = ResponseBaseModel();
     if (_accountController.accountSession.value != null) {
-      if (selectedPayment.value != null &&
-          selectedPayment.value?.paymentMethod != "COD") {
+      if (selectedPayment.value != null) {
+        final paymentMethod = selectedPayment.value?.paymentMethod;
         OrderDTO newOrder = OrderDTO();
         newOrder.deliveryInfo =
-            "${selectedAddress.value.details}, ${selectedAddress.value.ward}, ${selectedAddress.value.district}, ${selectedAddress.value.province} | ${selectedAddress.value.receiverName}, ${selectedAddress.value.receiverPhone}";
+            "${selectedAddress.value?.details}, ${selectedAddress.value?.ward}, ${selectedAddress.value?.district}, ${selectedAddress.value?.province} | ${selectedAddress.value?.receiverName}, ${selectedAddress.value?.receiverPhone}";
         newOrder.dishes = convertCartDishesToListDishItem(dishes);
         newOrder.quantity = dishes
             .fold(
@@ -71,31 +78,36 @@ class TransactionController extends GetxController {
         PaymentDetails newPaymentDetails = PaymentDetails();
         newPaymentDetails.amount = amount;
         newPaymentDetails.paymentId = selectedPayment.value?.paymentID;
-
-        PaymentRequestBody newPaymentRequestBody = PaymentRequestBody();
-        newPaymentRequestBody.amount = amount;
-
         TransactionModel newTransaction = TransactionModel();
         newTransaction.accountId =
             _accountController.accountSession.value?.accountID;
         newTransaction.ordersDTO = newOrder;
         newTransaction.paymentDetailsDTO = newPaymentDetails;
-        newTransaction.paymentRequestBody = newPaymentRequestBody;
-        final response =
-            await _transactionApi.performTransaction(newTransaction);
-        if (response.message == "Success") {
-          Logger().i("Response dat:\n ${response.data}");
-          TransactionResponseModel transactionResponse =
-              TransactionResponseModel.fromJson(response.data);
+        if (paymentMethod != "COD") {
+          PaymentRequestBody newPaymentRequestBody = PaymentRequestBody();
+          newPaymentRequestBody.amount = amount;
 
-          responseBaseModel.message = "Success";
-          responseBaseModel.data = transactionResponse;
+          newTransaction.paymentRequestBody = newPaymentRequestBody;
+          final response =
+              await _transactionApi.performVietQRTransaction(newTransaction);
+          if (response.message == "Success") {
+            responseBaseModel.message = "Success";
+            responseBaseModel.data = response.data;
+            return responseBaseModel;
+          }
+          return responseBaseModel;
+        } else if (paymentMethod == "COD") {
+          final response =
+              await _transactionApi.performCODTransaction(newTransaction);
+          if (response.message == "Success") {
+            responseBaseModel.message = response.message;
+            responseBaseModel.data = response.data;
+            return responseBaseModel;
+          }
           return responseBaseModel;
         }
-        responseBaseModel.message = "Fail";
-        return responseBaseModel;
       }
-      //Các trường hợp thanh toán khác
+
       responseBaseModel.message = "Fail";
       return responseBaseModel;
     }
@@ -106,6 +118,13 @@ class TransactionController extends GetxController {
   Future<String> updateTransaction(String orderId, int paymentDetailsId) async {
     final response =
         await _transactionApi.updateTransaction(orderId, paymentDetailsId);
+    return response.message ?? "";
+  }
+
+  Future<String> cancleTransaction(String orderId, int paymentDetailsId) async {
+    final response =
+        await _transactionApi.cancelTransaction(orderId, paymentDetailsId);
+    Logger().i("Cancel transaction result ${response.message}");
     return response.message ?? "";
   }
 }

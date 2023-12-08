@@ -14,6 +14,7 @@ import 'package:fooddelivery_fe/controller/payment_controller.dart';
 import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/model/transaction_response.dart';
+import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/payment_method_choose.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/choose_address_screen.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/payment_webview.dart';
@@ -128,75 +129,35 @@ class CheckoutScreen extends GetView {
                         .whenComplete(() => Get.back());
                     return;
                   }
-                  final result = await transactionController
-                      .performTransaction(
-                          listItem, cartController.calculateTotal().value)
+                  bool confirmOrdered = await showConfirmDialog(
+                          context,
+                          "Xác nhận đặt hàng",
+                          "Đơn hàng sẽ được giao tại:\n\n${transactionController.selectedAddress.value?.details}, ${transactionController.selectedAddress.value?.ward}, ${transactionController.selectedAddress.value?.district}, ${transactionController.selectedAddress.value?.province}\n\nNgười nhận : ${transactionController.selectedAddress.value?.receiverName}, ${transactionController.selectedAddress.value?.receiverPhone}")
                       .whenComplete(() => Get.back());
-                  TransactionResponseModel response =
-                      result.data as TransactionResponseModel;
-                  if (result.message == "Success") {
-                    showCustomSnackBar(
-                        context,
-                        "Thông báo",
-                        "Kết quả giao dịch :\n Đã tạo mã qr",
-                        ContentType.success,
-                        2);
-                    final webViewController = MainController.initController();
-                    webViewController
-                      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                      ..setBackgroundColor(AppColors.white100)
-                      ..setNavigationDelegate(
-                        NavigationDelegate(
-                          onProgress: (int progress) {
-                            // Update loading bar.
-                          },
-                          onPageStarted: (String url) {},
-                          onPageFinished: (String url) {},
-                          onWebResourceError: (WebResourceError error) {},
-                          onNavigationRequest:
-                              (NavigationRequest request) async {
-                            if (request.url
-                                .contains("/api/transaction/success")) {
-                              String result =
-                                  await transactionController.updateTransaction(
-                                      response.orderId,
-                                      response.paymentDetailsId);
-                              if (result == "Success") {
-                                showCustomSnackBar(
-                                    context,
-                                    "Thông báo",
-                                    "Thanh toán thành công",
-                                    ContentType.success,
-                                    2);
-                                Get.back();
-                              } else {
-                                showCustomSnackBar(
-                                    context,
-                                    "Có lỗi xảy ra",
-                                    "Thanh toán thất bại\nChi tiết $result",
-                                    ContentType.failure,
-                                    2);
-                              }
-                              return NavigationDecision.prevent;
-                            }
-                            return NavigationDecision.navigate;
-                          },
-                        ),
-                      )
-                      ..loadRequest(
-                          Uri.parse(response.paymentResponse.data.checkoutUrl));
-                    Get.to(
-                        () => PaymentWebView(
-                              webViewController: webViewController,
-                            ),
-                        transition: Transition.downToUp);
-                  } else {
-                    showCustomSnackBar(
-                        context,
-                        "Lỗi",
-                        "Có lỗi xảy ra :\nChi tiết :${result.message}",
-                        ContentType.success,
-                        2);
+                  if (confirmOrdered) {
+                    final result = await transactionController
+                        .performTransaction(
+                            listItem, cartController.calculateTotal().value)
+                        .whenComplete(() => Get.back());
+                    print("Result --------- ${result.message}");
+                    TransactionResponseModel response =
+                        TransactionResponseModel.fromJson(result.data);
+                    if (result.message == "Success") {
+                      transactionController.refresh();
+                      await cartController.clearCart();
+                      showCustomSnackBar(context, "Thông báo",
+                          "Đặt hàng thành công", ContentType.success, 2);
+                      if (response.paymentResponse != null) {
+                        toCheckoutWebView(context, response);
+                      }
+                    } else {
+                      showCustomSnackBar(
+                          context,
+                          "Lỗi",
+                          "Có lỗi xảy ra :\nChi tiết :${result.message}",
+                          ContentType.success,
+                          2);
+                    }
                   }
                 },
                 title: "Thanh toán",
@@ -206,6 +167,74 @@ class CheckoutScreen extends GetView {
         ),
       ),
     );
+  }
+
+  void toCheckoutWebView(
+      BuildContext context, TransactionResponseModel response) {
+    final webViewController = MainController.initController();
+    webViewController
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(AppColors.white100)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) async {
+            if (request.url.contains("/api/transaction/success")) {
+              String result = await transactionController
+                  .updateTransaction(
+                      "${response.orderId}", response.paymentDetailsId ?? 0)
+                  .whenComplete(() => Get.offAll(() => const HomeScreen()));
+              if (result == "Success") {
+                showCustomSnackBar(context, "Thông báo",
+                    "Thanh toán thành công", ContentType.success, 2);
+              } else {
+                showCustomSnackBar(
+                    context,
+                    "Có lỗi xảy ra",
+                    "Thanh toán thất bại\nChi tiết $result",
+                    ContentType.failure,
+                    2);
+              }
+              return NavigationDecision.prevent;
+            } else if (request.url.contains("/api/transaction/cancel")) {
+              String result = await transactionController.cancleTransaction(
+                  "${response.orderId}", response.paymentDetailsId ?? 0);
+              if (result == "Success") {
+                showCustomSnackBar(context, "Thông báo", "Đã huỷ thanh toán",
+                        ContentType.help, 2)
+                    .whenComplete(() => showDelayedLoadingAnimation(
+                            context, "assets/animations/loading.json", 140.w, 2)
+                        .whenComplete(
+                            () => Get.offAll(() => const HomeScreen())));
+              } else {
+                showCustomSnackBar(
+                    context, "Lỗi", "Có lỗi xảy ra", ContentType.failure, 2);
+              }
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(
+          Uri.parse("${response.paymentResponse?.data?.checkoutUrl}"));
+    Get.to(
+        () => WillPopScope(
+              onWillPop: () async {
+                transactionController.cancleTransaction(
+                    "${response.orderId}", response.paymentDetailsId ?? 0);
+                return true;
+              },
+              child: PaymentWebView(
+                webViewController: webViewController,
+              ),
+            ),
+        transition: Transition.downToUp);
   }
 }
 
@@ -241,7 +270,7 @@ class AccountAddress extends StatelessWidget {
               ),
               subtitle: Obx(
                 () => Text(
-                  "${transactionController.selectedAddress.value.receiverName} | ${transactionController.selectedAddress.value.receiverPhone}",
+                  "${transactionController.selectedAddress.value?.receiverName} | ${transactionController.selectedAddress.value?.receiverPhone}",
                   style: GoogleFonts.roboto(
                       fontSize: 13.r, color: AppColors.dark20),
                 ),
@@ -276,7 +305,7 @@ class AccountAddress extends StatelessWidget {
               child: NoGlowingScrollView(
                 child: Obx(
                   () => Text(
-                    "${transactionController.selectedAddress.value.details}, ${transactionController.selectedAddress.value.ward}, ${transactionController.selectedAddress.value.district}, ${transactionController.selectedAddress.value.province}",
+                    "${transactionController.selectedAddress.value?.details}, ${transactionController.selectedAddress.value?.ward}, ${transactionController.selectedAddress.value?.district}, ${transactionController.selectedAddress.value?.province}",
                     textAlign: TextAlign.justify,
                     style: GoogleFonts.roboto(
                         fontSize: 13.r, color: AppColors.dark20),

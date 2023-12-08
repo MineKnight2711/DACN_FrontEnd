@@ -1,24 +1,24 @@
 class TransactionResponseModel {
-  final String orderId;
-  final int paymentDetailsId;
-  final PaymentResponseModel paymentResponse;
+  String? orderId;
+  int? paymentDetailsId;
+  PaymentResponseModel? paymentResponse;
   TransactionResponseModel(
-      {required this.orderId,
-      required this.paymentDetailsId,
-      required this.paymentResponse});
-  factory TransactionResponseModel.fromJson(Map<String, dynamic> json) {
+      {this.orderId, this.paymentDetailsId, this.paymentResponse});
+  factory TransactionResponseModel.fromJson(Map<String, dynamic>? json) {
     return TransactionResponseModel(
-      orderId: json['orderId'] as String,
-      paymentDetailsId: json['paymentDetailsId'] as int,
-      paymentResponse: PaymentResponseModel.fromJson(json['paymentResponse']),
+      orderId: json?['orderId'] as String?,
+      paymentDetailsId: json?['paymentDetailsId'] as int?,
+      paymentResponse: json?['paymentResponse'] != null
+          ? PaymentResponseModel.fromJson(json?['paymentResponse'])
+          : null,
     );
   }
 }
 
 class PaymentResponseModel {
-  final String code;
-  final String desc;
-  final PaymentData data;
+  String? code;
+  String? desc;
+  PaymentData? data;
 
   PaymentResponseModel(
       {required this.code, required this.desc, required this.data});
@@ -33,20 +33,20 @@ class PaymentResponseModel {
 }
 
 class PaymentData {
-  final double amount;
-  final String description;
-  final int orderCode;
-  final String status;
-  final String checkoutUrl;
-  final String qrCode;
+  double? amount;
+  String? description;
+  int? orderCode;
+  String? status;
+  String? checkoutUrl;
+  String? qrCode;
 
   PaymentData({
-    required this.amount,
-    required this.description,
-    required this.orderCode,
-    required this.status,
-    required this.checkoutUrl,
-    required this.qrCode,
+    this.amount,
+    this.description,
+    this.orderCode,
+    this.status,
+    this.checkoutUrl,
+    this.qrCode,
   });
 
   factory PaymentData.fromJson(Map<String, dynamic> json) {

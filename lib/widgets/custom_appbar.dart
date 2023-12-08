@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,5 +56,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(50.h);
 }

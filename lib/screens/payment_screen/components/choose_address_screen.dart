@@ -40,7 +40,7 @@ class ChooseAddressScreen extends GetView {
                           );
                         },
                         child: transactionController
-                                    .selectedAddress.value.addressID ==
+                                    .selectedAddress.value?.addressID ==
                                 address.addressID
                             ? const Icon(
                                 Icons.check,

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class OrderDTO {
   int? quantity;
   DateTime? orderDate;
@@ -13,17 +11,6 @@ class OrderDTO {
     this.dishes,
   });
 
-  // factory Order.fromJson(Map<String, dynamic> json) {
-  //   return Order(
-  //     status: json['status'],
-  //     quantity: json['quantity'],
-  //     orderDate: json['orderDate'],
-  //     deliveryInfo: json['deliveryInfo'],
-  //     dishes: (json['dishes'] as List)
-  //         .map((dish) => DishItem.fromJson(dish))
-  //         .toList(),
-  //   );
-  // }
   Map<String, dynamic> toJson() {
     return {
       'quantity': quantity,
@@ -113,12 +100,20 @@ class TransactionModel {
     this.paymentDetailsDTO,
     this.paymentRequestBody,
   });
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toVietQRJson() {
     return {
       'accountId': accountId,
       'ordersDTO': ordersDTO?.toJson(),
       'paymentDetailsDTO': paymentDetailsDTO?.toJson(),
       'paymentRequestBody': paymentDetailsDTO?.toJson(),
+    };
+  }
+
+  Map<String, dynamic> toCODJson() {
+    return {
+      'accountId': accountId,
+      'ordersDTO': ordersDTO?.toJson(),
+      'paymentDetailsDTO': paymentDetailsDTO?.toJson(),
     };
   }
 }

@@ -22,6 +22,10 @@ class ApiUrl {
   static const apiGetDishesByCategoryID = '$apiDish/get-by-categoryId';
   static const apiPayment = '${baseUrl}payment';
   static const apiTransaction = '${baseUrl}transaction';
+  static const apiTransactionVietQR = '$apiTransaction/VietQR-PAYOS';
+  static const apiTransactionCOD = '$apiTransaction/COD';
+  static const apiTransactionUpdate = '$apiTransaction/update';
+  static const apiTransactionCancel = '$apiTransaction/cancel';
   static const apiFavorite = '${baseUrl}favorite';
   static const apiGetListFavorite = '$apiFavorite/get-by-accountId';
   // static const apiFindAccountById = '${baseUrl}account';
@@ -29,6 +33,7 @@ class ApiUrl {
   // static const apiForgotPassword = '${baseUrl}account/reset-password';
   // static const apiGetProductById = '${baseUrl}product/getById';
   // static const apiGetProductDetailsById = '${baseUrl}productDetail/getById';
+  static const apiOrder = '${baseUrl}order';
   static const apiCart = '${baseUrl}cart';
   static const apiClearCart = '$apiCart/delete-many-cart';
 

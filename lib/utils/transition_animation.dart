@@ -18,30 +18,26 @@ void showLoadingAnimation(
   );
 }
 
-void showDelayedLoadingAnimation(
+Future<void> showDelayedLoadingAnimation(
   BuildContext context,
   String animationPath,
   double size,
   int? delayInSeconds,
 ) async {
   showDialog(
-    context: context,
-    builder: (context) {
-      return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Padding(
-          padding: EdgeInsets.only(bottom: 15.h),
+      context: context,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => false,
           child: Center(
             child: Lottie.asset(animationPath, width: size, height: size),
           ),
-        ),
-      );
-    },
-  );
+        );
+      });
 
-  // Check if delayInSeconds is provided and wait for that duration
+  // Wait if delay specified
   if (delayInSeconds != null && delayInSeconds > 0) {
-    await Future.delayed(Duration(seconds: delayInSeconds))
+    return await Future.delayed(Duration(seconds: delayInSeconds))
         .whenComplete(() => Get.back());
   }
 }

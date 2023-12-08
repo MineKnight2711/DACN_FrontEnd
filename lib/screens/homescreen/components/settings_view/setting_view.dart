@@ -6,10 +6,12 @@ import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
+import 'package:fooddelivery_fe/controller/order_controller.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
 import 'package:fooddelivery_fe/screens/favorite_screen/favorite_screen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
+import 'package:fooddelivery_fe/screens/order_screen/order_screen.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -143,7 +145,11 @@ class SettingsView extends StatelessWidget {
 
 List<ExtensionCard> extensionsCard = [
   ExtensionCard(
-    onPressed: () {},
+    onPressed: () {
+      final orderController = Get.put(OrderController());
+      orderController.getAccountOrders();
+      Get.to(() => OrdersScreen(), transition: Transition.upToDown);
+    },
     icon: CupertinoIcons.square_list,
     title: 'Lịch sử đơn hàng',
   ),

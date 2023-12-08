@@ -12,15 +12,34 @@ class TransactionApi {
     'X-Client-Id': "Test",
     'X-Api-Key': "Test",
   };
-  Future<ResponseBaseModel> performTransaction(
+  Future<ResponseBaseModel> performVietQRTransaction(
       TransactionModel transaction) async {
-    Logger().i("Log transaction model :${transaction.toJson()}");
+    Logger().i("Log transaction model :${transaction.toVietQRJson()}");
     final response = await http.post(
-      Uri.parse(ApiUrl.apiTransaction),
+      Uri.parse(ApiUrl.apiTransactionVietQR),
       headers: headers,
-      body: jsonEncode(transaction.toJson()),
+      body: jsonEncode(transaction.toVietQRJson()),
     );
     // Logger().i("Log transaction model :${transaction.toJson()}");
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'Error';
+    return responseBase;
+  }
+
+  Future<ResponseBaseModel> performCODTransaction(
+      TransactionModel newTransaction) async {
+    Logger().i("Log transaction model :${newTransaction.toCODJson()}");
+    final response = await http.post(
+      Uri.parse(ApiUrl.apiTransactionCOD),
+      headers: headers,
+      body: jsonEncode(newTransaction.toCODJson()),
+    );
+    Logger().i("Log response :${jsonDecode(utf8.decode(response.bodyBytes))}");
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (response.statusCode == 200) {
       responseBase = ResponseBaseModel.fromJson(
@@ -34,7 +53,25 @@ class TransactionApi {
   Future<ResponseBaseModel> updateTransaction(
       String orderId, int paymentDetailsId) async {
     final Uri uri = Uri.parse(
-        "${ApiUrl.apiTransaction}?orderId=$orderId&paymentDetailsId=$paymentDetailsId");
+        "${ApiUrl.apiTransactionUpdate}?orderId=$orderId&paymentDetailsId=$paymentDetailsId");
+    final response = await http.put(
+      uri,
+      headers: headers,
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'Error';
+    return responseBase;
+  }
+
+  Future<ResponseBaseModel> cancelTransaction(
+      String orderId, int paymentDetailsId) async {
+    final Uri uri = Uri.parse(
+        "${ApiUrl.apiTransactionCancel}?orderId=$orderId&paymentDetailsId=$paymentDetailsId");
     final response = await http.put(
       uri,
       headers: headers,
