@@ -17,19 +17,25 @@ class OrderTabBarController extends GetxController {
       length: tabs.length,
       vsync: _tickerProvider,
     );
-    tabs.stream.listen(_onTabChanged);
   }
 
-  void _onTabChanged(List<String>? tabs) {
-    int newLength = tabs?.length ?? 0;
-    if (newLength != tabController.value?.length) {
-      initTabController(_tickerProvider);
-    }
-  }
+  // void _onTabChanged(List<String> tabs) {
+  //   int newLength = tabs.length;
+  //   if (tabController.value != null) {
+  //     int index = tabController.value!.index;
+
+  //     // Access passed in tabs parameter
+  //     print(tabs[index]);
+  //   }
+  //   if (newLength != tabController.value?.length) {
+  //     initTabController(_tickerProvider);
+  //   }
+  // }
 
   @override
   void onInit() {
     tabs.value = [
+      "Chờ thanh toán",
       "Đang thực hiện",
       "Đã hoàn tất",
       "Đã huỷ",

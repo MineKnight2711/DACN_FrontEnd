@@ -4,7 +4,6 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fooddelivery_fe/api/base_url.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
@@ -100,12 +99,12 @@ class CheckoutScreen extends GetView {
                 listItem: listItem,
                 listHeight: caculatecartItemHeight(listItem.length),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
               PaymentMethodAndVoucher(
                 transactionController: transactionController,
                 paymentController: paymentController,
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
               PaymentDetails(
                 cartTotal: cartController.calculateTotal().value,
                 itemAmount: listItem.fold(
@@ -113,7 +112,7 @@ class CheckoutScreen extends GetView {
                     (previousValue, cartItem) =>
                         previousValue += cartItem.quantity ?? 0),
               ),
-              SizedBox(height: 25.h),
+              SizedBox(height: 15.h),
               RoundIconButton(
                 size: 80.r,
                 onPressed: () async {
@@ -140,13 +139,16 @@ class CheckoutScreen extends GetView {
                             listItem, cartController.calculateTotal().value)
                         .whenComplete(() => Get.back());
                     print("Result --------- ${result.message}");
-                    TransactionResponseModel response =
-                        TransactionResponseModel.fromJson(result.data);
+
                     if (result.message == "Success") {
+                      TransactionResponseModel response =
+                          TransactionResponseModel.fromJson(result.data);
                       transactionController.refresh();
                       await cartController.clearCart();
                       showCustomSnackBar(context, "Thông báo",
                           "Đặt hàng thành công", ContentType.success, 2);
+                      print(
+                          "Result --------- ${response.paymentResponse?.data?.checkoutUrl}");
                       if (response.paymentResponse != null) {
                         toCheckoutWebView(context, response);
                       }
@@ -154,8 +156,8 @@ class CheckoutScreen extends GetView {
                       showCustomSnackBar(
                           context,
                           "Lỗi",
-                          "Có lỗi xảy ra :\nChi tiết :${result.message}",
-                          ContentType.success,
+                          "Có lỗi xảy ra :\nChi tiết :${result.data}",
+                          ContentType.failure,
                           2);
                     }
                   }

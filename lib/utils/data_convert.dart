@@ -46,12 +46,13 @@ class DataConvert {
     return result;
   }
 
-  String formattedOrderDate(DateTime orderDate) {
-    String amPm = orderDate.hour < 12 ? "AM" : "PM  ";
-    // int hour =
-    //     orderDate.hour < 12 ? orderDate.hour : orderDate.hour - 12;
-    return DateFormat("dd/MM/yyyy 'lúc' h:mm '$amPm' ", 'vi_VN')
-        .format(orderDate);
+  String formattedOrderDate(DateTime? orderDate) {
+    if (orderDate != null) {
+      String amPm = orderDate.hour < 12 ? "AM" : "PM  ";
+      return DateFormat("dd/MM/yyyy 'lúc' h:mm '$amPm' ", 'vi_VN')
+          .format(orderDate);
+    }
+    return "Undefined";
   }
 
   String removeDiacritics(String text) {

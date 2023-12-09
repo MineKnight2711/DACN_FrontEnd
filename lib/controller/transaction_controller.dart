@@ -4,7 +4,6 @@ import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/model/payment_model.dart';
-import 'package:fooddelivery_fe/model/transaction_response.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
 import 'package:fooddelivery_fe/model/transaction_model.dart';
 import 'package:get/get.dart';
@@ -90,24 +89,15 @@ class TransactionController extends GetxController {
           newTransaction.paymentRequestBody = newPaymentRequestBody;
           final response =
               await _transactionApi.performVietQRTransaction(newTransaction);
-          if (response.message == "Success") {
-            responseBaseModel.message = "Success";
-            responseBaseModel.data = response.data;
-            return responseBaseModel;
-          }
-          return responseBaseModel;
+          Logger().i("Log transaction model :${response.data}");
+          return response;
         } else if (paymentMethod == "COD") {
           final response =
               await _transactionApi.performCODTransaction(newTransaction);
-          if (response.message == "Success") {
-            responseBaseModel.message = response.message;
-            responseBaseModel.data = response.data;
-            return responseBaseModel;
-          }
-          return responseBaseModel;
+
+          return response;
         }
       }
-
       responseBaseModel.message = "Fail";
       return responseBaseModel;
     }
@@ -118,6 +108,7 @@ class TransactionController extends GetxController {
   Future<String> updateTransaction(String orderId, int paymentDetailsId) async {
     final response =
         await _transactionApi.updateTransaction(orderId, paymentDetailsId);
+    print("Update result --------- ${response..data}");
     return response.message ?? "";
   }
 

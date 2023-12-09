@@ -34,6 +34,7 @@ class ApiUrl {
   // static const apiGetProductById = '${baseUrl}product/getById';
   // static const apiGetProductDetailsById = '${baseUrl}productDetail/getById';
   static const apiOrder = '${baseUrl}order';
+  static const apiOrderByStatus = '$apiOrder/get-by-orderState';
   static const apiCart = '${baseUrl}cart';
   static const apiClearCart = '$apiCart/delete-many-cart';
 

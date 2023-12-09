@@ -1,4 +1,23 @@
 import 'package:fooddelivery_fe/model/account_model.dart';
+import 'package:fooddelivery_fe/model/dish_model.dart';
+
+class OrderDetailsDTO {
+  OrderModel? order;
+  List<DetailsDTO>? detailList;
+
+  OrderDetailsDTO({this.order, this.detailList});
+
+  factory OrderDetailsDTO.fromJson(Map<String, dynamic> json) {
+    return OrderDetailsDTO(
+      order: json['order'] != null ? OrderModel.fromJson(json['order']) : null,
+      detailList: json['detailList'] != null
+          ? (json['detailList'] as List)
+              .map((detail) => DetailsDTO.fromJson(detail))
+              .toList()
+          : null,
+    );
+  }
+}
 
 class OrderModel {
   String? orderID;
@@ -42,6 +61,22 @@ class OrderModel {
           : null,
       orderDate:
           json['orderDate'] != null ? DateTime.parse(json['orderDate']) : null,
+    );
+  }
+}
+
+class DetailsDTO {
+  DishModel? dish;
+  int? amount;
+  double? price;
+
+  DetailsDTO({this.dish, this.amount, this.price});
+
+  factory DetailsDTO.fromJson(Map<String, dynamic> json) {
+    return DetailsDTO(
+      dish: json['dish'] != null ? DishModel.fromJson(json['dish']) : null,
+      amount: json['amount'],
+      price: json['price'],
     );
   }
 }

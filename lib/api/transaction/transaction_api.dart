@@ -9,8 +9,10 @@ import 'package:logger/logger.dart';
 class TransactionApi {
   final headers = <String, String>{
     'Content-Type': 'application/json',
-    'X-Client-Id': "Test",
-    'X-Api-Key': "Test",
+    'X-Api-Key':
+        "\$2a\$10\$CL1Hl1P/RBMh4wR4themGuQRkIuvGgOz/OOYOuXByXJ3fH84XLjFK",
+    'X-Client-Id':
+        "\$2a\$10\$RFxfUKtO1roIyye0zxfETuRfNmHJiIdX5uSwy9uzcuriFCdnCw93W",
   };
   Future<ResponseBaseModel> performVietQRTransaction(
       TransactionModel transaction) async {
@@ -58,6 +60,8 @@ class TransactionApi {
       uri,
       headers: headers,
     );
+    Logger().i("Log response :${jsonDecode(utf8.decode(response.bodyBytes))}");
+
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (response.statusCode == 200) {
       responseBase = ResponseBaseModel.fromJson(
