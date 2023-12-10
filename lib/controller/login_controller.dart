@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
+import 'package:fooddelivery_fe/model/email_verification.dart' as emailver;
+import 'package:fooddelivery_fe/model/email_verification.dart';
 
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
 import 'package:fooddelivery_fe/utils/text_controller.dart';
@@ -30,43 +32,60 @@ class LoginController extends GetxController {
   }
 
   Future<String?> login(String email, String password) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: textControllers.txtEmailLogin.text,
-              password: textControllers.txtPasswordLogin.text);
-      if (userCredential.user != null) {
-        return await getAccountFromDatabase(email);
+    final signInResponse = await _accountApi.signIn(email, password);
+    if (signInResponse.message == "Success") {
+      UserSignInResponse signInUser =
+          UserSignInResponse.fromJson(signInResponse.data);
+      final verifiedResponse =
+          await _accountApi.verifiedEmail(email, "${signInUser.idToken}");
+      if (verifiedResponse.message == "Success") {
+        emailver.EmailVerificationResponse verificationResponse =
+            emailver.EmailVerificationResponse.fromJson(verifiedResponse.data);
+        emailver.User? user = verificationResponse.users
+            .firstWhereOrNull((user) => user.emailVerified == false);
+        if (user != null) {
+          final signOutResponse =
+              await _accountApi.signout("${signInUser.localId}");
+          if (signOutResponse.message == "Success") {
+            return "EmailNotVerified";
+          }
+        }
+        await getAccountFromDatabase(email);
+        return "AccountVerified";
       }
-      return "AuthenticationFail";
-    } on FirebaseAuthException catch (error) {
-      return catchFirebaseAuthException(error.code);
+      final signOutResponse =
+          await _accountApi.signout("${signInUser.localId}");
+      if (signOutResponse.message == "Success") {
+        return "EmailNotVerified";
+      }
+      return "VerificationFail";
     }
+    return "AccountNotFound";
   }
 
-  String catchFirebaseAuthException(String errorCode) {
-    print(errorCode);
-    switch (errorCode) {
-      case "invalid-email":
-        return "Email không hợp lệ!";
-      case "wrong-password":
-        return "Sai mật khẩu hoặc tài khoản không có mật khẩu\nNếu tài khoản của bạn đã liên kết với google hãy dùng chức năng bên dưới .";
-      case "user-not-found":
-        return "Tài khoản không tồn tại.";
-      case "user-disabled":
-        return "Tài khoản bị khoá.";
-      case "too-many-requests":
-        return "Sai mật khẩu quá nhiều lần vui lòng đợi 30 giây";
-      case "requires-recent-login":
-        return "Yêu cầu đăng nhập gần đây để thực hiện thao tác nhạy cảm.";
-      case "operation-not-allowed":
-        return "Không thể đăng nhập vui lòng liên hệ người phát triển.";
-      case "INVALID_LOGIN_CREDENTIALS":
-        return "Email hoặc mật khẩu không hợp lệ";
-      default:
-        return "Lỗi chưa xác định.";
-    }
-  }
+  // String catchFirebaseAuthException(String errorCode) {
+  //   print(errorCode);
+  //   switch (errorCode) {
+  //     case "invalid-email":
+  //       return "Email không hợp lệ!";
+  //     case "wrong-password":
+  //       return "Sai mật khẩu hoặc tài khoản không có mật khẩu\nNếu tài khoản của bạn đã liên kết với google hãy dùng chức năng bên dưới .";
+  //     case "user-not-found":
+  //       return "Tài khoản không tồn tại.";
+  //     case "user-disabled":
+  //       return "Tài khoản bị khoá.";
+  //     case "too-many-requests":
+  //       return "Sai mật khẩu quá nhiều lần vui lòng đợi 30 giây";
+  //     case "requires-recent-login":
+  //       return "Yêu cầu đăng nhập gần đây để thực hiện thao tác nhạy cảm.";
+  //     case "operation-not-allowed":
+  //       return "Không thể đăng nhập vui lòng liên hệ người phát triển.";
+  //     case "INVALID_LOGIN_CREDENTIALS":
+  //       return "Email hoặc mật khẩu không hợp lệ";
+  //     default:
+  //       return "Lỗi chưa xác định.";
+  //   }
+  // }
 
   Future<String> getAccountFromDatabase(String email) async {
     ResponseBaseModel? responseBaseModel = await _accountApi.login(email);

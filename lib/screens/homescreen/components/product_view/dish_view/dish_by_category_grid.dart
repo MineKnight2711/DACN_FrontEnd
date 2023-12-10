@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/model/dish_model.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 
@@ -60,7 +61,7 @@ class DishByCategoryGridView extends StatelessWidget {
                             color: AppColors.orange100,
                             image: DecorationImage(
                                 image: Image.network(
-                              dish.imageUrl,
+                              "${dish.imageUrl}",
                               scale: 0.5,
                               fit: BoxFit.cover,
                             ).image),
@@ -77,13 +78,13 @@ class DishByCategoryGridView extends StatelessWidget {
                             children: [
                               Text(
                                 dish.dishName,
-                                style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
+                                style: CustomFonts.customGoogleFonts(
+                                    fontSize: 16.r),
                               ),
                               Text(
                                 DataConvert().formatCurrency(dish.price),
-                                style: const TextStyle(fontSize: 14.0),
+                                style: CustomFonts.customGoogleFonts(
+                                    fontSize: 14.r),
                               ),
                             ],
                           ),

@@ -96,13 +96,12 @@ class MapScreen extends GetView {
                             if (!await geolocator.Geolocator
                                 .isLocationServiceEnabled()) {
                               showCustomSnackBar(
-                                      context,
-                                      "Thông báo",
-                                      "Vui lòng bật cài đặt vị trí",
-                                      ContentType.warning,
-                                      2)
-                                  .whenComplete(
-                                      () => mapController.getCurrentPosition());
+                                  context,
+                                  "Thông báo",
+                                  "Vui lòng bật cài đặt vị trí",
+                                  ContentType.warning,
+                                  2);
+                              await geolocator.Geolocator.requestPermission();
                             }
                             break;
                           default:

@@ -87,25 +87,46 @@ class LoginScreen extends GetView {
                             loginController.textControllers.txtEmailLogin.text,
                             loginController
                                 .textControllers.txtPasswordLogin.text)
-                        .whenComplete(() => Navigator.pop(context));
-                    if (result == "Success") {
-                      showCustomSnackBar(context, "Thông báo",
-                              "Đăng nhập thành công!", ContentType.success, 1)
-                          .whenComplete(() {
-                        loginController.textControllers.clearLoginText();
-                        Get.off(const HomeScreen(),
-                            transition: Transition.fadeIn);
-                      });
-                    } else if (result == "AccountNotFound") {
-                      showCustomSnackBar(context, "Lỗi",
-                          "Không tìm thấy tài khoản!", ContentType.failure, 2);
-                    } else {
-                      showCustomSnackBar(
-                          context,
-                          "Lỗi",
-                          "Có lỗi xảy ra\nChi tiết: $result",
-                          ContentType.failure,
-                          2);
+                        .whenComplete(() => Get.back());
+                    switch (result) {
+                      case "AccountVerified":
+                        showCustomSnackBar(context, "Thông báo",
+                                "Đăng nhập thành công!", ContentType.success, 1)
+                            .whenComplete(() {
+                          loginController.textControllers.clearLoginText();
+                          Get.off(const HomeScreen(),
+                              transition: Transition.fadeIn);
+                        });
+                        break;
+                      case "VerificationFail":
+                        showCustomSnackBar(
+                            context,
+                            "Thông báo",
+                            "Xác thực không thành công\nĐăng nhập thất bại!",
+                            ContentType.failure,
+                            2);
+                        break;
+                      case "AccountNotFound":
+                        showCustomSnackBar(
+                            context,
+                            "Thông báo",
+                            "Không tìm thấy tài khoản \nVui lòng kiểm tra email và mật khẩu!",
+                            ContentType.failure,
+                            2);
+
+                        break;
+                      case "EmailNotVerified":
+                        showCustomSnackBar(
+                            context,
+                            "Thông báo",
+                            "Email chưa được xác thực\nVui lòng xác thực email!",
+                            ContentType.failure,
+                            2);
+                        break;
+                      default:
+                        showCustomSnackBar(context, "Thông báo",
+                            "Lỗi chưa xác định!", ContentType.failure, 2);
+                        break;
                     }
                   },
                   color: AppColors.orange100,
@@ -154,7 +175,6 @@ class LoginScreen extends GetView {
                   showLoadingAnimation(
                       context, "assets/animations/loading_1.json", 180);
                   String? result = await loginController.signInWithGoogle();
-                  print(result);
                   switch (result) {
                     case "LoginSuccess":
                       showCustomSnackBar(context, "Thông báo",
@@ -162,11 +182,16 @@ class LoginScreen extends GetView {
                       Get.off(const HomeScreen(),
                           transition: Transition.rightToLeft);
                       break;
+                    case "SignUpSuccess":
+                      showCustomSnackBar(context, "Thông báo",
+                          "Đăng ký thành công", ContentType.success, 2);
+                      Get.off(const HomeScreen(),
+                          transition: Transition.rightToLeft);
+                      break;
                     default:
                       showCustomSnackBar(context, "Lỗi", "Có lỗi xảy ra!",
                               ContentType.failure, 2)
                           .whenComplete(() => Navigator.pop(context));
-
                       break;
                   }
                 },

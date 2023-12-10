@@ -8,6 +8,7 @@ import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/datetime_picker.dart';
 import 'package:fooddelivery_fe/widgets/gender_chose.dart';
@@ -122,11 +123,19 @@ class SignUpScreen extends GetView {
                     enabled: registerController.validate.isSignUpValid.value,
                     title: tr("Sign Up"),
                     onPressed: () async {
-                      String? result = await registerController.register();
-                      print(result);
-                      if (result == "Success") {
-                        showCustomSnackBar(context, "Thông báo",
-                            "Đăng ký thành công!", ContentType.success, 2);
+                      showLoadingAnimation(
+                          context, "assets/animations/loading.json", 180);
+                      final result = await registerController.register();
+                      if (result.message == "Success") {
+                        await registerController
+                            .saveSignInUserToDatabase()
+                            .whenComplete(() => Get.back());
+                        showCustomSnackBar(
+                            context,
+                            "Thông báo",
+                            "Đăng ký thành công!\nChúng tôi đã gửi 1 email xác thực đến bạn.\nVui lòng kiểm tra hộp thư của bạn!",
+                            ContentType.success,
+                            2);
                         Get.off(LoginScreen(),
                             transition: Transition.leftToRight);
                       } else {

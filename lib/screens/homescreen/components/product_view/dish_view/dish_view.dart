@@ -4,6 +4,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
@@ -98,7 +99,7 @@ class _ListDishViewState extends State<ListDishView> {
                                     context: context,
                                     builder: (context) {
                                       return ImageViewer(
-                                          imageUrl: dish.imageUrl);
+                                          imageUrl: "${dish.imageUrl}");
                                     },
                                   );
                                 },
@@ -109,27 +110,34 @@ class _ListDishViewState extends State<ListDishView> {
                                     width: 100.w,
                                     height: 120.h,
                                     child: Image.network(
-                                      dish.imageUrl,
+                                      "${dish.imageUrl}",
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
                               ),
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: 5.h),
-                                    Text(
-                                      dish.dishName,
-                                      style: GoogleFonts.roboto(fontSize: 16.r),
-                                    ),
-                                    SizedBox(height: 10.h),
-                                    Text(
-                                      DataConvert().formatCurrency(dish.price),
-                                      style: GoogleFonts.roboto(fontSize: 16.r),
-                                    ),
-                                  ],
+                                child: Padding(
+                                  padding: EdgeInsets.all(6.r),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 5.h),
+                                      Text(
+                                        dish.dishName,
+                                        style: CustomFonts.customGoogleFonts(
+                                            fontSize: 16.r),
+                                      ),
+                                      SizedBox(height: 10.h),
+                                      Text(
+                                        DataConvert()
+                                            .formatCurrency(dish.price),
+                                        style: CustomFonts.customGoogleFonts(
+                                            fontSize: 14.r),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Column(

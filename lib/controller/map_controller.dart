@@ -141,8 +141,6 @@ class MapController extends GetxController {
   }
 
   void centerCameraOnCoordinate(double lat, double longLat) {
-    Logger().i("Lng $longLatitude - Lat $lat");
-
     circleManager.value?.deleteAll();
     mapboxMap.value?.setCamera(CameraOptions(
         center: Point(

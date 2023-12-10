@@ -6,17 +6,22 @@ class ApiUrl {
   //ip wifi nhà - 192.168.0.106
   //ip mobile hostspot - 192.168.29.192/192.168.191.192s
   //ip debug lan - 192.168.93.160/192.168.93.111
+  //ip radmin vpn - 26.196.143.193
 
   // static const baseUrl =
   //     'https://testjava-fooddelivery-07101b5575c7.herokuapp.com/api/';
 
-  static const baseUrl = "http://26.196.143.193:6969/api/";
+  static const baseUrl = "http://192.168.1.44:6969/api/";
   // static const apiGetAllAccount = '${baseUrl}account/all';
   static const apiGoongMapBaseUrl = "https://rsapi.goong.io/";
   ///// Api của Đạt-------------------------------------------------
   static const apiCreateAccount = '${baseUrl}account';
   static const apiUpdateAccount = '${baseUrl}account/update-account';
   static const apiLoginWithEmail = '${baseUrl}account/login-by-email';
+  static const apiSignUpWithFireBase = '${baseUrl}account/create-user';
+  static const apiSignInWithFireBase = '${baseUrl}account/sign-in';
+  static const apiSignOut = '${baseUrl}account/sign-out';
+  static const apiVerifiedEmail = '${baseUrl}account/get-user-info';
   static const apiGetAllCategory = '${baseUrl}category';
   static const apiDish = '${baseUrl}dish';
   static const apiGetDishesByCategoryID = '$apiDish/get-by-categoryId';

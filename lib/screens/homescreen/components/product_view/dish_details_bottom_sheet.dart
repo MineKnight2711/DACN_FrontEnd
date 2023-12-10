@@ -39,7 +39,7 @@ class DishDetailsBottomSheet extends StatelessWidget {
                       color: Colors.amber[100],
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Image.network(dish.imageUrl).image,
+                        image: Image.network("${dish.imageUrl}").image,
                       )),
                   width: double.infinity,
                   height: 400.h,
