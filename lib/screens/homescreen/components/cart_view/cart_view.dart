@@ -87,15 +87,37 @@ class CartView extends StatelessWidget {
                     }
                   }
                 : null,
-            checkoutPressed: () {
+            checkoutPressed: () async {
               final paymentController = Get.put(PaymentController());
               final transactionController = Get.put(TransactionController());
-              paymentController.getAllListPayment();
-              transactionController.getAccountListAddress();
-              Get.to(
-                () => CheckoutScreen(cartController.listCart),
-                transition: Transition.downToUp,
-              );
+
+              await paymentController.getAllListPayment();
+              final addressResult =
+                  await transactionController.getAccountListAddress();
+              if (addressResult == "NoAddress") {
+                Get.delete<PaymentController>();
+                Get.delete<TransactionController>();
+                showCustomSnackBar(
+                    context,
+                    "Thông báo",
+                    "Bạn chưa có địa chỉ!\nVui lòng thêm địa chỉ để đặt hàng!",
+                    ContentType.warning,
+                    3);
+              } else if (addressResult == "NoPhone") {
+                Get.delete<PaymentController>();
+                Get.delete<TransactionController>();
+                showCustomSnackBar(
+                    context,
+                    "Thông báo",
+                    "Bạn chưa có cố điện thoại!\nVui lòng thêm số điện thoại để đặt hàng!",
+                    ContentType.warning,
+                    3);
+              } else {
+                Get.to(
+                  () => CheckoutScreen(cartController.listCart),
+                  transition: Transition.downToUp,
+                );
+              }
             },
           ),
         ),

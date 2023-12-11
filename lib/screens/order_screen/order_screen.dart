@@ -5,7 +5,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/order_controller.dart';
+import 'package:fooddelivery_fe/screens/order_screen/compinent/list_details_dishes.dart';
+import 'package:fooddelivery_fe/screens/order_screen/compinent/order_details_bottom_sheet.dart';
 import 'package:fooddelivery_fe/screens/order_screen/compinent/order_tabbar_controller.dart';
+import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_bottom_sheet.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
@@ -111,84 +114,54 @@ class _OrdersScreenState extends State<OrdersScreen>
                                             ],
                                           ),
                                           child: ListTile(
-                                            onTap: () {},
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                context: context,
+                                                isScrollControlled: true,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(20),
+                                                    topRight:
+                                                        Radius.circular(20),
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.white,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return SizedBox(
+                                                    height: 0.97.sh,
+                                                    child:
+                                                        DraggableScrollableSheet(
+                                                      shouldCloseOnMinExtent:
+                                                          true,
+                                                      initialChildSize: 1,
+                                                      minChildSize: 0.98,
+                                                      maxChildSize: 1,
+                                                      expand: false,
+                                                      builder: (context,
+                                                          scrollController) {
+                                                        return OrderDetailsBottomSheet(
+                                                          scrollController:
+                                                              scrollController,
+                                                          orderDetails:
+                                                              orderDetails,
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
                                             leading: Image.asset(
                                               "assets/images/delivery-man.png",
                                               width: 25.w,
                                             ),
-                                            title: RichText(
-                                              text: TextSpan(
-                                                style: CustomFonts
-                                                    .customGoogleFonts(
-                                                        fontSize: 14.r),
-                                                children: orderDetails
-                                                    .detailList
-                                                    ?.map((details) {
-                                                  if (orderDetails.detailList !=
-                                                      null) {
-                                                    final index = orderDetails
-                                                        .detailList!
-                                                        .indexOf(details);
-                                                    if (orderDetails.detailList!
-                                                            .length ==
-                                                        1) {
-                                                      return TextSpan(
-                                                        text:
-                                                            "${details.dish?.dishName}",
-                                                        style: CustomFonts
-                                                            .customGoogleFonts(
-                                                                fontSize: 14.r),
-                                                      );
-                                                    } else if (orderDetails
-                                                            .detailList!
-                                                            .isNotEmpty &&
-                                                        index < 2) {
-                                                      if (index == 1 &&
-                                                          orderDetails
-                                                                  .detailList!
-                                                                  .length ==
-                                                              2) {
-                                                        return TextSpan(
-                                                          text:
-                                                              "${details.dish?.dishName}",
-                                                          style: CustomFonts
-                                                              .customGoogleFonts(
-                                                                  fontSize:
-                                                                      14.r),
-                                                        );
-                                                      } else {
-                                                        return TextSpan(
-                                                          text:
-                                                              "${details.dish?.dishName}${index == 1 ? '' : ', '}",
-                                                          style: CustomFonts
-                                                              .customGoogleFonts(
-                                                                  fontSize:
-                                                                      14.r),
-                                                        );
-                                                      }
-                                                    } else if (orderDetails
-                                                                .detailList!
-                                                                .length >
-                                                            2 &&
-                                                        index == 2) {
-                                                      int remainingCount =
-                                                          orderDetails
-                                                                  .detailList!
-                                                                  .length -
-                                                              2;
-                                                      return TextSpan(
-                                                        text:
-                                                            " và $remainingCount món khác...",
-                                                        style: CustomFonts
-                                                            .customGoogleFonts(
-                                                                fontSize: 14.r),
-                                                      );
-                                                    }
-                                                  }
-                                                  return const TextSpan(
-                                                      text: "");
-                                                }).toList(),
-                                              ),
+                                            title: ListDetailsDishes(
+                                              detailList:
+                                                  orderDetails.detailList,
                                             ),
                                             subtitle: Text(DataConvert()
                                                 .formattedOrderDate(orderDetails
@@ -238,7 +211,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                     return Column(
                                       children: [
                                         Slidable(
-                                          groupTag: "listOnWaitOrder",
+                                          groupTag: "listOnDeliverOrder",
                                           endActionPane: ActionPane(
                                             motion: const DrawerMotion(),
                                             extentRatio: 0.2,
@@ -252,84 +225,54 @@ class _OrdersScreenState extends State<OrdersScreen>
                                             ],
                                           ),
                                           child: ListTile(
-                                            onTap: () {},
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                context: context,
+                                                isScrollControlled: true,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(20),
+                                                    topRight:
+                                                        Radius.circular(20),
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.white,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return SizedBox(
+                                                    height: 0.97.sh,
+                                                    child:
+                                                        DraggableScrollableSheet(
+                                                      shouldCloseOnMinExtent:
+                                                          true,
+                                                      initialChildSize: 1,
+                                                      minChildSize: 0.98,
+                                                      maxChildSize: 1,
+                                                      expand: false,
+                                                      builder: (context,
+                                                          scrollController) {
+                                                        return OrderDetailsBottomSheet(
+                                                          scrollController:
+                                                              scrollController,
+                                                          orderDetails:
+                                                              orderDetails,
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
                                             leading: Image.asset(
                                               "assets/images/delivery-man.png",
                                               width: 25.w,
                                             ),
-                                            title: RichText(
-                                              text: TextSpan(
-                                                style: CustomFonts
-                                                    .customGoogleFonts(
-                                                        fontSize: 14.r),
-                                                children: orderDetails
-                                                    .detailList
-                                                    ?.map((details) {
-                                                  if (orderDetails.detailList !=
-                                                      null) {
-                                                    final index = orderDetails
-                                                        .detailList!
-                                                        .indexOf(details);
-                                                    if (orderDetails.detailList!
-                                                            .length ==
-                                                        1) {
-                                                      return TextSpan(
-                                                        text:
-                                                            "${details.dish?.dishName}",
-                                                        style: CustomFonts
-                                                            .customGoogleFonts(
-                                                                fontSize: 14.r),
-                                                      );
-                                                    } else if (orderDetails
-                                                            .detailList!
-                                                            .isNotEmpty &&
-                                                        index < 2) {
-                                                      if (index == 1 &&
-                                                          orderDetails
-                                                                  .detailList!
-                                                                  .length ==
-                                                              2) {
-                                                        return TextSpan(
-                                                          text:
-                                                              "${details.dish?.dishName}",
-                                                          style: CustomFonts
-                                                              .customGoogleFonts(
-                                                                  fontSize:
-                                                                      14.r),
-                                                        );
-                                                      } else {
-                                                        return TextSpan(
-                                                          text:
-                                                              "${details.dish?.dishName}${index == 1 ? '' : ', '}",
-                                                          style: CustomFonts
-                                                              .customGoogleFonts(
-                                                                  fontSize:
-                                                                      14.r),
-                                                        );
-                                                      }
-                                                    } else if (orderDetails
-                                                                .detailList!
-                                                                .length >
-                                                            2 &&
-                                                        index == 2) {
-                                                      int remainingCount =
-                                                          orderDetails
-                                                                  .detailList!
-                                                                  .length -
-                                                              2;
-                                                      return TextSpan(
-                                                        text:
-                                                            " và $remainingCount món khác...",
-                                                        style: CustomFonts
-                                                            .customGoogleFonts(
-                                                                fontSize: 14.r),
-                                                      );
-                                                    }
-                                                  }
-                                                  return const TextSpan(
-                                                      text: "");
-                                                }).toList(),
-                                              ),
+                                            title: ListDetailsDishes(
+                                              detailList:
+                                                  orderDetails.detailList,
                                             ),
                                             subtitle: Text(DataConvert()
                                                 .formattedOrderDate(orderDetails
@@ -393,84 +336,54 @@ class _OrdersScreenState extends State<OrdersScreen>
                                             ],
                                           ),
                                           child: ListTile(
-                                            onTap: () {},
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                context: context,
+                                                isScrollControlled: true,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(20),
+                                                    topRight:
+                                                        Radius.circular(20),
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.white,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return SizedBox(
+                                                    height: 0.97.sh,
+                                                    child:
+                                                        DraggableScrollableSheet(
+                                                      shouldCloseOnMinExtent:
+                                                          true,
+                                                      initialChildSize: 1,
+                                                      minChildSize: 0.98,
+                                                      maxChildSize: 1,
+                                                      expand: false,
+                                                      builder: (context,
+                                                          scrollController) {
+                                                        return OrderDetailsBottomSheet(
+                                                          scrollController:
+                                                              scrollController,
+                                                          orderDetails:
+                                                              orderDetails,
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
                                             leading: Image.asset(
                                               "assets/images/delivery-man.png",
                                               width: 25.w,
                                             ),
-                                            title: RichText(
-                                              text: TextSpan(
-                                                style: CustomFonts
-                                                    .customGoogleFonts(
-                                                        fontSize: 14.r),
-                                                children: orderDetails
-                                                    .detailList
-                                                    ?.map((details) {
-                                                  if (orderDetails.detailList !=
-                                                      null) {
-                                                    final index = orderDetails
-                                                        .detailList!
-                                                        .indexOf(details);
-                                                    if (orderDetails.detailList!
-                                                            .length ==
-                                                        1) {
-                                                      return TextSpan(
-                                                        text:
-                                                            "${details.dish?.dishName}",
-                                                        style: CustomFonts
-                                                            .customGoogleFonts(
-                                                                fontSize: 14.r),
-                                                      );
-                                                    } else if (orderDetails
-                                                            .detailList!
-                                                            .isNotEmpty &&
-                                                        index < 2) {
-                                                      if (index == 1 &&
-                                                          orderDetails
-                                                                  .detailList!
-                                                                  .length ==
-                                                              2) {
-                                                        return TextSpan(
-                                                          text:
-                                                              "${details.dish?.dishName}",
-                                                          style: CustomFonts
-                                                              .customGoogleFonts(
-                                                                  fontSize:
-                                                                      14.r),
-                                                        );
-                                                      } else {
-                                                        return TextSpan(
-                                                          text:
-                                                              "${details.dish?.dishName}${index == 1 ? '' : ', '}",
-                                                          style: CustomFonts
-                                                              .customGoogleFonts(
-                                                                  fontSize:
-                                                                      14.r),
-                                                        );
-                                                      }
-                                                    } else if (orderDetails
-                                                                .detailList!
-                                                                .length >
-                                                            2 &&
-                                                        index == 2) {
-                                                      int remainingCount =
-                                                          orderDetails
-                                                                  .detailList!
-                                                                  .length -
-                                                              2;
-                                                      return TextSpan(
-                                                        text:
-                                                            " và $remainingCount món khác...",
-                                                        style: CustomFonts
-                                                            .customGoogleFonts(
-                                                                fontSize: 14.r),
-                                                      );
-                                                    }
-                                                  }
-                                                  return const TextSpan(
-                                                      text: "");
-                                                }).toList(),
-                                              ),
+                                            title: ListDetailsDishes(
+                                              detailList:
+                                                  orderDetails.detailList,
                                             ),
                                             subtitle: Text(DataConvert()
                                                 .formattedOrderDate(orderDetails
@@ -534,84 +447,54 @@ class _OrdersScreenState extends State<OrdersScreen>
                                             ],
                                           ),
                                           child: ListTile(
-                                            onTap: () {},
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                context: context,
+                                                isScrollControlled: true,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(20),
+                                                    topRight:
+                                                        Radius.circular(20),
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.white,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return SizedBox(
+                                                    height: 0.97.sh,
+                                                    child:
+                                                        DraggableScrollableSheet(
+                                                      shouldCloseOnMinExtent:
+                                                          true,
+                                                      initialChildSize: 1,
+                                                      minChildSize: 0.98,
+                                                      maxChildSize: 1,
+                                                      expand: false,
+                                                      builder: (context,
+                                                          scrollController) {
+                                                        return OrderDetailsBottomSheet(
+                                                          scrollController:
+                                                              scrollController,
+                                                          orderDetails:
+                                                              orderDetails,
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
                                             leading: Image.asset(
                                               "assets/images/delivery-man.png",
                                               width: 25.w,
                                             ),
-                                            title: RichText(
-                                              text: TextSpan(
-                                                style: CustomFonts
-                                                    .customGoogleFonts(
-                                                        fontSize: 14.r),
-                                                children: orderDetails
-                                                    .detailList
-                                                    ?.map((details) {
-                                                  if (orderDetails.detailList !=
-                                                      null) {
-                                                    final index = orderDetails
-                                                        .detailList!
-                                                        .indexOf(details);
-                                                    if (orderDetails.detailList!
-                                                            .length ==
-                                                        1) {
-                                                      return TextSpan(
-                                                        text:
-                                                            "${details.dish?.dishName}",
-                                                        style: CustomFonts
-                                                            .customGoogleFonts(
-                                                                fontSize: 14.r),
-                                                      );
-                                                    } else if (orderDetails
-                                                            .detailList!
-                                                            .isNotEmpty &&
-                                                        index < 2) {
-                                                      if (index == 1 &&
-                                                          orderDetails
-                                                                  .detailList!
-                                                                  .length ==
-                                                              2) {
-                                                        return TextSpan(
-                                                          text:
-                                                              "${details.dish?.dishName}",
-                                                          style: CustomFonts
-                                                              .customGoogleFonts(
-                                                                  fontSize:
-                                                                      14.r),
-                                                        );
-                                                      } else {
-                                                        return TextSpan(
-                                                          text:
-                                                              "${details.dish?.dishName}${index == 1 ? '' : ', '}",
-                                                          style: CustomFonts
-                                                              .customGoogleFonts(
-                                                                  fontSize:
-                                                                      14.r),
-                                                        );
-                                                      }
-                                                    } else if (orderDetails
-                                                                .detailList!
-                                                                .length >
-                                                            2 &&
-                                                        index == 2) {
-                                                      int remainingCount =
-                                                          orderDetails
-                                                                  .detailList!
-                                                                  .length -
-                                                              2;
-                                                      return TextSpan(
-                                                        text:
-                                                            " và $remainingCount món khác...",
-                                                        style: CustomFonts
-                                                            .customGoogleFonts(
-                                                                fontSize: 14.r),
-                                                      );
-                                                    }
-                                                  }
-                                                  return const TextSpan(
-                                                      text: "");
-                                                }).toList(),
-                                              ),
+                                            title: ListDetailsDishes(
+                                              detailList:
+                                                  orderDetails.detailList,
                                             ),
                                             subtitle: Text(DataConvert()
                                                 .formattedOrderDate(orderDetails

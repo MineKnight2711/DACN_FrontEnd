@@ -134,6 +134,8 @@ class CheckoutScreen extends GetView {
                           "Đơn hàng sẽ được giao tại:\n\n${transactionController.selectedAddress.value?.details}, ${transactionController.selectedAddress.value?.ward}, ${transactionController.selectedAddress.value?.district}, ${transactionController.selectedAddress.value?.province}\n\nNgười nhận : ${transactionController.selectedAddress.value?.receiverName}, ${transactionController.selectedAddress.value?.receiverPhone}")
                       .whenComplete(() => Get.back());
                   if (confirmOrdered) {
+                    showLoadingAnimation(
+                        context, "assets/animations/loading.json", 140.w);
                     final result = await transactionController
                         .performTransaction(
                             listItem, cartController.calculateTotal().value)

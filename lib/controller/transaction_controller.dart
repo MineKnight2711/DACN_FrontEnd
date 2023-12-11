@@ -31,19 +31,25 @@ class TransactionController extends GetxController {
     selectedPayment.value = null;
   }
 
-  Future<void> getAccountListAddress() async {
+  Future<String> getAccountListAddress() async {
     if (_accountController.accountSession.value != null) {
       listAddress.value = await _addressController.getListAddressByAccountId(
               "${_accountController.accountSession.value?.accountID}") ??
           [];
-      Logger().i("Loggggg list address :${listAddress.length}");
+      if (listAddress.isEmpty) {
+        return "NoAddress";
+      }
       AddressModel? defaultAddress = listAddress.firstWhereOrNull(
         (address) => address.defaultAddress.toString() == "true",
       );
       if (defaultAddress != null) {
         selectedAddress.value = defaultAddress;
       }
+      return "OK";
+    } else if (_accountController.accountSession.value?.phoneNumber == null) {
+      return "NoPhone";
     }
+    return "Unknown";
   }
 
   List<DishItem> convertCartDishesToListDishItem(List<CartModel> cartList) {

@@ -6,6 +6,7 @@ import 'package:fooddelivery_fe/screens/address_screen/add_address_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/components/address_item.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/empty_widget.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 
@@ -52,7 +53,8 @@ class AddressListScreen extends GetView {
                 ],
               );
             }
-            return const Center(child: CircularProgressIndicator());
+            return const EmptyWidget(
+                assetsAnimations: "no_address", tilte: "Bạn chưa có địa chỉ..");
           }),
         ),
       ),

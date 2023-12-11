@@ -21,7 +21,8 @@ class EmptyWidget extends StatelessWidget {
           SizedBox(
             height: 15.h,
           ),
-          LottieBuilder.asset("assets/animations/$assetsAnimations.json"),
+          LottieBuilder.asset("assets/animations/$assetsAnimations.json",
+              width: 200.w),
         ],
       ),
     );
