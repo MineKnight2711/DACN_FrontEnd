@@ -1,5 +1,6 @@
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/model/dish_model.dart';
+import 'package:fooddelivery_fe/model/voucher_model.dart';
 
 class OrderDetailsDTO {
   OrderModel? order;
@@ -27,7 +28,7 @@ class OrderModel {
   double? score;
   String? feedBack;
   DateTime? dateFeedBack;
-  String? voucher;
+  VoucherModel? voucher;
   AccountModel? account;
   DateTime? orderDate;
 
@@ -55,7 +56,9 @@ class OrderModel {
       dateFeedBack: json['dateFeedBack'] != null
           ? DateTime.parse(json['dateFeedBack'])
           : null,
-      voucher: json['voucher'],
+      voucher: json['voucher'] != null
+          ? VoucherModel.fromJson(json['voucher'])
+          : null,
       account: json['account'] != null
           ? AccountModel.fromJson(json['account'])
           : null,

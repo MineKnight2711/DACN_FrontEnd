@@ -102,6 +102,7 @@ class MapScreen extends GetView {
                                   ContentType.warning,
                                   2);
                               await geolocator.Geolocator.requestPermission();
+                              await geolocator.Geolocator.getCurrentPosition();
                             }
                             break;
                           default:

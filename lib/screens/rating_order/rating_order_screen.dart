@@ -6,6 +6,7 @@ import 'package:fooddelivery_fe/controller/rating_order_controller.dart';
 import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_item.dart';
 import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_tabbar_controller.dart';
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,20 +51,25 @@ class RatingOrderScreen extends GetView {
               indicatorPadding: EdgeInsets.symmetric(horizontal: 5.w),
               padding: EdgeInsets.all(5.w),
             ),
-            Container(
-                height: 0.853.sh,
+            SizedBox(
+                height: 0.85.sh,
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: tabBarController.tabController.value,
                   children: [
                     Obx(() {
                       if (ratingOrderController.listCompleteOrder.isNotEmpty) {
-                        return Column(
-                          children: ratingOrderController.listCompleteOrder
-                              .map((order) => RatingOrderItem(
-                                  order: order,
-                                  ratingOrderController: ratingOrderController))
-                              .toList(),
+                        return NoGlowingScrollView(
+                          child: Column(
+                            children: ratingOrderController.listCompleteOrder
+                                .map(
+                                  (order) => RatingOrderItem(
+                                      order: order,
+                                      ratingOrderController:
+                                          ratingOrderController),
+                                )
+                                .toList(),
+                          ),
                         );
                       }
                       return Center(child: CircularProgressIndicator());

@@ -109,14 +109,7 @@ class MapController extends GetxController {
   }
 
   Future<String> findCurrentLocation() async {
-    bool serviceEnabled;
-
-    serviceEnabled = await geolocator.Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return "NotEnable";
-    } else {
-      return await getCurrentPosition();
-    }
+    return await getCurrentPosition();
   }
 
   Future<String> getCurrentPosition() async {

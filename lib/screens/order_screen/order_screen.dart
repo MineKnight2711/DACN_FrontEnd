@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/order_controller.dart';
+import 'package:fooddelivery_fe/model/order_model.dart';
 import 'package:fooddelivery_fe/screens/order_screen/compinent/list_details_dishes.dart';
 import 'package:fooddelivery_fe/screens/order_screen/compinent/order_details_bottom_sheet.dart';
 import 'package:fooddelivery_fe/screens/order_screen/compinent/order_tabbar_controller.dart';
@@ -115,45 +116,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                           ),
                                           child: ListTile(
                                             onTap: () {
-                                              showModalBottomSheet(
-                                                context: context,
-                                                isScrollControlled: true,
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(20),
-                                                    topRight:
-                                                        Radius.circular(20),
-                                                  ),
-                                                ),
-                                                backgroundColor: Colors.white,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return SizedBox(
-                                                    height: 0.97.sh,
-                                                    child:
-                                                        DraggableScrollableSheet(
-                                                      shouldCloseOnMinExtent:
-                                                          true,
-                                                      initialChildSize: 1,
-                                                      minChildSize: 0.98,
-                                                      maxChildSize: 1,
-                                                      expand: false,
-                                                      builder: (context,
-                                                          scrollController) {
-                                                        return OrderDetailsBottomSheet(
-                                                          scrollController:
-                                                              scrollController,
-                                                          orderDetails:
-                                                              orderDetails,
-                                                        );
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                              );
+                                              _showBottomSheet(orderDetails);
                                             },
                                             leading: Image.asset(
                                               "assets/images/delivery-man.png",
@@ -226,45 +189,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                           ),
                                           child: ListTile(
                                             onTap: () {
-                                              showModalBottomSheet(
-                                                context: context,
-                                                isScrollControlled: true,
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(20),
-                                                    topRight:
-                                                        Radius.circular(20),
-                                                  ),
-                                                ),
-                                                backgroundColor: Colors.white,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return SizedBox(
-                                                    height: 0.97.sh,
-                                                    child:
-                                                        DraggableScrollableSheet(
-                                                      shouldCloseOnMinExtent:
-                                                          true,
-                                                      initialChildSize: 1,
-                                                      minChildSize: 0.98,
-                                                      maxChildSize: 1,
-                                                      expand: false,
-                                                      builder: (context,
-                                                          scrollController) {
-                                                        return OrderDetailsBottomSheet(
-                                                          scrollController:
-                                                              scrollController,
-                                                          orderDetails:
-                                                              orderDetails,
-                                                        );
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                              );
+                                              _showBottomSheet(orderDetails);
                                             },
                                             leading: Image.asset(
                                               "assets/images/delivery-man.png",
@@ -337,45 +262,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                           ),
                                           child: ListTile(
                                             onTap: () {
-                                              showModalBottomSheet(
-                                                context: context,
-                                                isScrollControlled: true,
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(20),
-                                                    topRight:
-                                                        Radius.circular(20),
-                                                  ),
-                                                ),
-                                                backgroundColor: Colors.white,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return SizedBox(
-                                                    height: 0.97.sh,
-                                                    child:
-                                                        DraggableScrollableSheet(
-                                                      shouldCloseOnMinExtent:
-                                                          true,
-                                                      initialChildSize: 1,
-                                                      minChildSize: 0.98,
-                                                      maxChildSize: 1,
-                                                      expand: false,
-                                                      builder: (context,
-                                                          scrollController) {
-                                                        return OrderDetailsBottomSheet(
-                                                          scrollController:
-                                                              scrollController,
-                                                          orderDetails:
-                                                              orderDetails,
-                                                        );
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                              );
+                                              _showBottomSheet(orderDetails);
                                             },
                                             leading: Image.asset(
                                               "assets/images/delivery-man.png",
@@ -433,7 +320,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                     return Column(
                                       children: [
                                         Slidable(
-                                          groupTag: "listOnWaitOrder",
+                                          groupTag: "listCancelOrder",
                                           endActionPane: ActionPane(
                                             motion: const DrawerMotion(),
                                             extentRatio: 0.2,
@@ -448,45 +335,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                           ),
                                           child: ListTile(
                                             onTap: () {
-                                              showModalBottomSheet(
-                                                context: context,
-                                                isScrollControlled: true,
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(20),
-                                                    topRight:
-                                                        Radius.circular(20),
-                                                  ),
-                                                ),
-                                                backgroundColor: Colors.white,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return SizedBox(
-                                                    height: 0.97.sh,
-                                                    child:
-                                                        DraggableScrollableSheet(
-                                                      shouldCloseOnMinExtent:
-                                                          true,
-                                                      initialChildSize: 1,
-                                                      minChildSize: 0.98,
-                                                      maxChildSize: 1,
-                                                      expand: false,
-                                                      builder: (context,
-                                                          scrollController) {
-                                                        return OrderDetailsBottomSheet(
-                                                          scrollController:
-                                                              scrollController,
-                                                          orderDetails:
-                                                              orderDetails,
-                                                        );
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                              );
+                                              _showBottomSheet(orderDetails);
                                             },
                                             leading: Image.asset(
                                               "assets/images/delivery-man.png",
@@ -541,6 +390,37 @@ class _OrdersScreenState extends State<OrdersScreen>
           ),
         ),
       ]),
+    );
+  }
+
+  void _showBottomSheet(OrderDetailsDTO orderDetails) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      builder: (context) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.8, //Kích cỡ sheet khi vừa hiện lên
+          minChildSize:
+              0.3, //Khi ta kéo sheet về 0.3 chiều cao của nó, nó sẽ đóng
+          maxChildSize: 0.95, //Chiều cao tối đa của sheet được phép kéo lên
+          expand: false,
+          builder: (context, scrollController) {
+            return NoGlowingScrollView(
+              scrollController: scrollController,
+              child: OrderDetailsBottomSheet(
+                scrollController: scrollController,
+                orderDetails: orderDetails,
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

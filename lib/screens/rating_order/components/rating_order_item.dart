@@ -21,7 +21,7 @@ class RatingOrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 0.21.sh,
+      height: 0.22.sh,
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
       margin: EdgeInsets.only(top: 5.h),
       child: Card(
