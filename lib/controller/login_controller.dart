@@ -129,6 +129,7 @@ class LoginController extends GetxController {
 
         final responseModel = await _accountApi.registerGoogle(newAccount);
         if (responseModel?.message == "Success") {
+          await getAccountFromDatabase("${user.email}");
           return "SignUpSuccess";
         }
         return "Fail";

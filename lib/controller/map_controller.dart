@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/map/map_api.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -10,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart' as geolocator;
 import 'package:geolocator_platform_interface/geolocator_platform_interface.dart'
     as gpi;
-import 'package:logger/logger.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 class MapController extends GetxController {

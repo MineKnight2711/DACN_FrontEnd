@@ -12,7 +12,6 @@ class DishApi {
     );
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (response.statusCode == 200) {
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
       responseBase = ResponseBaseModel.fromJson(
           jsonDecode(utf8.decode(response.bodyBytes)));
       return responseBase;
@@ -26,8 +25,8 @@ class DishApi {
       Uri.parse("${ApiUrl.apiGetDishesByCategoryID}/$categoryId"),
     );
     ResponseBaseModel responseBase = ResponseBaseModel();
+    print(jsonDecode(utf8.decode(response.bodyBytes)));
     if (response.statusCode == 200) {
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
       responseBase = ResponseBaseModel.fromJson(
           jsonDecode(utf8.decode(response.bodyBytes)));
       return responseBase;

@@ -8,8 +8,8 @@ enum SortBy { priceLowToHigh, priceHighToLow }
 
 class DishByCategoryController extends GetxController {
   late DishApi _dishApi;
-  RxList<DishModel> dishes = <DishModel>[].obs;
-  RxList<DishModel> filteredDishes = <DishModel>[].obs;
+  RxList<DishFavoriteCountDTO> dishes = <DishFavoriteCountDTO>[].obs;
+  RxList<DishFavoriteCountDTO> filteredDishes = <DishFavoriteCountDTO>[].obs;
 
   Rx<SortBy> sortBy = SortBy.priceLowToHigh.obs;
   TextEditingController searchController = TextEditingController();
@@ -31,10 +31,10 @@ class DishByCategoryController extends GetxController {
   void sortDishes() {
     switch (sortBy.value) {
       case SortBy.priceLowToHigh:
-        filteredDishes.sort((a, b) => (a.price).compareTo(b.price));
+        filteredDishes.sort((a, b) => (a.dish.price).compareTo(b.dish.price));
         break;
       case SortBy.priceHighToLow:
-        filteredDishes.sort((a, b) => (b.price).compareTo(a.price));
+        filteredDishes.sort((a, b) => (b.dish.price).compareTo(a.dish.price));
         break;
     }
   }
@@ -44,13 +44,14 @@ class DishByCategoryController extends GetxController {
     if (response.message == "Success") {
       final dishesReceivedJson = response.data as List<dynamic>;
 
-      dishes.value = filteredDishes.value =
-          dishesReceivedJson.map((d) => DishModel.fromJson(d)).toList();
+      dishes.value = filteredDishes.value = dishesReceivedJson
+          .map((d) => DishFavoriteCountDTO.fromJson(d))
+          .toList();
     }
   }
 
   String? searchDishes(String? query) {
-    List<DishModel> searchDishes = [];
+    List<DishFavoriteCountDTO> searchDishes = [];
     // if (filteredDishes.isEmpty) {
     //   filteredDishes.value = dishes;
     //   return 'Không tìm thấy món :((';
@@ -59,8 +60,8 @@ class DishByCategoryController extends GetxController {
       filteredDishes.value = dishes;
       return null;
     } else {
-      searchDishes = dishes.where((dish) {
-        String dishName = dish.dishName.toString();
+      searchDishes = dishes.where((dishItem) {
+        String dishName = dishItem.dish.dishName.toString();
         //Bỏ dấu ở tên món và từ khoá tìm kiếm để tìm kiếm dễ dàng hơn
         String normalizedDishName =
             DataConvert().removeDiacritics(dishName.toLowerCase());

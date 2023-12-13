@@ -46,6 +46,13 @@ class DataConvert {
     return result;
   }
 
+  String formattedNormalDate(DateTime? orderDate) {
+    if (orderDate != null) {
+      return DateFormat("dd/MM/yyyy", 'vi_VN').format(orderDate);
+    }
+    return "Undefined";
+  }
+
   String formattedOrderDate(DateTime? orderDate) {
     if (orderDate != null) {
       String amPm = orderDate.hour < 12 ? "AM" : "PM  ";

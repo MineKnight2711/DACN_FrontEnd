@@ -16,12 +16,12 @@ import 'package:fooddelivery_fe/widgets/quantity_chooser.dart';
 import 'package:get/get.dart';
 
 class DishDetailsBottomSheet extends StatelessWidget {
-  final DishModel dish;
+  final DishFavoriteCountDTO dishDTO;
   // final detailController = Get.find<ProductDetailController>();
   // final accountController = Get.find<AccountApi>();
   final cartController = Get.find<CartController>();
   final favoriteController = Get.find<FavoriteController>();
-  DishDetailsBottomSheet({super.key, required this.dish});
+  DishDetailsBottomSheet({super.key, required this.dishDTO});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class DishDetailsBottomSheet extends StatelessWidget {
                       color: Colors.amber[100],
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Image.network("${dish.imageUrl}").image,
+                        image: Image.network("${dishDTO.dish.imageUrl}").image,
                       )),
                   width: double.infinity,
                   height: 400.h,
@@ -66,19 +66,19 @@ class DishDetailsBottomSheet extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          dish.dishName,
+                          dishDTO.dish.dishName,
                           style: CustomFonts.customGoogleFonts(
                               fontSize: 18.r, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          DataConvert().formatCurrency(dish.price),
+                          DataConvert().formatCurrency(dishDTO.dish.price),
                           style: CustomFonts.customGoogleFonts(fontSize: 16.r),
                         ),
                       ],
                     ),
                     const Spacer(),
                     FavoriteIconButton(
-                      dish: dish,
+                      dishDTO: dishDTO,
                       favoriteController: favoriteController,
                     )
                   ],
@@ -90,7 +90,7 @@ class DishDetailsBottomSheet extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        dish.description,
+                        dishDTO.dish.description,
                         style: CustomFonts.customGoogleFonts(
                             fontSize: 13.r, color: AppColors.dark20),
                       ),
@@ -125,10 +125,11 @@ class DishDetailsBottomSheet extends StatelessWidget {
                     onPressed: () async {
                       if (await showConfirmDialog(
                           context,
-                          "Thêm ${dish.dishName}",
-                          "Bạn có muốn thêm ${dish.dishName} vào giỏ hàng ?")) {
+                          "Thêm ${dishDTO.dish.dishName}",
+                          "Bạn có muốn thêm ${dishDTO.dish.dishName} vào giỏ hàng ?")) {
                         String? result = await cartController.addToCart(
-                            dish, cartController.selectedQuantity.value);
+                            dishDTO.dish,
+                            cartController.selectedQuantity.value);
                         switch (result) {
                           case "Success":
                             showCustomSnackBar(

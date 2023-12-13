@@ -8,12 +8,14 @@ import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/controller/order_controller.dart';
 import 'package:fooddelivery_fe/controller/rating_order_controller.dart';
+import 'package:fooddelivery_fe/controller/voucher_controller.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
 import 'package:fooddelivery_fe/screens/favorite_screen/favorite_screen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
 import 'package:fooddelivery_fe/screens/order_screen/order_screen.dart';
 import 'package:fooddelivery_fe/screens/rating_order/rating_order_screen.dart';
+import 'package:fooddelivery_fe/screens/voucher_shop_screen/voucher_shop_screen.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,19 +31,28 @@ class SettingsView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Tiện ích",
-            style:
-                GoogleFonts.roboto(fontSize: 16.r, fontWeight: FontWeight.w500),
-          ),
-          SizedBox(
-            height: 200.h,
-            child: GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 2.r,
-              mainAxisSpacing: 10.h,
-              crossAxisSpacing: 10.w,
-              children: extensionsCard.map((e) => e).toList(),
+          Obx(
+            () => Visibility(
+              visible: accountController.accountSession.value != null,
+              child: Column(
+                children: [
+                  Text(
+                    "Tiện ích",
+                    style: GoogleFonts.roboto(
+                        fontSize: 16.r, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 200.h,
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: 2.r,
+                      mainAxisSpacing: 10.h,
+                      crossAxisSpacing: 10.w,
+                      children: extensionsCard.map((e) => e).toList(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Text(
@@ -156,7 +167,11 @@ List<ExtensionCard> extensionsCard = [
     title: 'Lịch sử đơn hàng',
   ),
   ExtensionCard(
-    onPressed: () {},
+    onPressed: () {
+      final orderController = Get.put(VoucherController());
+      orderController.getAllVoucher();
+      Get.to(() => VoucherShopScreen(), transition: Transition.upToDown);
+    },
     icon: Icons.discount,
     title: 'Nhận mã ưu đãi',
   ),

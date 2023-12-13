@@ -6,7 +6,7 @@ import 'package:fooddelivery_fe/model/dish_model.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 
 class DishByCategoryGridView extends StatelessWidget {
-  final List<DishModel> dishes;
+  final List<DishFavoriteCountDTO> dishes;
 
   const DishByCategoryGridView({super.key, required this.dishes});
 
@@ -27,7 +27,7 @@ class DishByCategoryGridView extends StatelessWidget {
           crossAxisSpacing: 5.w,
           children: dishes
               .map(
-                (dish) => Card(
+                (dishItem) => Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                   shadowColor: AppColors.dark50.withOpacity(1),
@@ -61,7 +61,7 @@ class DishByCategoryGridView extends StatelessWidget {
                             color: AppColors.orange100,
                             image: DecorationImage(
                                 image: Image.network(
-                              "${dish.imageUrl}",
+                              "${dishItem.dish.imageUrl}",
                               scale: 0.5,
                               fit: BoxFit.cover,
                             ).image),
@@ -77,12 +77,13 @@ class DishByCategoryGridView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                dish.dishName,
+                                dishItem.dish.dishName,
                                 style: CustomFonts.customGoogleFonts(
                                     fontSize: 16.r),
                               ),
                               Text(
-                                DataConvert().formatCurrency(dish.price),
+                                DataConvert()
+                                    .formatCurrency(dishItem.dish.price),
                                 style: CustomFonts.customGoogleFonts(
                                     fontSize: 14.r),
                               ),

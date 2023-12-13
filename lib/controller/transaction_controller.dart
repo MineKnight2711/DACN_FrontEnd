@@ -33,6 +33,9 @@ class TransactionController extends GetxController {
 
   Future<String> getAccountListAddress() async {
     if (_accountController.accountSession.value != null) {
+      if (_accountController.accountSession.value?.phoneNumber == null) {
+        return "NoPhone";
+      }
       listAddress.value = await _addressController.getListAddressByAccountId(
               "${_accountController.accountSession.value?.accountID}") ??
           [];
@@ -46,8 +49,6 @@ class TransactionController extends GetxController {
         selectedAddress.value = defaultAddress;
       }
       return "OK";
-    } else if (_accountController.accountSession.value?.phoneNumber == null) {
-      return "NoPhone";
     }
     return "Unknown";
   }

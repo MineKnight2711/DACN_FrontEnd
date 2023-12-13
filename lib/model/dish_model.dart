@@ -1,6 +1,27 @@
 import 'package:fooddelivery_fe/model/category_model.dart';
 import 'package:intl/intl.dart';
 
+class DishFavoriteCountDTO {
+  DishModel dish;
+  int favoriteCount;
+
+  DishFavoriteCountDTO({required this.dish, required this.favoriteCount});
+
+  factory DishFavoriteCountDTO.fromJson(Map<String, dynamic> json) {
+    return DishFavoriteCountDTO(
+      dish: DishModel.fromJson(json['dish']),
+      favoriteCount: json['favoriteCount'],
+    );
+  }
+
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = Map<String, dynamic>();
+  //   data['dish'] = dish.toJson();
+  //   data['favoriteCount'] = favoriteCount;
+  //   return data;
+  // }
+}
+
 class DishModel {
   String dishID;
   String dishName;

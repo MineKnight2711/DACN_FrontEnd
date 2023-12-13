@@ -17,6 +17,7 @@ class CartController extends GetxController {
     super.onInit();
     _cartApi = CartApi();
     _accountController = Get.find<AccountController>();
+    getAccountCart();
   }
 
   RxDouble caculateItemTotal(CartModel item) {

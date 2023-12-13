@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class DishController extends GetxController {
   late DishApi _dishApi;
-  Rx<List<DishModel>> listDish = Rx<List<DishModel>>([]);
+  Rx<List<DishFavoriteCountDTO>> listDish = Rx<List<DishFavoriteCountDTO>>([]);
   @override
   void onInit() {
     super.onInit();
@@ -17,9 +17,9 @@ class DishController extends GetxController {
     ResponseBaseModel? responseBaseModel = await _dishApi.getAllDish();
     if (responseBaseModel?.message == "Success") {
       final dishesReceived = responseBaseModel?.data as List<dynamic>;
-      List<DishModel> dishList = dishesReceived
+      List<DishFavoriteCountDTO> dishList = dishesReceived
           .map(
-            (dishMap) => DishModel.fromJson(dishMap),
+            (dishMap) => DishFavoriteCountDTO.fromJson(dishMap),
           )
           .toList();
       listDish.value = dishList;

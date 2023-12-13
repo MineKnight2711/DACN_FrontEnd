@@ -219,7 +219,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                           width: 5.w,
                         ),
                         Text(
-                          "Chưa thanh toán",
+                          "${orderDetails.order?.status}",
                           style: CustomFonts.customGoogleFonts(fontSize: 15.r),
                         ),
                       ],

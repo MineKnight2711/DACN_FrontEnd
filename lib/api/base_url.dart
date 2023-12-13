@@ -23,8 +23,8 @@ class ApiUrl {
   static const apiSignOut = '${baseUrl}account/sign-out';
   static const apiVerifiedEmail = '${baseUrl}account/get-user-info';
   static const apiGetAllCategory = '${baseUrl}category';
-  static const apiDish = '${baseUrl}dish';
-  static const apiGetDishesByCategoryID = '$apiDish/get-by-categoryId';
+  static const apiDish = '${baseUrl}dish/with-favorite';
+  static const apiGetDishesByCategoryID = '${baseUrl}dish/get-by-categoryId';
   static const apiPayment = '${baseUrl}payment';
   static const apiTransaction = '${baseUrl}transaction';
   static const apiTransactionVietQR = '$apiTransaction/VietQR-PAYOS';
@@ -33,6 +33,8 @@ class ApiUrl {
   static const apiTransactionCancel = '$apiTransaction/cancel';
   static const apiFavorite = '${baseUrl}favorite';
   static const apiGetListFavorite = '$apiFavorite/get-by-accountId';
+  static const apiVoucher = '${baseUrl}voucher';
+  static const apiGetAllVoucher = '$apiVoucher/all';
   // static const apiFindAccountById = '${baseUrl}account';
   // static const apiChangePassword = '${baseUrl}account';
   // static const apiForgotPassword = '${baseUrl}account/reset-password';

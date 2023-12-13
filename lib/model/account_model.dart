@@ -11,7 +11,9 @@ class AccountModel {
   String? imageUrl;
   String? phoneNumber;
   String? role;
-
+  int? points;
+  String? tier;
+  int? lifetimePoints;
   AccountModel(
       {this.accountID,
       this.password,
@@ -21,7 +23,10 @@ class AccountModel {
       this.gender,
       this.imageUrl,
       this.phoneNumber,
-      this.role});
+      this.role,
+      this.points,
+      this.lifetimePoints,
+      this.tier});
   factory AccountModel.fromJson(Map<String, dynamic> json) {
     String? birthdayString = json['birthday'] as String?;
     return AccountModel(
@@ -34,6 +39,9 @@ class AccountModel {
       gender: json['gender'] as String?,
       imageUrl: json['imageUrl'],
       phoneNumber: json['phoneNumber'] as String?,
+      points: json['points'] as int?,
+      lifetimePoints: json['lifetimePoints'] as int?,
+      tier: json['tier'] as String?,
       role: json['role'] as String?,
     );
   }
@@ -49,6 +57,9 @@ class AccountModel {
       'gender': gender,
       'imageUrl': imageUrl ?? "",
       'phoneNumber': phoneNumber,
+      'points': points ?? 0,
+      'lifetimePoints': lifetimePoints ?? 0,
+      'tier': tier ?? ''
     };
   }
 
