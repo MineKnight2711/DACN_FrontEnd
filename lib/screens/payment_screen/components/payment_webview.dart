@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 
-import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

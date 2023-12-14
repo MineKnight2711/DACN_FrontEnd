@@ -9,13 +9,13 @@ import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/datetime_picker.dart';
 import 'package:fooddelivery_fe/widgets/gender_chose.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 
-import 'package:fooddelivery_fe/widgets/custom_button.dart';
-import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
 class SignUpScreen extends GetView {

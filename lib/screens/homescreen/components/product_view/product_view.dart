@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/model/category_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/category_view/category_view.dart';
-import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
 import 'dish_view/dish_view.dart';

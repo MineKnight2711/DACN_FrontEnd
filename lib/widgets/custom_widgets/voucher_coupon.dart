@@ -3,22 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
 
-class TestScreen extends StatelessWidget {
-  const TestScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: VoucherCoupon(
-          size: 1,
-          imagePath: "assets/images/voucher_banner.png",
-        ),
-      ),
-    );
-  }
-}
-
 class VoucherCoupon extends StatelessWidget {
   final double size;
   final String imagePath;

@@ -9,10 +9,10 @@ import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/components/list_search_address.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
-import 'package:fooddelivery_fe/widgets/custom_button.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
-import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 

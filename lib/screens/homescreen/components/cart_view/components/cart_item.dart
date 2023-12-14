@@ -10,7 +10,7 @@ import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/components/quantity_dialog.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CartItem extends StatelessWidget {

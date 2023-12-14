@@ -5,7 +5,7 @@ import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/rating_order_controller.dart';
 import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_item.dart';
 import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_tabbar_controller.dart';
-import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

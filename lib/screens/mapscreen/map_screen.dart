@@ -11,7 +11,7 @@ import 'package:fooddelivery_fe/screens/mapscreen/components/address_info.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/address_textfield.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/list_predict_address.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:geolocator/geolocator.dart' as geolocator;
 
 import 'package:get/get.dart';

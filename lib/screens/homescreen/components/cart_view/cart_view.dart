@@ -7,7 +7,7 @@ import 'package:fooddelivery_fe/controller/payment_controller.dart';
 import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/components/cart_item.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/payment_screen.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/empty_widget.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';

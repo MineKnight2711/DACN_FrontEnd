@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/update_profile_controller.dart';
-import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:fooddelivery_fe/widgets/datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

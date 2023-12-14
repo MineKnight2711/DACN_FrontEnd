@@ -10,8 +10,8 @@ import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/model/dish_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/favorite_icon_button.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
-import 'package:fooddelivery_fe/widgets/custom_button.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/quantity_chooser.dart';
 import 'package:get/get.dart';
 

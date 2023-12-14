@@ -6,6 +6,7 @@ import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/model/payment_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
 import 'package:fooddelivery_fe/model/transaction_model.dart';
+import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -101,7 +102,7 @@ class TransactionController extends GetxController {
         } else if (paymentMethod == "COD") {
           final response =
               await _transactionApi.performCODTransaction(newTransaction);
-
+          Get.offAll(() => const HomeScreen());
           return response;
         }
       }

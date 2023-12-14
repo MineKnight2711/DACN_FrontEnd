@@ -9,7 +9,7 @@ import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/model/dish_model.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:get/get.dart';
 
 class FavoriteIconButton extends StatefulWidget {

@@ -12,7 +12,7 @@ import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/update_address_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 

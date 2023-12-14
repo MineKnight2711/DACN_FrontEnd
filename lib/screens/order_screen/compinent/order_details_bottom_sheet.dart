@@ -6,7 +6,7 @@ import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/model/order_model.dart';
 import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_bottom_sheet.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
-import 'package:fooddelivery_fe/widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 

@@ -9,8 +9,8 @@ import 'package:fooddelivery_fe/controller/voucher_controller.dart';
 import 'package:fooddelivery_fe/screens/voucher_shop_screen/components/sorting_voucher_popups_menu.dart';
 import 'package:fooddelivery_fe/screens/voucher_shop_screen/components/voucher_item.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 

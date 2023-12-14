@@ -9,10 +9,10 @@ import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/sign_up_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
-import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
-import 'package:fooddelivery_fe/widgets/custom_button.dart';
-import 'package:fooddelivery_fe/widgets/custom_textfield.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends GetView {

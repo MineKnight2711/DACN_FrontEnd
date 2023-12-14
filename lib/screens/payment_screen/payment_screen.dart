@@ -20,9 +20,9 @@ import 'package:fooddelivery_fe/screens/payment_screen/components/payment_webvie
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 
-import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
-import 'package:fooddelivery_fe/widgets/custom_button.dart';
-import 'package:fooddelivery_fe/widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -149,8 +149,7 @@ class CheckoutScreen extends GetView {
                       await cartController.clearCart();
                       showCustomSnackBar(context, "Thông báo",
                           "Đặt hàng thành công", ContentType.success, 2);
-                      print(
-                          "Result --------- ${response.paymentResponse?.data?.checkoutUrl}");
+
                       if (response.paymentResponse != null) {
                         toCheckoutWebView(context, response);
                       }

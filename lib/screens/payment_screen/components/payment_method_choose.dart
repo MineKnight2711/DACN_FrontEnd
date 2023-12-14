@@ -4,7 +4,7 @@ import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/payment_controller.dart';
 import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/model/payment_model.dart';
-import 'package:fooddelivery_fe/widgets/custom_button.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
