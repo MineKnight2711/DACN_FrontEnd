@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,9 +9,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AccountController extends GetxController {
   Rx<AccountModel?> accountSession = Rx<AccountModel?>(null);
   User? user = FirebaseAuth.instance.currentUser;
+  late AccountApi _accountApi;
+  @override
+  void onInit() {
+    super.onInit();
+    _accountApi = AccountApi();
+  }
 
   Future<void> fetchCurrentUser() async {
-    accountSession.value = await getUserFromSharedPreferences();
+    if (accountSession.value != null) {
+      final responseBaseModel =
+          await _accountApi.login("${accountSession.value?.email}");
+      if (responseBaseModel?.message == "Success") {
+        accountSession.value = AccountModel.fromJson(responseBaseModel?.data);
+        await storedUserToSharedRefererces(
+            AccountModel.fromJson(responseBaseModel?.data));
+        accountSession.value = await getUserFromSharedPreferences();
+      }
+    }
   }
 
   Future<void> storedUserToSharedRefererces(

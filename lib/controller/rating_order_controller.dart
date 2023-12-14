@@ -81,7 +81,7 @@ class RatingOrderController extends GetxController {
     if (_accountController.accountSession.value != null) {
       final response = await _orderApi.getAccountOrdersByStatus(
           "${_accountController.accountSession.value?.accountID}",
-          "Đã hoàn tất");
+          "Đã thanh toán");
       if (response.message == "Success") {
         final orderDetailsJson = response.data as List<dynamic>;
 

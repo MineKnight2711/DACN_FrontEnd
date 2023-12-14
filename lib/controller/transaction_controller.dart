@@ -96,7 +96,7 @@ class TransactionController extends GetxController {
           newTransaction.paymentRequestBody = newPaymentRequestBody;
           final response =
               await _transactionApi.performVietQRTransaction(newTransaction);
-          Logger().i("Log transaction model :${response.data}");
+
           return response;
         } else if (paymentMethod == "COD") {
           final response =
@@ -115,7 +115,7 @@ class TransactionController extends GetxController {
   Future<String> updateTransaction(String orderId, int paymentDetailsId) async {
     final response =
         await _transactionApi.updateTransaction(orderId, paymentDetailsId);
-    print("Update result --------- ${response..data}");
+    await _accountController.fetchCurrentUser();
     return response.message ?? "";
   }
 

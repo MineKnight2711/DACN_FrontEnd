@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 
 import 'package:fooddelivery_fe/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ class PaymentWebView extends GetView {
     return Scaffold(
       appBar: CustomAppBar(
         onPressed: () {
-          Get.back();
+          Get.offAll(const HomeScreen(), transition: Transition.fadeIn);
         },
       ),
       body: WebViewWidget(controller: webViewController),

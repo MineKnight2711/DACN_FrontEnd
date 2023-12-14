@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/controller/main_controllers.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
+import 'package:fooddelivery_fe/screens/test_screen.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -40,7 +41,7 @@ class AppFood extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         'home_screen': (context) => HomeScreen(),
-        'login_screen': (context) => LoginScreen(),
+        'test': (context) => const TestScreen(),
       },
     );
   }
