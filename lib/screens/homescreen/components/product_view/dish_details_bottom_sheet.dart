@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -121,7 +122,7 @@ class DishDetailsBottomSheet extends StatelessWidget {
                   height: 40.h,
                   child: RoundIconButton(
                     size: 50.w,
-                    title: "Đặt mua",
+                    title: tr("dishes_details.place_order"),
                     onPressed: () async {
                       if (await showConfirmDialog(
                           context,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +52,7 @@ class CartTotalView extends StatelessWidget {
                   width: 40.w,
                 ),
                 Text(
-                  "Tổng tiền :",
+                  tr("cart.total"),
                   style: GoogleFonts.roboto(fontSize: 20.r),
                 ),
                 // SizedBox(
@@ -94,7 +95,7 @@ class CartTotalView extends StatelessWidget {
               child: RoundIconButton(
                   enabled: checkOutEnable,
                   size: 75.r,
-                  title: "Đặt mua",
+                  title: tr("cart.order"),
                   onPressed: checkoutPressed),
             ),
           ),

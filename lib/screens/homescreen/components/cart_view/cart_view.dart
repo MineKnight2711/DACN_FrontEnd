@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
@@ -30,7 +31,7 @@ class CartView extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "Giỏ hàng của bạn",
+                  tr("cart.your_cart"),
                   style: GoogleFonts.roboto(fontSize: 20),
                 ),
                 SizedBox(
@@ -48,8 +49,8 @@ class CartView extends StatelessWidget {
                             .toList(),
                       );
                     }
-                    return const EmptyWidget(
-                        tilte: "Giỏ hàng trống..",
+                    return EmptyWidget(
+                        tilte: tr("cart.empty_cart"),
                         assetsAnimations: "person_empty_box");
                   },
                 ),
@@ -66,8 +67,10 @@ class CartView extends StatelessWidget {
             cartTotal: cartController.calculateTotal().value,
             deleteCartPressed: cartController.listCart.isNotEmpty
                 ? () async {
-                    bool result = await showConfirmDialog(context,
-                        "Xoá giỏ hàng", "Bạn có chắc muốn xoá giỏ hàng?");
+                    bool result = await showConfirmDialog(
+                        context,
+                        tr("cart.cart_message.cart_remove"),
+                        tr("cart.cart_message.confirm_remove"));
                     if (result) {
                       String? result =
                           await cartController.clearCart().whenComplete(

@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously,
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -28,13 +29,13 @@ class VoucherView extends StatelessWidget {
                 return Column(
                   children: [
                     Text(
-                      "Voucher của bạn",
+                      tr("discount.your_voucher"),
                       style: CustomFonts.customGoogleFonts(fontSize: 16.r),
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Sẵn sàng sử dụng",
+                        tr("discount.ready_to_use"),
                         style: CustomFonts.customGoogleFonts(fontSize: 16.r),
                       ),
                     ),
@@ -83,7 +84,7 @@ class VoucherView extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Đã hết hạn :((\nCác voucher đã hết hạn và không thể sử dụng",
+                        "${tr("discount.expired")} \n${tr("discount.voucher_cannot_be_use")}",
                         style: CustomFonts.customGoogleFonts(
                             fontSize: 16.r, color: Colors.red),
                       ),
@@ -102,7 +103,7 @@ class VoucherView extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(20),
                                         foregroundColor: Colors.red,
                                         icon: Icons.delete,
-                                        label: "Xoá",
+                                        label: tr("discount.delete_voucher"),
                                         onPressed: (context) async {
                                           String result =
                                               await accountVoucherController

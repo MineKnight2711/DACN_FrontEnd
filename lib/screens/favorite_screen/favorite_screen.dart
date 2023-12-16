@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
@@ -23,7 +24,7 @@ class FavoriteScreen extends GetView {
         onPressed: () {
           Get.back();
         },
-        title: "Sản phẩm yêu thích",
+        title: tr("favorite_products.appbar.favorite_products_text"),
       ),
       body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -81,8 +82,8 @@ class FavoriteScreen extends GetView {
                         .toList()),
               );
             }
-            return const EmptyWidget(
-              tilte: "Bạn chưa có sản phẩm yêu thích..",
+            return EmptyWidget(
+              tilte: tr("favorite_products.appbar.no_favorite"),
               assetsAnimations: "cat_sleep",
             );
           })),

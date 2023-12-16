@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/controller/dish_by_category_controller.dart';
@@ -41,14 +42,14 @@ class DishByCategoryScreen extends GetView {
                   height: 20.h,
                 ),
                 RoundTextfield(
-                  hintText: "Nhập gì đó đi...",
+                  hintText: tr("dish_category.enter_something"),
                   controller: _controller.searchController,
                   onChanged: _controller.searchDishes,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Text('Xếp theo'),
+                    Text(tr("exchange_voucher.sort_by")),
                     PopupMenuButton<SortBy>(
                       icon: Image.asset(
                         'assets/images/menu_icon.png',
@@ -61,13 +62,13 @@ class DishByCategoryScreen extends GetView {
                       },
                       itemBuilder: (BuildContext context) =>
                           <PopupMenuEntry<SortBy>>[
-                        const PopupMenuItem<SortBy>(
+                        PopupMenuItem<SortBy>(
                           value: SortBy.priceLowToHigh,
-                          child: Text('Giá: Thấp đến cao'),
+                          child: Text(tr("dish_category.sort_low_to_high")),
                         ),
-                        const PopupMenuItem<SortBy>(
+                        PopupMenuItem<SortBy>(
                           value: SortBy.priceHighToLow,
-                          child: Text('Giá: Cao đến thấp'),
+                          child: Text(tr("dish_category.sort_high_to_low")),
                         ),
                       ],
                     )

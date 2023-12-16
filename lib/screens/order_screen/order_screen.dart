@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -53,7 +54,7 @@ class _OrdersScreenState extends State<OrdersScreen>
         onPressed: () {
           Get.back();
         },
-        title: "Lịch sử đơn hàng",
+        title: tr("order_history_screen.appbar.order_history_text"),
       ),
       body: Column(children: [
         DefaultTabController(

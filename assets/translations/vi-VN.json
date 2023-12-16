@@ -1,21 +1,204 @@
 {
+    "login":{
+        
+        "login_text":"Đăng nhập",
+        "details_login":"Hãy nhập thông tin để đăng nhập",
+        "password":"Mật khẩu",
+        "forgot_password":"Quên mật khẩu?",
+        "or_login":"hoặc Đăng nhập với",
+        "continue_google":"Tiếp tục với Google",
+        "no_account":"Chưa có tài khoản?",
+        "sign_up":"Đăng ký"
+       
+    },
+    "sign_up":{
+        "gender":{
+            "male":"Nam",
+            "female":"Nữ"
+         },
+         "add_your_details_to_signup":"Add your details to signup",
+         "confirm_password":"Xác nhận mật khẩu",
+         "already_account":"Đã có tài khoản?"
+    },
     "home":{
-        "delivery_to": "Giao tới",
-        "choose_location": "Chọn địa điểm",
+        "app_bar":{
+            "delivery_to": "Giao tới",
+            "choose_location": "Chọn địa điểm"
+        },    
+        "bottom_navigation_bar":{
+            "home":"Trang chủ",
+            "cart":"Giỏ hàng",
+            "discount":"Ưu đãi",
+            "more":"Nhiều hơn"
+        },   
         "category":"Danh mục",
         "search":"Hôm nay ăn gì ?",
-        "top_food":"Các món nổi bật?"
+        "top_food":"Các món nổi bật?",
+        "view_all":"Xem tất cả",
+        "view_less":"Xem tất cả"
     },
-    "View All": "Xem thêm",
-    "View Less": "Xem ít hơn",
-    "login":{
-        "title": "Xin chào",
-        "password": "Mật khẩu",
-        "forgot_password":"Quên mật khẩu ?",
-        "login":"Đăng nhập"
+    "dish_category":{
+
+        "enter_something":"Nhập gì đó đi...",
+        "sort_low_to_high":"Giá: Thấp đến cao",
+        "sort_high_to_low":"Giá: Cao đến thấp"  
     },
-    "gender":{
-        "male":"Nam",
-        "female":"Nữ"
-     }
+    "dishes_details":{
+        "place_order":"Đặt mua"
+    },
+    "cart":{
+        "dishes_cart":{
+            "edit_dishes":"Sửa",
+            "remove_dishes":"Xoá"
+        },
+        "dish_quantity":"Mời chọn số lượng",
+        "cart_message":{
+            "quantity_cannot_zero":"Số lượng không thể là 0",
+            "dish_remove":"Bạn có chắc muốn xoá món ăn này?",
+            "cart_remove":"Xoá giỏ hàng",
+            "confirm_remove":"Bạn có chắc muốn xoá giỏ hàng?"            
+        },
+        "your_cart":"Giỏ hàng của bạn",
+        "empty_cart":"Giỏ hàng trống..",
+        "total":"Tổng tiền :",
+        "order":"Đặt mua"       
+    },
+    "discount":{
+        "your_voucher":"Voucher của bạn",
+        "ready_to_use":"Sẵn sàng để sử dụng",
+        "expired":"Đã hết hạn :((",
+        "voucher_cannot_be_use":"Các voucher đã hết hạn và không thể sử dụng",
+        "delete_voucher":"Xoá"
+    },
+    "more":{
+        "account_info":{
+            "account":"Tài khoản",
+            "profile_account":"Thông tin tài khoản",
+            "saved_address":"Địa chỉ đã lưu",
+            "log_out":"Đăng xuất"
+        },
+        "utilities":"Tiện ích",
+        "order_history":"Lịch sử đơn hàng",
+        "get_voucher":"Nhận mã ưu đãi",
+        "order_review":"Đánh giá đơn hàng",
+        "food_favorite":"Món yêu thích"
+      
+    },
+    "order_history_screen":{
+        "appbar":{
+            "order_history_text":"Lịch sử đơn hàng"
+        },
+        "pending":"Chờ thanh toán",
+        "processing":"Đang thực hiện",
+        "completed":"Đã hoàn tất",
+        "cancelled":"Đã huỷ"
+    },
+    "order_rate_screen":{
+        "appbar":{
+            "order_review_text":"Đánh giá đơn hàng"
+        },
+        "not_review_yet":"Chưa đánh giá",
+        "already_review":"Đã đánh giá",
+        "order_id":"Mã đơn hàng"
+    },
+    "bottom_sheet_order_details":{
+        "order_details":"Chi tiết đơn hàng",
+        "status":"Trạng thái",
+        "already_paid":"Đã thanh toán",
+        "checkout_now":"Thanh toán ngay!",
+        "rate_order":"Đánh giá",
+        "reorder":"Đặt lại",
+        "order_information":"Thông tin đơn hàng",
+        "recipient_name":"Tên người nhận",
+        "payment_status":"Trạng thái thanh toán",
+        "ordered_dishes":"Các món ăn đã đặt",
+        "total_amount":"Thành tiền",
+        "voucher_used":"Khuyến mãi đã sử dụng",
+        "payment_amount":"Số tiền thanh toán"
+    },
+    "exchange_voucher":{
+        "appbar":{
+            "exchange_voucher_text":"Đổi voucher"
+        },
+        "your_current_point":"Số điểm hiện tại của bạn",
+        "sort_by":"Xếp theo",
+        "sort_points_redeem":"Xếp theo điểm cần đổi",
+        "point_low":"Điểm: Thấp đến cao",
+        "point_high":"Điểm: Cao đến thấp",
+
+        "sort_expiration_date":"Xếp theo ngày hết hạn",
+        "nearest_day":"Ngày gần nhất",
+        "farthest_day":"Ngày xa nhất",
+
+        "sort_start_date":"Xếp theo ngày bắt đầu",
+        "sort_voucher_type":"Xếp theo loại voucher",
+        "percent":"Phần trăm",
+        "amount_money":"Số tiền",
+        "all_vouchers":"Tất cả voucher"
+    },
+
+    "favorite_products":{
+        "appbar":{
+            "favorite_products_text":"Sản phẩm yêu thích"
+        },
+        "no_favorite":"Bạn chưa có sản phẩm yêu thích.."
+    }, 
+    "profile":{
+        "appbar":{
+            "update_profile":"Cập nhật thông tin"
+        },
+        "select_device":"Chọn từ thiết bị",
+        "or":"hoặc",
+        "use_camera":"Sử dụng máy ảnh",
+        "full_name":"Họ và tên",
+        "birthday":"Ngày sinh",
+        "phone_number":"Số điện thoại",
+        "change_email":"Thay đổi email",
+        "reset_password":"Đổi mật khẩu",
+        "save":"Lưu"
+    },
+    "address_screen":{
+        "appbar":{
+            "your_address":"Địa chỉ của bạn"
+        },
+        "choose_on_map":"Chọn trên bản đồ",
+        "edit":"Sửa",
+        "update_address":"Cập nhật địa chỉ",
+        "remove":"Xoá",
+        "add":"Thêm địa chỉ",
+        "no_address":"Bạn chưa có địa chỉ ..",
+        "appbar_new_address":{
+            "add_new_address":"Thêm địa chỉ mới"
+        },
+        "select_province_city":"Chọn tỉnh/thành phố",
+        "select_district":"Chọn quận/huyện",
+        "select_ward":"Chọn phường/xã",
+        "enter_province":"Nhập tỉnh/thành phố..",
+        "enter_district":"Nhập quận/huyện..",
+        "enter_ward":"Nhập phường xã..",
+        "enter_house_number_street":"Nhập số nhà/ đường..",
+        "enter_address_name":"Nhập tên địa chỉ..",
+        "enter_recipient_name":"Nhập tên người nhận..",
+        "enter_recipient_phone_number":"Nhập số điện thoại người nhận..",
+        "set_as_default_address":"Đặt làm địa chỉ mặc định",
+        "new_address_button":"Lưu"
+    },
+    "payment":{
+        "appbar":{
+            "payment_text":"Thanh toán"
+        },
+        "address_box":{
+            "recipient_information":"Thông tin người nhận",
+            "address":"Địa chỉ",
+            "address_edit":"Sửa"
+        },
+        "selected_product":"Sản phẩm đã chọn",
+        "choose_payment_methods":"Chọn phương thức thanh toán",
+        "add_discount":"Thêm mã giảm giá",
+        "payment_details":"Chi tiết thanh toán",
+        "dishes(amount)":"Món ăn(số lượng)",
+        "discount":"Giảm giá",
+        "total":"Tổng cộng",
+        "checkout":"Thanh toán"
+    }
 }

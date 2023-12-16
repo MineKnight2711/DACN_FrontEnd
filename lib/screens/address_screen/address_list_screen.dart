@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
@@ -28,7 +29,7 @@ class AddressListScreen extends GetView {
           Get.back();
         },
         showLeading: true,
-        title: "Địa chỉ của bạn",
+        title: tr("address_screen.appbar.your_address"),
       ),
       body: RefreshIndicator(
         onRefresh: refresh,
@@ -53,8 +54,9 @@ class AddressListScreen extends GetView {
                 ],
               );
             }
-            return const EmptyWidget(
-                assetsAnimations: "no_address", tilte: "Bạn chưa có địa chỉ..");
+            return EmptyWidget(
+                assetsAnimations: "no_address",
+                tilte: tr("address_screen.appbar.no_address"));
           }),
         ),
       ),
@@ -62,7 +64,7 @@ class AddressListScreen extends GetView {
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
         child: RoundIconButton(
           size: 90.r,
-          title: "Thêm địa chỉ",
+          title: tr("address_screen.add"),
           onPressed: () {
             Get.to(() => AddAddressScreen(), transition: Transition.downToUp);
           },

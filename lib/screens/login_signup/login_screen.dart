@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -27,7 +28,7 @@ class LoginScreen extends GetView {
             Navigator.pop(context);
           },
           backGroundColor: AppColors.orange100,
-          title: "Đăng nhập"),
+          title: tr("login.login_text")),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
@@ -38,14 +39,14 @@ class LoginScreen extends GetView {
                 height: 64,
               ),
               Text(
-                "Login",
+                tr("login.login_text"),
                 style: TextStyle(
                     color: TextColor.primaryText,
                     fontSize: 30,
                     fontWeight: FontWeight.w800),
               ),
               Text(
-                "Add your details to login",
+                tr("login.details_login"),
                 style: TextStyle(
                     color: TextColor.secondaryText,
                     fontSize: 14,
@@ -65,7 +66,7 @@ class LoginScreen extends GetView {
                 height: 25,
               ),
               RoundTextfield(
-                hintText: "Password",
+                hintText: tr("login.password"),
                 controller: loginController.textControllers.txtPasswordLogin,
                 onChanged: loginController.validatePassword,
                 obscureText: true,
@@ -78,7 +79,7 @@ class LoginScreen extends GetView {
                   size: 80.r,
                   enabled: loginController.validate.isValidEmailLogin.value &&
                       loginController.validate.isValidPasswordLogin.value,
-                  title: "Login",
+                  title: tr("login.login_text"),
                   onPressed: () async {
                     showLoadingAnimation(
                         context, "assets/animations/loading.json", 180);
@@ -145,7 +146,7 @@ class LoginScreen extends GetView {
                   // );
                 },
                 child: Text(
-                  "Forgot your password?",
+                  tr("login.forgot_password"),
                   style: TextStyle(
                       color: TextColor.secondaryText,
                       fontSize: 14,
@@ -156,7 +157,7 @@ class LoginScreen extends GetView {
                 height: 30,
               ),
               Text(
-                "or Login With",
+                tr("login.or_login"),
                 style: TextStyle(
                     color: TextColor.secondaryText,
                     fontSize: 14,
@@ -168,7 +169,7 @@ class LoginScreen extends GetView {
               RoundIconButton(
                 enabled: true,
                 iconPath: "assets/images/google.png",
-                title: "Tiếp tục với google",
+                title: tr("login.continue_google"),
                 size: 80.r,
                 color: AppColors.gray80,
                 onPressed: () async {
@@ -208,14 +209,14 @@ class LoginScreen extends GetView {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Dont have an Account?",
+                      tr("login.no_account"),
                       style: TextStyle(
                           color: TextColor.secondaryText,
                           fontSize: 14,
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "Sign Up",
+                      tr("login.sign_up"),
                       style: TextStyle(
                           color: TextColor.primary,
                           fontSize: 14,
@@ -308,7 +309,7 @@ class LoginScreen extends GetView {
 //                 height: CustomMediaQuery.mediaHeight(context, 20),
 //               ),
 //               DefaultButton(
-//                 text: tr("login.login"),
+//                 text: tr("login"),
 //                 fontSize: 20,
 //                 press: () async {
 //                   String? result = await loginController.login(

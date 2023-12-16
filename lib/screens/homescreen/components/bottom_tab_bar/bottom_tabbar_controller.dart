@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:get/get.dart';
@@ -40,15 +41,22 @@ class BottomTabBarController extends GetxController {
   @override
   void onInit() {
     tabs.value = [
-      TabModel(tag: "Home", name: 'Home', imagePath: 'assets/images/home.png'),
       TabModel(
-          tag: "Cart", name: 'Giỏ hàng', imagePath: 'assets/images/cart.png'),
+          tag: "Home",
+          name: tr("home.bottom_navigation_bar.home"),
+          imagePath: 'assets/images/home.png'),
+      TabModel(
+          tag: "Cart",
+          name: tr("home.bottom_navigation_bar.cart"),
+          imagePath: 'assets/images/cart.png'),
       TabModel(
           tag: "Discount",
-          name: 'Ưu đãi',
+          name: tr("home.bottom_navigation_bar.discount"),
           imagePath: 'assets/images/voucher.png'),
       TabModel(
-          tag: "More", name: 'Nhiều hơn', imagePath: 'assets/images/menu.png'),
+          tag: "More",
+          name: tr("home.bottom_navigation_bar.more"),
+          imagePath: 'assets/images/menu.png'),
     ];
     cartController = Get.find<CartController>();
     super.onInit();

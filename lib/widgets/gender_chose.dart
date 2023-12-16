@@ -46,7 +46,7 @@ class GenderSelectionWidgetState extends State<GenderSelectionWidget> {
           ),
         ),
         Text(
-          tr('gender.male'),
+          tr('sign_up.gender.male'),
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey[800],
@@ -70,11 +70,13 @@ class GenderSelectionWidgetState extends State<GenderSelectionWidget> {
             activeColor: Colors.pink,
           ),
         ),
-        Text(tr('gender.female'),
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[800],
-            )),
+        Text(
+          tr('sign_up.gender.female'),
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey[800],
+          ),
+        ),
       ],
     );
   }

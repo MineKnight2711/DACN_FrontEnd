@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +23,8 @@ class RatingOrderTabbarController extends GetxController {
   @override
   void onInit() {
     tabs.value = [
-      "Chưa đánh giá",
-      "Đã đánh giá",
+      tr("order_rate_screen.not_review_yet"),
+      tr("order_rate_screen.already_review"),
     ];
     super.onInit();
   }

@@ -1,10 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/controller/favorite_controller.dart';
+import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/controller/order_controller.dart';
 import 'package:fooddelivery_fe/controller/rating_order_controller.dart';
@@ -23,6 +26,7 @@ import 'package:google_fonts/google_fonts.dart';
 class SettingsView extends StatelessWidget {
   SettingsView({super.key});
   final accountController = Get.find<AccountController>();
+  final languageController = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return NoGlowingScrollView(
@@ -37,7 +41,7 @@ class SettingsView extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Tiện ích",
+                    tr("more.utilities"),
                     style: GoogleFonts.roboto(
                         fontSize: 16.r, fontWeight: FontWeight.w500),
                   ),
@@ -56,12 +60,12 @@ class SettingsView extends StatelessWidget {
             ),
           ),
           Text(
-            "Tài khoản",
+            tr("more.account_info.account"),
             style:
                 GoogleFonts.roboto(fontSize: 16.r, fontWeight: FontWeight.w500),
           ),
           SizedBox(
-            height: 200.h,
+            height: 300.h,
             child: ListView(
               children: [
                 Obx(
@@ -77,7 +81,7 @@ class SettingsView extends StatelessWidget {
                           splashColor: AppColors.lightOrange,
                           leading: const Icon(CupertinoIcons.person),
                           title: Text(
-                            "Thông tin tài khoản",
+                            tr("more.account_info.profile_account"),
                             style: GoogleFonts.roboto(
                               fontSize: 14.r,
                             ),
@@ -99,7 +103,7 @@ class SettingsView extends StatelessWidget {
                           splashColor: AppColors.lightOrange,
                           leading: const Icon(CupertinoIcons.location_solid),
                           title: Text(
-                            "Địa chỉ đã lưu",
+                            tr("more.account_info.saved_address"),
                             style: GoogleFonts.roboto(
                               fontSize: 14.r,
                             ),
@@ -113,6 +117,45 @@ class SettingsView extends StatelessWidget {
                     ),
                   ),
                 ),
+                ListTile(
+                  onTap: () {
+                    accountController.logOut();
+                  },
+                  splashColor: AppColors.lightOrange,
+                  leading: const Icon(Icons.language),
+                  title: Text(
+                    tr("more.language"),
+                    style: GoogleFonts.roboto(
+                      fontSize: 14.r,
+                    ),
+                  ),
+                  trailing: SizedBox(
+                    width: 100.w,
+                    child: Row(
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            languageController
+                                .saveLocale(const Locale('en', 'US'))
+                                .whenComplete(() => Phoenix.rebirth(context));
+                          },
+                          child: Text("English"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            languageController
+                                .saveLocale(const Locale('vi', 'VN'))
+                                .whenComplete(() => Phoenix.rebirth(context));
+                          },
+                          child: Text("Viet Nam"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(
+                  thickness: 1.w,
+                ),
                 Obx(() {
                   if (accountController.accountSession.value != null) {
                     return ListTile(
@@ -122,7 +165,7 @@ class SettingsView extends StatelessWidget {
                       splashColor: AppColors.lightOrange,
                       leading: const Icon(Icons.logout_sharp),
                       title: Text(
-                        "Đăng xuất",
+                        tr("more.account_info.log_out"),
                         style: GoogleFonts.roboto(
                           fontSize: 14.r,
                         ),
@@ -139,7 +182,7 @@ class SettingsView extends StatelessWidget {
                     splashColor: AppColors.lightOrange,
                     leading: const Icon(Icons.logout_sharp),
                     title: Text(
-                      "Đăng nhập",
+                      tr("login.login_text"),
                       style: GoogleFonts.roboto(
                         fontSize: 14.r,
                       ),
@@ -164,7 +207,7 @@ List<ExtensionCard> extensionsCard = [
       Get.to(() => OrdersScreen(), transition: Transition.upToDown);
     },
     icon: CupertinoIcons.square_list,
-    title: 'Lịch sử đơn hàng',
+    title: tr("more.order_history"),
   ),
   ExtensionCard(
     onPressed: () {
@@ -173,7 +216,7 @@ List<ExtensionCard> extensionsCard = [
       Get.to(() => VoucherShopScreen(), transition: Transition.upToDown);
     },
     icon: Icons.discount,
-    title: 'Nhận mã ưu đãi',
+    title: tr("more.get_voucher"),
   ),
   ExtensionCard(
     onPressed: () async {
@@ -183,7 +226,7 @@ List<ExtensionCard> extensionsCard = [
       Get.to(() => RatingOrderScreen(), transition: Transition.upToDown);
     },
     icon: Icons.star,
-    title: 'Đánh giá đơn hàng',
+    title: tr("more.order_review"),
   ),
   ExtensionCard(
     onPressed: () {
@@ -192,7 +235,7 @@ List<ExtensionCard> extensionsCard = [
       Get.to(() => FavoriteScreen(), transition: Transition.upToDown);
     },
     icon: CupertinoIcons.heart_circle_fill,
-    title: 'Món yêu thích',
+    title: tr("more.food_favorite"),
   ),
 ];
 

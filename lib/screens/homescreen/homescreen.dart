@@ -13,7 +13,7 @@ import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/cart_vie
 import 'package:fooddelivery_fe/screens/homescreen/components/homescreen_appbar.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/product_view.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/setting_view.dart';
-import 'package:fooddelivery_fe/screens/homescreen/voucher_view/voucher_view.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/voucher_view/voucher_view.dart';
 
 import 'package:get/get.dart';
 

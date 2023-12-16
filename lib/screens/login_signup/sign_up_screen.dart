@@ -39,14 +39,14 @@ class SignUpScreen extends GetView {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Sign Up",
+                tr("login.sign_up"),
                 style: TextStyle(
                     color: TextColor.primaryText,
                     fontSize: 30,
                     fontWeight: FontWeight.w800),
               ),
               Text(
-                "Add your details to sign up",
+                tr("sign_up.add_your_details_to_signup"),
                 style: TextStyle(
                     color: TextColor.secondaryText,
                     fontSize: 14,
@@ -56,7 +56,7 @@ class SignUpScreen extends GetView {
                 height: 25,
               ),
               RoundTextfield(
-                hintText: "Họ và tên",
+                hintText: tr("profile.full_name"),
                 controller:
                     registerController.textControllers.txtFullNameSignUp,
                 onChanged: registerController.validateFullname,
@@ -89,7 +89,7 @@ class SignUpScreen extends GetView {
                 height: 25,
               ),
               RoundTextfield(
-                hintText: "Số điện thoại",
+                hintText: tr("profile.phone_number"),
                 controller: registerController.textControllers.txtPhoneSignUp,
                 keyboardType: TextInputType.phone,
                 onChanged: registerController.validatePhonenumber,
@@ -98,7 +98,7 @@ class SignUpScreen extends GetView {
                 height: 25,
               ),
               RoundTextfield(
-                hintText: "Password",
+                hintText: tr("login.password"),
                 controller:
                     registerController.textControllers.txtPasswordSignUp,
                 obscureText: true,
@@ -108,7 +108,7 @@ class SignUpScreen extends GetView {
                 height: 25,
               ),
               RoundTextfield(
-                hintText: "Confirm Password",
+                hintText: tr("sign_up.confirm_password"),
                 controller:
                     registerController.textControllers.txtConfirmPasswordSignUp,
                 obscureText: true,
@@ -121,7 +121,7 @@ class SignUpScreen extends GetView {
                 () => RoundIconButton(
                     size: 80.r,
                     enabled: registerController.validate.isSignUpValid.value,
-                    title: tr("Sign Up"),
+                    title: tr("login.sign_up"),
                     onPressed: () async {
                       showLoadingAnimation(
                           context, "assets/animations/loading.json", 180);
@@ -159,14 +159,14 @@ class SignUpScreen extends GetView {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Already have an Account? ",
+                      tr("sign_up.already_account"),
                       style: TextStyle(
                           color: TextColor.secondaryText,
                           fontSize: 14,
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "Login",
+                      tr("login.login_text"),
                       style: TextStyle(
                           color: TextColor.primary,
                           fontSize: 14,

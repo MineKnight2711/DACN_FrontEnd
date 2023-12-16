@@ -15,7 +15,9 @@ import 'dish_view/dish_view.dart';
 class ProductView extends StatelessWidget {
   final CategoryController categoryController;
   ProductView({super.key, required this.categoryController});
+
   final TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return NotificationListener<OverscrollIndicatorNotification>(
@@ -65,12 +67,13 @@ class BodyHeader extends StatelessWidget {
   final bool isExpanded;
   final CategoryController categoryController;
   final TextEditingController searchController;
-
+  final Function()? onDropDown;
   const BodyHeader({
     super.key,
     required this.categoryController,
     required this.searchController,
     required this.isExpanded,
+    this.onDropDown,
   });
 
   @override
@@ -78,7 +81,7 @@ class BodyHeader extends StatelessWidget {
     return SliverLayoutBuilder(
       builder: (context, constraints) {
         final headerHeight = isExpanded
-            ? ((categoryController.listCategory.value?.length) ?? 0) * 40.h
+            ? categoryController.calculateCategoryListHeight()
             : 0.3.sh;
 
         final isScrolledUnder = isExpanded
@@ -86,8 +89,8 @@ class BodyHeader extends StatelessWidget {
             : (constraints.scrollOffset > headerHeight - 30);
         return SliverAppBar(
           expandedHeight: isExpanded
-              ? ((categoryController.listCategory.value?.length) ?? 0) * 40.h
-              : 0.3.sh,
+              ? categoryController.calculateCategoryListHeight()
+              : 200.h,
           floating: false,
           backgroundColor: Colors.transparent,
           flexibleSpace: FlexibleSpaceBar(
@@ -107,73 +110,9 @@ class BodyHeader extends StatelessWidget {
                           controller: searchController),
                     ),
                     const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            tr("home.category"),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black26,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              categoryController.toggleShowAllCategories();
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Obx(
-                                  () => Text(
-                                    tr(categoryController
-                                            .showAllCategories.value
-                                        ? "View Less"
-                                        : "View All"),
-                                    style: const TextStyle(
-                                      color: Colors.orange,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                SvgPicture.asset(
-                                    "assets/icons/arrow_right.svg"),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                    CategoryList(
+                      categoryController: categoryController,
                     ),
-                    Obx(() {
-                      final List<CategoryModel>? categoryList =
-                          categoryController.listCategory.value;
-                      List<CategoryModel> displayedCategories = [];
-                      if (categoryList != null && categoryList.isNotEmpty) {
-                        if (categoryList.length >= 4) {
-                          displayedCategories =
-                              categoryController.showAllCategories.value
-                                  ? categoryList
-                                  : categoryList.sublist(0, 4);
-                        } else {
-                          displayedCategories = categoryList;
-                        }
-                        return CategoryList(
-                            categories: displayedCategories,
-                            categoryController: categoryController);
-                      }
-                      return const Center(
-                          child: Padding(
-                        padding: EdgeInsets.all(32),
-                        child: Text("Không có danh mục :(("),
-                      ));
-                    }),
                   ],
                 ),
               ),

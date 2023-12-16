@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -28,7 +29,7 @@ class UpdateAddressScreen extends StatelessWidget {
           addressController.refresh();
           Get.back();
         },
-        title: "Cập nhật địa chỉ",
+        title: tr("address_screen.update_address"),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -39,7 +40,7 @@ class UpdateAddressScreen extends StatelessWidget {
             },
             controller:
                 addressController.updateAddressTextControllers.txtProvince,
-            hintText: "Mời nhập tỉnh/thành phố",
+            hintText: tr("address_screen.enter_province"),
             onChanged: (province) {
               addressController.searchProvince("$province");
               address.province = addressController
@@ -67,7 +68,7 @@ class UpdateAddressScreen extends StatelessWidget {
             },
             controller:
                 addressController.updateAddressTextControllers.txtDistrict,
-            hintText: "Mời nhập quận/huyện",
+            hintText: tr("address_screen.enter_district"),
             onChanged: (district) {
               addressController.searchDistrict("$district");
               address.district = addressController
@@ -94,7 +95,7 @@ class UpdateAddressScreen extends StatelessWidget {
               addressController.bondDropDownList("ward");
             },
             controller: addressController.updateAddressTextControllers.txtWard,
-            hintText: "Mời nhập phường/xã",
+            hintText: tr("address_screen.enter_ward"),
             onChanged: (ward) {
               addressController.searchWard("$ward");
               address.ward =
@@ -122,7 +123,7 @@ class UpdateAddressScreen extends StatelessWidget {
             },
             controller:
                 addressController.updateAddressTextControllers.txtDetails,
-            hintText: "Mời nhập số nhà , đường",
+            hintText: tr("address_screen.enter_house_number_street"),
             onChanged: (details) {
               address.details = details;
             },
@@ -136,7 +137,7 @@ class UpdateAddressScreen extends StatelessWidget {
             },
             controller:
                 addressController.updateAddressTextControllers.txtAddressName,
-            hintText: "Mời nhập tên địa chỉ",
+            hintText: tr("address_screen.enter_address_name"),
             onChanged: (addressName) {
               address.addressName = addressName;
             },
@@ -150,7 +151,7 @@ class UpdateAddressScreen extends StatelessWidget {
             },
             controller:
                 addressController.updateAddressTextControllers.txtReceiverName,
-            hintText: "Mời nhập người nhận",
+            hintText: tr("address_screen.enter_recipient_name"),
             onChanged: (receiverName) {
               address.receiverName = receiverName;
             },
@@ -164,7 +165,7 @@ class UpdateAddressScreen extends StatelessWidget {
             },
             controller:
                 addressController.updateAddressTextControllers.txtReceiverPhone,
-            hintText: "Mời nhập số điện thoại người nhận",
+            hintText: tr("address_screen.enter_recipient_phone_number"),
             onChanged: (receiverPhone) {
               address.receiverPhone = receiverPhone;
             },
@@ -177,7 +178,7 @@ class UpdateAddressScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Đặt làm địa chỉ mặc định",
+                Text(tr("address_screen.set_as_default_address"),
                     style: GoogleFonts.roboto(fontSize: 16.r)),
                 Transform.scale(
                   scale: 1.2,
@@ -200,7 +201,7 @@ class UpdateAddressScreen extends StatelessWidget {
           ),
           RoundIconButton(
             size: 80.r,
-            title: "Cập nhật địa chỉ",
+            title: tr("address_screen.update_address"),
             onPressed: () async {
               showLoadingAnimation(
                   context, "assets/animations/loading.json", 180);

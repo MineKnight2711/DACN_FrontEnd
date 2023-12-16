@@ -100,74 +100,78 @@ class ListDishView extends StatelessWidget {
                                 ),
                                 Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     FavoriteIconButton(
                                       dishDTO: dishItem,
                                       favoriteController: favoriteController,
                                     ),
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        if (await showConfirmDialog(
-                                            context,
-                                            "Thêm ${dishItem.dish.dishName}",
-                                            "Bạn có muốn thêm ${dishItem.dish.dishName} vào giỏ hàng ?")) {
-                                          String? result = await cartController
-                                              .addToCart(dishItem.dish, 1);
-                                          switch (result) {
-                                            case "Success":
-                                              showCustomSnackBar(
-                                                  context,
-                                                  "Thông báo",
-                                                  "Thêm vào giỏ hàng thành công",
-                                                  ContentType.success,
-                                                  2);
-                                              break;
-                                            case "UpdatedCart":
-                                              showCustomSnackBar(
-                                                  context,
-                                                  "Thông báo",
-                                                  "Cập nhật giỏ hàng thành công",
-                                                  ContentType.help,
-                                                  2);
-                                              break;
-                                            case "NoAccount":
-                                              showCustomSnackBar(
-                                                  context,
-                                                  "Lỗi",
-                                                  "Bạn phải đăng nhập để thêm sản phẩm vào giỏ hàng",
-                                                  ContentType.failure,
-                                                  2);
-                                              break;
-                                            default:
-                                              showCustomSnackBar(
-                                                  context,
-                                                  "Lỗi",
-                                                  "Lỗi chưa xác định: $result",
-                                                  ContentType.failure,
-                                                  2);
-                                              break;
-                                          }
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const CircleBorder(),
-
-                                        backgroundColor: AppColors
-                                            .orange100, // Make the button circular
-                                        padding: EdgeInsets.all(6.w),
-                                      ),
-                                      child: const Icon(
-                                        Icons.add,
-                                        color: Colors
-                                            .white, // Set the icon's color
-                                        size: 18, // Set the icon's size
-                                      ),
-                                    ),
                                     SizedBox(
-                                      height: 5.h,
+                                      width: 30.w,
+                                      child: ElevatedButton(
+                                        onPressed: () async {
+                                          if (await showConfirmDialog(
+                                              context,
+                                              "Thêm ${dishItem.dish.dishName}",
+                                              "Bạn có muốn thêm ${dishItem.dish.dishName} vào giỏ hàng ?")) {
+                                            String? result =
+                                                await cartController.addToCart(
+                                                    dishItem.dish, 1);
+                                            switch (result) {
+                                              case "Success":
+                                                showCustomSnackBar(
+                                                    context,
+                                                    "Thông báo",
+                                                    "Thêm vào giỏ hàng thành công",
+                                                    ContentType.success,
+                                                    2);
+                                                break;
+                                              case "UpdatedCart":
+                                                showCustomSnackBar(
+                                                    context,
+                                                    "Thông báo",
+                                                    "Cập nhật giỏ hàng thành công",
+                                                    ContentType.help,
+                                                    2);
+                                                break;
+                                              case "NoAccount":
+                                                showCustomSnackBar(
+                                                    context,
+                                                    "Lỗi",
+                                                    "Bạn phải đăng nhập để thêm sản phẩm vào giỏ hàng",
+                                                    ContentType.failure,
+                                                    2);
+                                                break;
+                                              default:
+                                                showCustomSnackBar(
+                                                    context,
+                                                    "Lỗi",
+                                                    "Lỗi chưa xác định: $result",
+                                                    ContentType.failure,
+                                                    2);
+                                                break;
+                                            }
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+
+                                          backgroundColor: AppColors
+                                              .orange100, // Make the button circular
+                                          padding: EdgeInsets.all(6.w),
+                                        ),
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: Colors
+                                              .white, // Set the icon's color
+                                          size: 18, // Set the icon's size
+                                        ),
+                                      ),
                                     ),
                                   ],
+                                ),
+                                SizedBox(
+                                  width: 10.w,
                                 ),
                               ],
                             ),

@@ -33,7 +33,7 @@ class ProfileScreen extends GetView {
           profileController.onClose();
           Navigator.pop(context);
         },
-        title: 'Cập nhật thông tin',
+        title: tr("profile.appbar.update_profile"),
         backGroundColor: AppColors.orange80,
       ),
       body: SingleChildScrollView(
@@ -69,7 +69,7 @@ class ProfileScreen extends GetView {
             Obx(
               () => InputExpandTile(
                 controller: profileController.fullnameExpansionTileController,
-                title: 'Họ và tên',
+                title: tr("profile.full_name"),
                 content: "${accountController.accountSession.value?.fullName}",
                 textController: profileController
                     .textControllers.txtFullNameUpdateController,
@@ -88,7 +88,7 @@ class ProfileScreen extends GetView {
             Obx(
               () => DatePickerExpandTile(
                 controller: profileController.birthDayExpansionTileController,
-                title: "Ngày sinh",
+                title: tr("profile.birthday"),
                 currentBirthday:
                     accountController.accountSession.value?.birthday ??
                         DateTime.now(),
@@ -109,7 +109,7 @@ class ProfileScreen extends GetView {
               () => InputExpandTile(
                 controller:
                     profileController.phoneNumberExpansionTileController,
-                title: 'Số điện thoại',
+                title: tr("profile.phone_number"),
                 content:
                     "${accountController.accountSession.value?.phoneNumber}",
                 textController: profileController
@@ -131,13 +131,13 @@ class ProfileScreen extends GetView {
               onPressed: () {
                 // Navigate to change email screen
               },
-              child: Text(tr('Change Email')),
+              child: Text(tr("profile.change_email")),
             ),
             TextButton(
               onPressed: () {
                 // Show reset password dialog
               },
-              child: Text(tr('Reset Password')),
+              child: Text(tr("profile.reset_password")),
             ),
           ],
         ),

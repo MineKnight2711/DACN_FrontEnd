@@ -30,7 +30,7 @@ class BottomNavigationTabBar extends StatelessWidget {
                               alignment: Alignment.topRight,
                               child: Obx(
                                 () => Text(
-                                  "${bottomTabBarController.cartController.listCart.value.length}",
+                                  "${bottomTabBarController.cartController.listCart.length}",
                                   style: GoogleFonts.roboto(fontSize: 16.r),
                                 ),
                               ),

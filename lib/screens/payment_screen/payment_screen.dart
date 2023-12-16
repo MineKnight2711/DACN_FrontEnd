@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,6 @@ import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CheckoutScreen extends GetView {
@@ -70,7 +70,7 @@ class CheckoutScreen extends GetView {
             popScreen();
             Get.back();
           },
-          title: "Thanh toán",
+          title: tr("payment.appbar.payment_text"),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.r),
@@ -89,7 +89,7 @@ class CheckoutScreen extends GetView {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Sản phẩm đã chọn:',
+                  tr("payment.selected_product"),
                   style: CustomFonts.customGoogleFonts(
                     fontSize: 14.r,
                     fontWeight: FontWeight.w500,
@@ -165,7 +165,7 @@ class CheckoutScreen extends GetView {
                     }
                   }
                 },
-                title: "Thanh toán",
+                title: tr("payment.checkout"),
               ),
             ],
           ),
@@ -294,7 +294,7 @@ class AccountAddress extends StatelessWidget {
           Expanded(
             child: ListTile(
               title: Text(
-                "Thông tin người nhận :",
+                tr("payment.address_box.recipient_information"),
                 style: CustomFonts.customGoogleFonts(fontSize: 14.r),
               ),
               subtitle: Obx(
@@ -306,7 +306,7 @@ class AccountAddress extends StatelessWidget {
               ),
               trailing: TextButton.icon(
                 label: Text(
-                  "Sửa",
+                  tr("payment.address_box.address_edit"),
                   style: CustomFonts.customGoogleFonts(fontSize: 14.r),
                 ),
                 onPressed: () {
@@ -323,7 +323,7 @@ class AccountAddress extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 11.w),
             child: Text(
-              "Địa chỉ :",
+              tr("payment.address_box.address"),
               style: CustomFonts.customGoogleFonts(fontSize: 14.r),
             ),
           ),
@@ -367,7 +367,7 @@ class PaymentDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Chi tiết thanh toán:',
+          tr("payment.payment_details"),
           style: CustomFonts.customGoogleFonts(
               fontSize: 16.r, fontWeight: FontWeight.w500),
         ),
@@ -376,7 +376,7 @@ class PaymentDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Tạm tính',
+              tr("payment.payment_details"),
               style: CustomFonts.customGoogleFonts(fontSize: 14.r),
             ),
             Text(
@@ -392,7 +392,7 @@ class PaymentDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Món ăn (số lượng)',
+              tr("payment.dishes(amount)"),
               style: CustomFonts.customGoogleFonts(fontSize: 14.r),
             ),
             Text(
@@ -408,7 +408,7 @@ class PaymentDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Giảm giá',
+              tr("payment.discount"),
               style: CustomFonts.customGoogleFonts(fontSize: 14.r),
             ),
             Obx(
@@ -437,7 +437,7 @@ class PaymentDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Tổng cộng',
+              tr("payment.total"),
               style: CustomFonts.customGoogleFonts(fontSize: 18.r),
             ),
             Text(
@@ -481,7 +481,7 @@ class PaymentMethodAndVoucher extends StatelessWidget {
               () => Text(
                 transactionController.selectedPayment.value != null
                     ? "${transactionController.selectedPayment.value?.paymentMethod}"
-                    : "Chọn phương thức thanh toán",
+                    : tr("payment.choose_payment_methods"),
                 style: CustomFonts.customGoogleFonts(fontSize: 14.r),
               ),
             ),
@@ -507,7 +507,7 @@ class PaymentMethodAndVoucher extends StatelessWidget {
               () => Text(
                 transactionController.selectedVoucher.value != null
                     ? "${transactionController.selectedVoucher.value?.voucherName}"
-                    : "Thêm mã giảm giá",
+                    : tr("payment.add_discount"),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: CustomFonts.customGoogleFonts(fontSize: 14.r),

@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,6 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      // key: Key("${cartItem.cartID}"),
       closeOnScroll: true,
       endActionPane: ActionPane(
         motion: const DrawerMotion(),
@@ -45,8 +45,8 @@ class CartItem extends StatelessWidget {
                 if (cartItem.quantity == 0) {
                   bool result = await showConfirmDialog(
                       context,
-                      "Số lượng không thể là 0",
-                      "Bạn có chắc muốn xoá sản phẩm này?");
+                      tr("cart.cart_message.quantity_cannot_zero"),
+                      "cart.cart_message.dish_remove");
                   if (result) {
                     cartController.deleteCartItem(cartItem);
                   } else {
@@ -70,7 +70,7 @@ class CartItem extends StatelessWidget {
             backgroundColor: Colors.blue[200]!,
             foregroundColor: AppColors.dark100,
             icon: CupertinoIcons.pencil,
-            label: 'Sửa',
+            label: tr("cart.dishes_cart.edit_dishes"),
           ),
           SlidableAction(
             onPressed: (slideContext) async {
@@ -97,7 +97,7 @@ class CartItem extends StatelessWidget {
             backgroundColor: AppColors.orange100,
             foregroundColor: AppColors.white100,
             icon: CupertinoIcons.delete,
-            label: 'Xoá',
+            label: tr("cart.dishes_cart.remove_dishes"),
           ),
         ],
       ),

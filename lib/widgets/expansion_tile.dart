@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/mediquerry.dart';
@@ -167,9 +168,9 @@ class InputExpandTile extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: isValid ? onSavePressed : null,
-                  child: const Text(
-                    'Lưu',
-                    style: TextStyle(fontSize: 18),
+                  child: Text(
+                    tr("profile.save"),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
               ],

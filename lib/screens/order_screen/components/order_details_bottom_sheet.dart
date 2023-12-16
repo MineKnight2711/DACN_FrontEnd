@@ -1,13 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/model/order_model.dart';
-import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_bottom_sheet.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
-import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 
 class OrderDetailsBottomSheet extends StatelessWidget {
@@ -50,7 +49,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Trạng thái",
+                tr("bottom_sheet_order_details.status"),
                 textAlign: TextAlign.center,
                 style: CustomFonts.customGoogleFonts(
                   fontSize: 14.r,
@@ -61,7 +60,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                 height: 5.h,
               ),
               Text(
-                "${orderDetails.order?.status}",
+                tr("bottom_sheet_order_details.already_paid"),
                 textAlign: TextAlign.center,
                 style: CustomFonts.customGoogleFonts(
                   fontSize: 16.r,
@@ -86,7 +85,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                     height: 0.05.sh,
                     child: RoundIconButton(
                       size: 40.w,
-                      title: "Đánh giá",
+                      title: tr("bottom_sheet_order_details.rate_order"),
                       onPressed: () {},
                     ),
                   )
@@ -96,7 +95,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                     height: 0.05.sh,
                     child: RoundIconButton(
                       size: 60.w,
-                      title: "Thanh toán ngay!",
+                      title: tr("bottom_sheet_order_details.checkout_now"),
                       onPressed: () {},
                     ),
                   )
@@ -109,7 +108,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                     : "${orderDetails.order?.status}" == "Chờ thanh toán"
                         ? 40.w
                         : 80.w,
-                title: "Đặt lại",
+                title: tr("bottom_sheet_order_details.reorder"),
                 onPressed: () {},
               ),
             )
@@ -128,7 +127,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                 height: 5.h,
               ),
               Text(
-                "Thông tin đơn hàng",
+                tr("bottom_sheet_order_details.order_information"),
                 style: CustomFonts.customGoogleFonts(fontSize: 16.r),
               ),
               SizedBox(
@@ -142,7 +141,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Tên người nhận',
+                          tr("bottom_sheet_order_details.recipient_name"),
                           style: CustomFonts.customGoogleFonts(
                               fontSize: 14.r, color: AppColors.dark20),
                         ),
@@ -167,7 +166,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Số điện thoại',
+                          tr("profile.phone_number"),
                           style: CustomFonts.customGoogleFonts(
                               fontSize: 14.r, color: AppColors.dark20),
                         ),
@@ -187,7 +186,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                 thickness: 1.h,
               ),
               Text(
-                "Địa chỉ",
+                tr("payment.address_box.address"),
                 style: CustomFonts.customGoogleFonts(
                     fontSize: 14.r, color: AppColors.dark20),
               ),
@@ -203,7 +202,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                 thickness: 1.h,
               ),
               Text(
-                "Trạng thái thanh toán",
+                tr("bottom_sheet_order_details.payment_status"),
                 style: CustomFonts.customGoogleFonts(
                     fontSize: 14.r, color: AppColors.dark20),
               ),
@@ -263,7 +262,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Text(
-            "Các sản phẩm đã đặt",
+            tr("bottom_sheet_order_details.ordered_dishes"),
             style: CustomFonts.customGoogleFonts(
               fontSize: 16.r,
             ),
@@ -321,7 +320,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Tổng cộng",
+                tr("bottom_sheet_order_details.ordered_dishes"),
                 style: CustomFonts.customGoogleFonts(
                   fontSize: 16.r,
                 ),
@@ -333,7 +332,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Thành tiền",
+                    tr("cart.total"),
                     style: CustomFonts.customGoogleFonts(
                       fontSize: 14.r,
                     ),
@@ -364,7 +363,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Khuyến mãi sử dụng",
+                              tr("bottom_sheet_order_details.voucher_used"),
                               style: CustomFonts.customGoogleFonts(
                                 fontSize: 14.r,
                               ),
@@ -403,7 +402,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Số tiền thanh toán",
+                    tr("bottom_sheet_order_details.payment_amount"),
                     style: CustomFonts.customGoogleFonts(
                       fontSize: 14.r,
                     ),
@@ -464,7 +463,7 @@ class OrderDetailsBottomSheetHeader extends StatelessWidget {
             alignment: Alignment.topCenter,
             padding: EdgeInsets.only(top: 10.h),
             child: Text(
-              "Chi tiết đơn hàng",
+              tr("bottom_sheet_order_details.order_details"),
               textAlign: TextAlign.center,
               style: CustomFonts.customGoogleFonts(fontSize: 16.r),
             ),

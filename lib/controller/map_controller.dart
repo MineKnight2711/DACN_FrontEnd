@@ -120,17 +120,22 @@ class MapController extends GetxController {
 
   void selectAddress() {}
   Future<String> getCurrentPosition() async {
-    gpi.Position position = await geolocator.Geolocator.getCurrentPosition(
-        desiredAccuracy: geolocator.LocationAccuracy.high);
     String result = "";
     geolocator.LocationPermission permission =
         await geolocator.Geolocator.checkPermission();
-    if (permission == geolocator.LocationPermission.denied) {
-      result = 'Denied';
-    } else if (permission == geolocator.LocationPermission.deniedForever) {
-      result = "DeniedForever";
+    if (permission == geolocator.LocationPermission.deniedForever) {
+      result = 'DeniedForever';
+    } else if (permission == geolocator.LocationPermission.denied) {
+      result = "Denied";
+      geolocator.LocationPermission requestPermission =
+          await geolocator.Geolocator.requestPermission();
+      if (requestPermission == geolocator.LocationPermission.deniedForever) {
+        return "DeniedForever";
+      }
     } else if (permission == geolocator.LocationPermission.whileInUse ||
         permission == geolocator.LocationPermission.always) {
+      gpi.Position position = await geolocator.Geolocator.getCurrentPosition(
+          desiredAccuracy: geolocator.LocationAccuracy.high);
       Position getPositon = Position(position.longitude, position.latitude);
       final locationResult =
           await getLocationByLatitude("${getPositon.lat}", "${getPositon.lng}");

@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/font.dart';
@@ -31,7 +32,7 @@ class VoucherShopScreen extends GetView {
         onPressed: () {
           Get.back();
         },
-        title: "Đổi voucher",
+        title: tr("exchange_voucher.appbar.exchange_voucher_text"),
         actions: [SortingPopupMenu(voucherController: voucherController)],
       ),
       body: RefreshIndicator(
@@ -46,7 +47,7 @@ class VoucherShopScreen extends GetView {
                   Column(
                     children: [
                       Text(
-                        "Số điểm hiện tại của bạn",
+                        tr("exchange_voucher.your_current_point"),
                         style: CustomFonts.customGoogleFonts(fontSize: 14.r),
                       ),
                       Obx(

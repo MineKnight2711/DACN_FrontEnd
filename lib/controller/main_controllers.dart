@@ -4,6 +4,7 @@ import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
 import 'package:fooddelivery_fe/controller/favorite_controller.dart';
+import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -17,7 +18,8 @@ class MainController {
     Get.put(DishController());
     Get.put(CartController());
     Get.put(FavoriteController());
-
+    final languageController = Get.put(LanguageController());
+    await languageController.fetchCurrentLocale();
     final accountVoucherController = Get.put(AccountVoucherController());
     final accountController = Get.find<AccountController>();
     await accountController.fetchCurrentUser();

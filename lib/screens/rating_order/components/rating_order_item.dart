@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -73,7 +74,7 @@ class RatingOrderItem extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Mã đơn hàng",
+                    tr("order_rate_screen.order_id"),
                     style: CustomFonts.customGoogleFonts(
                         fontSize: 14.r, color: AppColors.gray50),
                   ),

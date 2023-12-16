@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,10 +36,10 @@ class OrderTabBarController extends GetxController {
   @override
   void onInit() {
     tabs.value = [
-      "Chờ thanh toán",
-      "Đang thực hiện",
-      "Đã hoàn tất",
-      "Đã huỷ",
+      tr("order_history_screen.pending"),
+      tr("order_history_screen.processing"),
+      tr("order_history_screen.completed"),
+      tr("order_history_screen.cancelled"),
     ];
     super.onInit();
   }

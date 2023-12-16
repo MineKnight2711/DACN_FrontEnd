@@ -39,7 +39,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      tr("home.delivery_to"),
+                      tr("home.app_bar.delivery_to"),
                       style: TextStyle(
                         color: AppColors.gray100,
                         fontSize: 14.sp,
@@ -83,7 +83,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                           () => Text(
                             _accountController.selectedAddress.value != null
                                 ? "${_accountController.selectedAddress.value?.details}, ${_accountController.selectedAddress.value?.ward}, ${_accountController.selectedAddress.value?.district}, ${_accountController.selectedAddress.value?.province}"
-                                : tr("home.choose_location"),
+                                : tr("home.app_bar.choose_location"),
                             style: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.w500,

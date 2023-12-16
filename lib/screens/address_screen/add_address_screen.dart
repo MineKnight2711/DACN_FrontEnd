@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/api/province_api/model/province_model.dart';
@@ -28,7 +29,7 @@ class AddAddressScreen extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Thêm địa chỉ mới",
+        title: tr("address_screen.appbar.your_address"),
         onPressed: () {
           Get.back();
           Get.delete<MapController>();
@@ -112,7 +113,7 @@ class AddAddressScreen extends GetView {
                   () => Text(
                     _addressController.selectedAddress.value != null
                         ? "${_addressController.selectedAddress.value?.details}, ${_addressController.selectedAddress.value?.ward}, ${_addressController.selectedAddress.value?.district}, ${_addressController.selectedAddress.value?.province}"
-                        : "Chọn trên bản đồ",
+                        : tr("address_screen.choose_on_map"),
                     maxLines: 2,
                     style: CustomFonts.customGoogleFonts(fontSize: 16.r),
                   ),
@@ -128,7 +129,7 @@ class AddAddressScreen extends GetView {
                     enable: _addressController.selectedProvince.value == null,
                     title: _addressController.selectedProvince.value != null
                         ? "${_addressController.selectedProvince.value?.name}"
-                        : "Chọn tỉnh/thành phố",
+                        : tr("address_screen.select_province_city"),
                     listDropDown: _addressController.listProvince,
                     onItemSelected: (province) {
                       _addressController.getProvince(province.code);
@@ -147,7 +148,7 @@ class AddAddressScreen extends GetView {
                         _addressController.selectedProvince.value != null,
                     title: _addressController.selectedDistrict.value != null
                         ? "${_addressController.selectedDistrict.value?.name}"
-                        : "Chọn quận/huyện",
+                        : tr("address_screen.select_district"),
                     listDropDown: _addressController.listDistrict,
                     onItemSelected: (value) {
                       _addressController.getDistrict(value.code);
@@ -167,11 +168,10 @@ class AddAddressScreen extends GetView {
                         _addressController.selectedWard.value == null,
                     title: _addressController.selectedWard.value != null
                         ? "${_addressController.selectedWard.value?.name}"
-                        : "Chọn phường/xã",
+                        : tr("address_screen.select_ward"),
                     listDropDown: _addressController.listWard,
                     onItemSelected: (value) {
                       _addressController.selectedWard.value = value;
-                      print(value.name);
                     },
                   ),
                 ),
@@ -181,7 +181,7 @@ class AddAddressScreen extends GetView {
               ),
               Obx(
                 () => RoundTextfield(
-                  hintText: "Nhập số nhà/ đường..",
+                  hintText: tr("address_screen.enter_house_number_street"),
                   controller:
                       _addressController.textControllers.value.txtDetails,
                   onChanged: (value) {
@@ -194,7 +194,7 @@ class AddAddressScreen extends GetView {
               ),
               Obx(
                 () => RoundTextfield(
-                  hintText: "Nhập tên địa chỉ..",
+                  hintText: tr("address_screen.enter_address_name"),
                   controller:
                       _addressController.textControllers.value.txtAddressName,
                   onChanged: (value) {
@@ -207,7 +207,7 @@ class AddAddressScreen extends GetView {
               ),
               Obx(
                 () => RoundTextfield(
-                  hintText: "Nhập tên người nhận..",
+                  hintText: tr("address_screen.enter_recipient_name"),
                   controller:
                       _addressController.textControllers.value.txtReceiverName,
                   onChanged: (value) {
@@ -220,7 +220,7 @@ class AddAddressScreen extends GetView {
               ),
               Obx(
                 () => RoundTextfield(
-                  hintText: "Nhập số điện thoại người nhận..",
+                  hintText: tr("address_screen.enter_recipient_phone_number"),
                   controller:
                       _addressController.textControllers.value.txtReceiverPhone,
                   onChanged: (value) {
@@ -235,7 +235,7 @@ class AddAddressScreen extends GetView {
                 () => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Đặt làm địa chỉ mặc định",
+                    Text(tr("address_screen.set_as_default_address"),
                         style: GoogleFonts.roboto(fontSize: 16.r)),
                     Transform.scale(
                       scale: 1.2,
@@ -263,7 +263,7 @@ class AddAddressScreen extends GetView {
                       _addressController.receiverName.value != "" &&
                       _addressController.receiverPhone.value != "",
                   size: 90.r,
-                  title: "Lưu",
+                  title: tr("address_screen.new_address_button"),
                   onPressed: () async {
                     showLoadingAnimation(
                         context, "assets/animations/loading.json", 180);

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -37,7 +38,7 @@ class QuantityDialog extends StatelessWidget {
       child: AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
-          "Mời chọn số lượng",
+          tr("cart.dish_quantity"),
           style: GoogleFonts.roboto(fontSize: 16.r),
         ),
         content: QuantityChooser(

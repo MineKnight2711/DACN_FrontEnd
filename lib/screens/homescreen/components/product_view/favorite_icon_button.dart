@@ -115,14 +115,18 @@ class FavoriteIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        IconButton(
-          splashRadius: 20.r,
+        InkWell(
+          borderRadius: BorderRadius.circular(20.r),
           splashColor: Colors.pink.withOpacity(0.4),
-          onPressed: onFavorite,
-          icon: Icon(
-            iconData,
-            size: 25.r,
-            color: color,
+          onTap: onFavorite,
+          child: SizedBox(
+            width: 30.w,
+            height: 30.w,
+            child: Icon(
+              iconData,
+              size: 25.r,
+              color: color,
+            ),
           ),
         ),
         Text(
