@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/controller/account_voucher_controller.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
@@ -11,12 +13,12 @@ import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/cart_vie
 import 'package:fooddelivery_fe/screens/homescreen/components/homescreen_appbar.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/product_view.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/setting_view.dart';
+import 'package:fooddelivery_fe/screens/homescreen/voucher_view/voucher_view.dart';
 
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   final AccountModel? accountModel;
-
   const HomeScreen({super.key, this.accountModel});
 
   @override
@@ -32,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen>
   final categoryController = Get.find<CategoryController>();
   final dishController = Get.find<DishController>();
   final cartController = Get.find<CartController>();
-
+  final accountVoucherController = Get.find<AccountVoucherController>();
   @override
   void initState() {
     super.initState();
@@ -47,6 +49,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   Future<void> cartRefresh() async {
     await cartController.getAccountCart();
+  }
+
+  Future<void> voucherRefresh() async {
+    await accountVoucherController.getAllAccountVouchers();
   }
 
   @override
@@ -67,7 +73,15 @@ class _HomeScreenState extends State<HomeScreen>
             displacement: 40.0,
             child: CartView(cartController: cartController),
           ),
-          Center(child: Text('Ưu đãi')),
+          RefreshIndicator(
+            onRefresh: () => voucherRefresh(),
+            child: Container(
+              color: AppColors.white100,
+              child: VoucherView(
+                accountVoucherController: accountVoucherController,
+              ),
+            ),
+          ),
           SettingsView(),
         ],
       ),

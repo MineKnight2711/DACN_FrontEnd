@@ -46,6 +46,13 @@ class DataConvert {
     return result;
   }
 
+  String formattedDateOnlyDayAndMonth(DateTime? orderDate) {
+    if (orderDate != null) {
+      return DateFormat("dd/MM", 'vi_VN').format(orderDate);
+    }
+    return "Undefined";
+  }
+
   String formattedNormalDate(DateTime? orderDate) {
     if (orderDate != null) {
       return DateFormat("dd/MM/yyyy", 'vi_VN').format(orderDate);

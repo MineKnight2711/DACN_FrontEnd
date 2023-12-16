@@ -32,17 +32,16 @@ class Prediction {
 }
 
 class Compound {
-  String district;
-  String commune;
-  String province;
+  String? district;
+  String? commune;
+  String? province;
 
-  Compound(
-      {required this.district, required this.commune, required this.province});
+  Compound({this.district, this.commune, this.province});
   factory Compound.fromJson(Map<String, dynamic> json) {
     return Compound(
-      district: json['district'],
-      commune: json['commune'],
-      province: json['province'],
+      district: json['district'] as String?,
+      commune: json['commune'] as String?,
+      province: json['province'] as String?,
     );
   }
 }

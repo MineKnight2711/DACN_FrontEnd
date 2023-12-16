@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/map/map_api.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/model/map/location_model.dart';
 import 'package:fooddelivery_fe/model/map/predict_location_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
@@ -22,19 +25,27 @@ class MapController extends GetxController {
   RxBool isHidden = true.obs;
 
   RxString searchText = "".obs;
-  RxString mainText = "".obs;
-  RxString secondText = "".obs;
   RxString latitude = "".obs;
   RxString longLatitude = "".obs;
 
   Rx<List<Prediction>> places = Rx<List<Prediction>>([]);
   final TextEditingController searchController = TextEditingController();
   Rx<Result?> details = Rx<Result?>(null);
-
+  Rx<LocationResponse?> selectedLocation = Rx<LocationResponse?>(null);
   @override
   void onInit() {
     super.onInit();
     _mapApi = MapApi();
+  }
+
+  @override
+  void refresh() {
+    super.refresh();
+    searchText.value = latitude.value = longLatitude.value = "";
+    isShow.value = false;
+    isHidden.value = true;
+    selectedLocation.value = null;
+    searchController.clear();
   }
 
   onMapCreated(MapboxMap mapboxMapCreate) {
@@ -83,6 +94,7 @@ class MapController extends GetxController {
   }
 
   Future<String> getLocation(String placesID) async {
+    searchController.clear();
     isShow.value = false;
     isHidden.value = false;
     ResponseBaseModel responseBaseModel =
@@ -96,10 +108,7 @@ class MapController extends GetxController {
       longLatitude.value = "${details.value?.geometry.location.lng}";
       centerCameraOnCoordinate(
           double.parse(latitude.value), double.parse(longLatitude.value));
-      String address = "${details.value?.formattedAddress}";
-
-      mainText.value = address;
-      secondText.value = "Tọa độ: ${latitude.value}, ${longLatitude.value}";
+      selectedLocation.value = locationResult;
     }
 
     return responseBaseModel.message ?? "";
@@ -109,6 +118,7 @@ class MapController extends GetxController {
     return await getCurrentPosition();
   }
 
+  void selectAddress() {}
   Future<String> getCurrentPosition() async {
     gpi.Position position = await geolocator.Geolocator.getCurrentPosition(
         desiredAccuracy: geolocator.LocationAccuracy.high);
@@ -122,12 +132,35 @@ class MapController extends GetxController {
     } else if (permission == geolocator.LocationPermission.whileInUse ||
         permission == geolocator.LocationPermission.always) {
       Position getPositon = Position(position.longitude, position.latitude);
-      centerCameraOnCoordinate(
-          getPositon.lat.toDouble(), getPositon.lng.toDouble());
+      final locationResult =
+          await getLocationByLatitude("${getPositon.lat}", "${getPositon.lng}");
+      if (locationResult == "Success") {
+        centerCameraOnCoordinate(
+            getPositon.lat.toDouble(), getPositon.lng.toDouble());
+      }
       return "Success";
     }
 
     return result;
+  }
+
+  Future<String> getLocationByLatitude(String lat, String longLat) async {
+    searchController.clear();
+    isShow.value = false;
+    isHidden.value = false;
+    ResponseBaseModel responseBaseModel =
+        await _mapApi.getLocationByLatitude(lat, longLat);
+
+    if (responseBaseModel.message == "Success") {
+      LocationByLatitudeResponse locationResult =
+          LocationByLatitudeResponse.fromJson(responseBaseModel.data);
+      final resultAddress = locationResult.results[0];
+      selectedLocation.value =
+          LocationResponse(results: resultAddress, status: "OK");
+      return responseBaseModel.message ?? "";
+    }
+
+    return responseBaseModel.message ?? "";
   }
 
   void centerCameraOnCoordinate(double lat, double longLat) {

@@ -25,6 +25,21 @@ class MapApi {
     return responseBase;
   }
 
+  Future<ResponseBaseModel> getLocationByLatitude(
+      String lat, String longLat) async {
+    final Uri uri = Uri.parse(
+        "${ApiUrl.apiGoongMapBaseUrl}/Geocode?latlng=$lat,$longLat&api_key=$goongApiKey");
+    final response = await http.get(uri);
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase.data = jsonDecode(utf8.decode(response.bodyBytes));
+      responseBase.message = "Success";
+      return responseBase;
+    }
+    responseBase.message = 'Error';
+    return responseBase;
+  }
+
   Future<ResponseBaseModel> getPredictLocation(String predictString) async {
     final response = await http.get(
       Uri.parse(

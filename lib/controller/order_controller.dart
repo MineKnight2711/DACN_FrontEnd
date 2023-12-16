@@ -52,7 +52,7 @@ class OrderController extends GetxController {
       case "Đã hoàn tất":
         listCompleteOrder.value = listOrder
             .where(
-                (orderDetails) => orderDetails.order?.status == "Đã hoàn tất")
+                (orderDetails) => orderDetails.order?.status == "Đã thanh toán")
             .toList();
         break;
       case "Đã huỷ":

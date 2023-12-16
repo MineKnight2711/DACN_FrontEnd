@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -6,10 +5,9 @@ import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/order_controller.dart';
 import 'package:fooddelivery_fe/model/order_model.dart';
-import 'package:fooddelivery_fe/screens/order_screen/compinent/list_details_dishes.dart';
-import 'package:fooddelivery_fe/screens/order_screen/compinent/order_details_bottom_sheet.dart';
-import 'package:fooddelivery_fe/screens/order_screen/compinent/order_tabbar_controller.dart';
-import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_bottom_sheet.dart';
+import 'package:fooddelivery_fe/screens/order_screen/components/list_details_dishes.dart';
+import 'package:fooddelivery_fe/screens/order_screen/components/order_details_bottom_sheet.dart';
+import 'package:fooddelivery_fe/screens/order_screen/components/order_tabbar_controller.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
@@ -131,15 +129,8 @@ class _OrdersScreenState extends State<OrdersScreen>
                                                     .order?.orderDate)),
                                             trailing: Text(
                                               DataConvert().formatCurrency(
-                                                  orderDetails.detailList?.fold<
-                                                              double>(
-                                                          0.0,
-                                                          (previousValue,
-                                                                  details) =>
-                                                              previousValue +
-                                                              (details.price ??
-                                                                  0.0)) ??
-                                                      0.0),
+                                                  caculateCartTotal(
+                                                      orderDetails)),
                                               style:
                                                   CustomFonts.customGoogleFonts(
                                                       fontSize: 14.r),
@@ -204,15 +195,8 @@ class _OrdersScreenState extends State<OrdersScreen>
                                                     .order?.orderDate)),
                                             trailing: Text(
                                               DataConvert().formatCurrency(
-                                                  orderDetails.detailList?.fold<
-                                                              double>(
-                                                          0.0,
-                                                          (previousValue,
-                                                                  details) =>
-                                                              previousValue +
-                                                              (details.price ??
-                                                                  0.0)) ??
-                                                      0.0),
+                                                  caculateCartTotal(
+                                                      orderDetails)),
                                               style:
                                                   CustomFonts.customGoogleFonts(
                                                       fontSize: 14.r),
@@ -277,15 +261,8 @@ class _OrdersScreenState extends State<OrdersScreen>
                                                     .order?.orderDate)),
                                             trailing: Text(
                                               DataConvert().formatCurrency(
-                                                  orderDetails.detailList?.fold<
-                                                              double>(
-                                                          0.0,
-                                                          (previousValue,
-                                                                  details) =>
-                                                              previousValue +
-                                                              (details.price ??
-                                                                  0.0)) ??
-                                                      0.0),
+                                                  caculateCartTotal(
+                                                      orderDetails)),
                                               style:
                                                   CustomFonts.customGoogleFonts(
                                                       fontSize: 14.r),
@@ -350,15 +327,8 @@ class _OrdersScreenState extends State<OrdersScreen>
                                                     .order?.orderDate)),
                                             trailing: Text(
                                               DataConvert().formatCurrency(
-                                                  orderDetails.detailList?.fold<
-                                                              double>(
-                                                          0.0,
-                                                          (previousValue,
-                                                                  details) =>
-                                                              previousValue +
-                                                              (details.price ??
-                                                                  0.0)) ??
-                                                      0.0),
+                                                  caculateCartTotal(
+                                                      orderDetails)),
                                               style:
                                                   CustomFonts.customGoogleFonts(
                                                       fontSize: 14.r),
@@ -391,6 +361,28 @@ class _OrdersScreenState extends State<OrdersScreen>
         ),
       ]),
     );
+  }
+
+  double caculateCartTotal(OrderDetailsDTO orderDetails) {
+    double total = orderDetails.detailList?.fold<double>(
+          0.0,
+          (previousValue, details) => previousValue + (details.price ?? 0.0),
+        ) ??
+        0.0;
+    if (orderDetails.order != null && orderDetails.order?.voucher != null) {
+      final voucher = orderDetails.order!.voucher!;
+      switch (voucher.type) {
+        case "Percent":
+          total = total - (total * ((voucher.discountPercent ?? 0) / 100));
+          return total;
+        case "Amount":
+          total = total - (voucher.discountAmount ?? 0);
+          return total;
+        default:
+          break;
+      }
+    }
+    return total;
   }
 
   void _showBottomSheet(OrderDetailsDTO orderDetails) {

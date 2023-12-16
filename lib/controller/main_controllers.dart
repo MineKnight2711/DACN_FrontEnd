@@ -1,4 +1,5 @@
 import 'package:fooddelivery_fe/controller/account_controller.dart';
+import 'package:fooddelivery_fe/controller/account_voucher_controller.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
@@ -16,9 +17,13 @@ class MainController {
     Get.put(DishController());
     Get.put(CartController());
     Get.put(FavoriteController());
-    final AccountController accountController = Get.find();
+
+    final accountVoucherController = Get.put(AccountVoucherController());
+    final accountController = Get.find<AccountController>();
+    await accountController.fetchCurrentUser();
     accountController.accountSession.value =
         await accountController.getUserFromSharedPreferences();
+    await accountVoucherController.getAllAccountVouchers();
     // Get.put(HomeScreenController());
   }
 

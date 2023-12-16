@@ -6,6 +6,7 @@ import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/model/payment_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
 import 'package:fooddelivery_fe/model/transaction_model.dart';
+import 'package:fooddelivery_fe/model/voucher_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -17,6 +18,7 @@ class TransactionController extends GetxController {
   RxList<AddressModel> listAddress = <AddressModel>[].obs;
   Rx<AddressModel?> selectedAddress = Rx<AddressModel?>(null);
   Rx<PaymentModel?> selectedPayment = Rx<PaymentModel?>(null);
+  Rx<VoucherModel?> selectedVoucher = Rx<VoucherModel?>(null);
   @override
   void onInit() {
     super.onInit();
@@ -30,6 +32,7 @@ class TransactionController extends GetxController {
     super.refresh();
     selectedAddress.value = null;
     selectedPayment.value = null;
+    selectedVoucher.value = null;
   }
 
   Future<String> getAccountListAddress() async {
@@ -75,6 +78,9 @@ class TransactionController extends GetxController {
         newOrder.deliveryInfo =
             "${selectedAddress.value?.details}, ${selectedAddress.value?.ward}, ${selectedAddress.value?.district}, ${selectedAddress.value?.province} | ${selectedAddress.value?.receiverName}, ${selectedAddress.value?.receiverPhone}";
         newOrder.dishes = convertCartDishesToListDishItem(dishes);
+        selectedVoucher.value != null
+            ? newOrder.voucherId = selectedVoucher.value?.voucherID
+            : "";
         newOrder.quantity = dishes
             .fold(
                 0,

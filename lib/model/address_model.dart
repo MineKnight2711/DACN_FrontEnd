@@ -26,16 +26,18 @@ class AddressModel {
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
-        addressID: json['addressID'],
+        addressID: json['addressID'] as String?,
         ward: json['ward'],
         district: json['district'],
         province: json['province'],
         details: json['details'],
-        addressName: json['addressName'],
-        receiverName: json['receiverName'],
-        receiverPhone: json['receiverPhone'],
-        defaultAddress: json['defaultAddress'],
-        account: AccountModel.fromJson(json['account']));
+        addressName: json['addressName'] as String?,
+        receiverName: json['receiverName'] as String?,
+        receiverPhone: json['receiverPhone'] as String?,
+        defaultAddress: json['defaultAddress'] as bool?,
+        account: json['account'] != null
+            ? AccountModel.fromJson(json['account'])
+            : null);
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +50,15 @@ class AddressModel {
       'receiverName': receiverName,
       'receiverPhone': receiverPhone,
       'defaultAddress': defaultAddress.toString(),
+    };
+  }
+
+  Map<String, dynamic> toAddressOnlyJson() {
+    return {
+      'ward': ward,
+      'district': district,
+      'province': province,
+      'details': details,
     };
   }
 }

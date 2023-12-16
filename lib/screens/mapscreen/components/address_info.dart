@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
+import 'package:fooddelivery_fe/config/font.dart';
+import 'package:fooddelivery_fe/model/map/location_model.dart';
 
 class AddressInfo extends StatelessWidget {
-  final String address, info;
-  const AddressInfo({super.key, required this.address, required this.info});
+  final LocationResponse location;
+  final Function(LocationResponse)? onChooseAddress;
+  const AddressInfo({super.key, this.onChooseAddress, required this.location});
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +24,35 @@ class AddressInfo extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.only(top: 10),
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                address,
-                style: const TextStyle(color: Colors.black, fontSize: 18),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    location.results.formattedAddress,
+                    style: CustomFonts.customGoogleFonts(fontSize: 16.r),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 12)),
+                  Text(
+                    "${location.results.geometry.location.lat}, ${location.results.geometry.location.lng}",
+                    style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+                  )
+                ],
               ),
-              const Padding(padding: EdgeInsets.only(top: 12)),
-              Text(
-                info,
-                style: const TextStyle(color: Colors.black54, fontSize: 15),
-              )
+              TextButton.icon(
+                onPressed: () {
+                  if (onChooseAddress != null) {
+                    onChooseAddress!(location);
+                  }
+                },
+                label: Text(
+                  "Chọn",
+                  style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+                ),
+                icon: const Icon(Icons.check),
+              ),
             ],
           ),
         ),

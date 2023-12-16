@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fooddelivery_fe/api/address/address_api.dart';
 import 'package:fooddelivery_fe/api/province_api/province_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
@@ -5,6 +7,7 @@ import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/utils/text_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/province_api/model/province_model.dart';
 
@@ -30,6 +33,7 @@ class AddressController extends GetxController {
   Rx<District?> selectedDistrict = Rx<District?>(null);
   Rx<Ward?> selectedWard = Rx<Ward?>(null);
 
+  Rx<AddressModel?> selectedAddress = Rx<AddressModel?>(null);
   final textControllers = AddressTextController().obs;
 
   final updateAddressTextControllers = UpdateAddressTextController();
@@ -60,7 +64,8 @@ class AddressController extends GetxController {
     isDefaultAddress.value = false;
     details.value =
         addressName.value = receiverName.value = receiverPhone.value = "";
-    selectedProvince.value = selectedDistrict.value = selectedWard.value = null;
+    selectedAddress.value = selectedProvince.value =
+        selectedDistrict.value = selectedWard.value = null;
     getAllProvine();
   }
 
@@ -82,6 +87,23 @@ class AddressController extends GetxController {
         listSearchProvince.clear();
         listSearchDistrict.clear();
         listSearchWard.clear();
+    }
+  }
+
+  Future<void> saveSelectedAddress() async {
+    if (selectedAddress.value != null) {
+      await SharedPreferences.getInstance().then((prefs) {
+        final addressToJson = jsonEncode(selectedAddress.value?.toJson());
+        prefs.setString("diachiHienTai", addressToJson);
+      });
+    }
+  }
+
+  Future<void> getCurrentSelectedAddress() async {
+    final prefs = await SharedPreferences.getInstance();
+    String addressToJson = prefs.getString("diachiHienTai") ?? "";
+    if (addressToJson.isNotEmpty) {
+      selectedAddress.value = AddressModel.fromJson(jsonDecode(addressToJson));
     }
   }
 

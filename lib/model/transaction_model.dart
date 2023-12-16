@@ -2,6 +2,7 @@ class OrderDTO {
   int? quantity;
   DateTime? orderDate;
   String? deliveryInfo;
+  String? voucherId;
   List<DishItem>? dishes;
 
   OrderDTO({
@@ -17,6 +18,7 @@ class OrderDTO {
       'orderDate': DateTime.now().toIso8601String(),
       'deliveryInfo': deliveryInfo,
       'dishes': dishes?.map((e) => e.toJson()).toList(),
+      'voucherId': voucherId ?? ""
     };
   }
 }

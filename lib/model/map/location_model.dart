@@ -12,6 +12,21 @@ class LocationResponse {
   }
 }
 
+class LocationByLatitudeResponse {
+  List<Result> results;
+  String status;
+
+  LocationByLatitudeResponse({required this.results, required this.status});
+  factory LocationByLatitudeResponse.fromJson(Map<String, dynamic> json) {
+    return LocationByLatitudeResponse(
+      results: (json['results'] as List<dynamic>)
+          .map((p) => Result.fromJson(p))
+          .toList(),
+      status: json['status'] as String,
+    );
+  }
+}
+
 class Result {
   String formattedAddress;
   Geometry geometry;
@@ -25,6 +40,7 @@ class Result {
     required this.compound,
   });
   factory Result.fromJson(Map<String, dynamic> json) {
+    print(json['compound']);
     return Result(
         formattedAddress: json['formatted_address'] as String,
         name: json['name'] as String,

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/map_controller.dart';
-import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
+import 'package:fooddelivery_fe/model/map/location_model.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/address_info.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/address_textfield.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/components/list_predict_address.dart';
@@ -19,13 +19,14 @@ import 'package:get/get.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 class MapScreen extends GetView {
-  MapScreen({super.key});
+  final Function(LocationResponse)? onChooseAddress;
+  MapScreen({super.key, this.onChooseAddress});
   final mapController = Get.find<MapController>();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Get.to(() => const HomeScreen(), transition: Transition.fadeIn);
+        Get.back(closeOverlays: false);
         Get.delete<MapController>();
         return true;
       },
@@ -153,10 +154,15 @@ class MapScreen extends GetView {
 
             Obx(
               () {
-                if (!mapController.isHidden.value) {
+                if (!mapController.isHidden.value &&
+                    mapController.selectedLocation.value != null) {
                   return AddressInfo(
-                    address: mapController.mainText.value,
-                    info: mapController.secondText.value,
+                    onChooseAddress: (selectedLocation) {
+                      if (onChooseAddress != null) {
+                        onChooseAddress!(selectedLocation);
+                      }
+                    },
+                    location: mapController.selectedLocation.value!,
                   );
                 }
                 return const SizedBox.shrink();

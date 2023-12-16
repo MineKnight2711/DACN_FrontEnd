@@ -3,11 +3,14 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fooddelivery_fe/api/province_api/model/province_model.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
+import 'package:fooddelivery_fe/controller/map_controller.dart';
 import 'package:fooddelivery_fe/model/address_model.dart';
-import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/components/province_dropdown.dart';
+import 'package:fooddelivery_fe/screens/mapscreen/map_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
@@ -19,7 +22,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AddAddressScreen extends GetView {
   AddAddressScreen({super.key});
-  final addressController = Get.find<AddressController>();
+  final _addressController = Get.find<AddressController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,22 +31,23 @@ class AddAddressScreen extends GetView {
         title: "Thêm địa chỉ mới",
         onPressed: () {
           Get.back();
-
-          addressController.refresh();
+          Get.delete<MapController>();
+          _addressController.refresh();
         },
         actions: [
           Obx(
             () => Visibility(
-              visible: addressController.selectedProvince.value != null ||
-                  addressController.selectedDistrict.value != null ||
-                  addressController.selectedWard.value != null ||
-                  addressController
+              visible: _addressController.selectedProvince.value != null ||
+                  _addressController.selectedDistrict.value != null ||
+                  _addressController.selectedWard.value != null ||
+                  _addressController
                       .textControllers.value.txtDetails.text.isNotEmpty ||
-                  addressController.textControllers.value.txtDetails.text != "",
+                  _addressController.textControllers.value.txtDetails.text !=
+                      "",
               child: IconButton(
                 splashRadius: 20.r,
                 onPressed: () {
-                  addressController.refresh();
+                  _addressController.refresh();
                 },
                 icon: const Icon(
                   Icons.refresh,
@@ -59,18 +64,74 @@ class AddAddressScreen extends GetView {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              TextButton.icon(
+                onPressed: () async {
+                  final _mapController = Get.put(MapController());
+                  final result = await _mapController.findCurrentLocation();
+                  if (result == "Success") {
+                    Get.to(MapScreen(
+                      onChooseAddress: (location) {
+                        if (_mapController.selectedLocation.value != null) {
+                          AddressModel _selectedAddress = AddressModel();
+                          _selectedAddress.details = _mapController
+                              .selectedLocation.value?.results.name;
+                          _selectedAddress.ward = _mapController
+                              .selectedLocation.value?.results.compound.commune;
+                          _selectedAddress.district =
+                              location.results.compound.district;
+                          _selectedAddress.province =
+                              location.results.compound.province;
+                          _addressController.selectedAddress.value =
+                              _selectedAddress;
+                          _addressController.selectedWard.value = Ward(
+                              code: 0,
+                              name: "${location.results.compound.commune}");
+                          _addressController.selectedDistrict.value = District(
+                              code: 0,
+                              name: "${location.results.compound.district}",
+                              wards: []);
+                          _addressController.selectedProvince.value = Province(
+                              code: 0,
+                              name: "${location.results.compound.province}",
+                              districts: []);
+                          Get.back(closeOverlays: false);
+                          Get.delete<MapController>();
+                        }
+                      },
+                    ), transition: Transition.upToDown);
+                  } else {
+                    showCustomSnackBar(context, "Thông báo",
+                        "Vui lòng bật định vị!", ContentType.help, 2);
+                  }
+                },
+                icon: const Icon(Icons.location_history),
+                label: Obx(
+                  () => Text(
+                    _addressController.selectedAddress.value != null
+                        ? "${_addressController.selectedAddress.value?.details}, ${_addressController.selectedAddress.value?.ward}, ${_addressController.selectedAddress.value?.district}, ${_addressController.selectedAddress.value?.province}"
+                        : "Chọn trên bản đồ",
+                    maxLines: 2,
+                    style: CustomFonts.customGoogleFonts(fontSize: 16.r),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
               Container(
                 alignment: Alignment.center,
                 child: Obx(
                   () => ProvinceDropdown(
-                    enable: addressController.selectedProvince.value == null,
-                    title: addressController.selectedProvince.value != null
-                        ? "${addressController.selectedProvince.value?.name}"
+                    enable: _addressController.selectedProvince.value == null,
+                    title: _addressController.selectedProvince.value != null
+                        ? "${_addressController.selectedProvince.value?.name}"
                         : "Chọn tỉnh/thành phố",
-                    listDropDown: addressController.listProvince,
+                    listDropDown: _addressController.listProvince,
                     onItemSelected: (province) {
-                      addressController.getProvince(province.code);
-                      print(addressController.selectedProvince.value?.name);
+                      _addressController.getProvince(province.code);
                     },
                   ),
                 ),
@@ -82,14 +143,14 @@ class AddAddressScreen extends GetView {
                 alignment: Alignment.center,
                 child: Obx(
                   () => ProvinceDropdown(
-                    enable: addressController.selectedDistrict.value == null &&
-                        addressController.selectedProvince.value != null,
-                    title: addressController.selectedDistrict.value != null
-                        ? "${addressController.selectedDistrict.value?.name}"
+                    enable: _addressController.selectedDistrict.value == null &&
+                        _addressController.selectedProvince.value != null,
+                    title: _addressController.selectedDistrict.value != null
+                        ? "${_addressController.selectedDistrict.value?.name}"
                         : "Chọn quận/huyện",
-                    listDropDown: addressController.listDistrict,
+                    listDropDown: _addressController.listDistrict,
                     onItemSelected: (value) {
-                      addressController.getDistrict(value.code);
+                      _addressController.getDistrict(value.code);
                     },
                   ),
                 ),
@@ -101,15 +162,15 @@ class AddAddressScreen extends GetView {
                 alignment: Alignment.center,
                 child: Obx(
                   () => ProvinceDropdown(
-                    enable: addressController.selectedProvince.value != null &&
-                        addressController.selectedDistrict.value != null &&
-                        addressController.selectedWard.value == null,
-                    title: addressController.selectedWard.value != null
-                        ? "${addressController.selectedWard.value?.name}"
+                    enable: _addressController.selectedProvince.value != null &&
+                        _addressController.selectedDistrict.value != null &&
+                        _addressController.selectedWard.value == null,
+                    title: _addressController.selectedWard.value != null
+                        ? "${_addressController.selectedWard.value?.name}"
                         : "Chọn phường/xã",
-                    listDropDown: addressController.listWard,
+                    listDropDown: _addressController.listWard,
                     onItemSelected: (value) {
-                      addressController.selectedWard.value = value;
+                      _addressController.selectedWard.value = value;
                       print(value.name);
                     },
                   ),
@@ -122,9 +183,9 @@ class AddAddressScreen extends GetView {
                 () => RoundTextfield(
                   hintText: "Nhập số nhà/ đường..",
                   controller:
-                      addressController.textControllers.value.txtDetails,
+                      _addressController.textControllers.value.txtDetails,
                   onChanged: (value) {
-                    addressController.details.value = value ?? "";
+                    _addressController.details.value = value ?? "";
                   },
                 ),
               ),
@@ -135,9 +196,9 @@ class AddAddressScreen extends GetView {
                 () => RoundTextfield(
                   hintText: "Nhập tên địa chỉ..",
                   controller:
-                      addressController.textControllers.value.txtAddressName,
+                      _addressController.textControllers.value.txtAddressName,
                   onChanged: (value) {
-                    addressController.addressName.value = value ?? "";
+                    _addressController.addressName.value = value ?? "";
                   },
                 ),
               ),
@@ -148,9 +209,9 @@ class AddAddressScreen extends GetView {
                 () => RoundTextfield(
                   hintText: "Nhập tên người nhận..",
                   controller:
-                      addressController.textControllers.value.txtReceiverName,
+                      _addressController.textControllers.value.txtReceiverName,
                   onChanged: (value) {
-                    addressController.receiverName.value = value ?? "";
+                    _addressController.receiverName.value = value ?? "";
                   },
                 ),
               ),
@@ -161,9 +222,9 @@ class AddAddressScreen extends GetView {
                 () => RoundTextfield(
                   hintText: "Nhập số điện thoại người nhận..",
                   controller:
-                      addressController.textControllers.value.txtReceiverPhone,
+                      _addressController.textControllers.value.txtReceiverPhone,
                   onChanged: (value) {
-                    addressController.receiverPhone.value = value ?? "";
+                    _addressController.receiverPhone.value = value ?? "";
                   },
                 ),
               ),
@@ -180,9 +241,9 @@ class AddAddressScreen extends GetView {
                       scale: 1.2,
                       child: Switch(
                         activeColor: AppColors.orange100,
-                        value: addressController.isDefaultAddress.value,
+                        value: _addressController.isDefaultAddress.value,
                         onChanged: (value) {
-                          addressController.isDefaultAddress.value = value;
+                          _addressController.isDefaultAddress.value = value;
                         },
                       ),
                     ),
@@ -194,45 +255,45 @@ class AddAddressScreen extends GetView {
               ),
               Obx(
                 () => RoundIconButton(
-                  enabled: addressController.selectedProvince.value != null &&
-                      addressController.selectedDistrict.value != null &&
-                      addressController.selectedWard.value != null &&
-                      addressController.details.value != "" &&
-                      addressController.addressName.value != "" &&
-                      addressController.receiverName.value != "" &&
-                      addressController.receiverPhone.value != "",
+                  enabled: _addressController.selectedProvince.value != null &&
+                      _addressController.selectedDistrict.value != null &&
+                      _addressController.selectedWard.value != null &&
+                      _addressController.details.value != "" &&
+                      _addressController.addressName.value != "" &&
+                      _addressController.receiverName.value != "" &&
+                      _addressController.receiverPhone.value != "",
                   size: 90.r,
                   title: "Lưu",
                   onPressed: () async {
                     showLoadingAnimation(
                         context, "assets/animations/loading.json", 180);
                     AddressModel newAddress = AddressModel();
-                    newAddress.details = addressController.details.value;
+                    newAddress.details = _addressController.details.value;
                     newAddress.ward =
-                        addressController.selectedWard.value?.name;
+                        _addressController.selectedWard.value?.name;
                     newAddress.district =
-                        addressController.selectedDistrict.value?.name;
+                        _addressController.selectedDistrict.value?.name;
                     newAddress.province =
-                        addressController.selectedProvince.value?.name;
+                        _addressController.selectedProvince.value?.name;
                     newAddress.addressName =
-                        addressController.addressName.value;
+                        _addressController.addressName.value;
                     newAddress.receiverName =
-                        addressController.receiverName.value;
+                        _addressController.receiverName.value;
                     newAddress.receiverPhone =
-                        addressController.receiverPhone.value;
+                        _addressController.receiverPhone.value;
                     newAddress.defaultAddress =
-                        addressController.isDefaultAddress.value;
-                    String? result = await addressController
+                        _addressController.isDefaultAddress.value;
+                    String? result = await _addressController
                         .saveAddress(newAddress)
                         .whenComplete(
-                          () => Navigator.pop(context),
+                          () => Get.back(),
                         );
                     if (result == "Success") {
                       showCustomSnackBar(context, "Thông báo",
                           "Thêm địa chỉ thành công", ContentType.success, 2);
-                      addressController.getAllAddress();
+                      _addressController.getAllAddress();
                       Get.back();
-                      addressController.refresh();
+                      _addressController.refresh();
                     } else {
                       showCustomSnackBar(
                           context,

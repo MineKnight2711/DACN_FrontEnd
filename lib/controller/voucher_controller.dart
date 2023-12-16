@@ -1,5 +1,6 @@
 import 'package:fooddelivery_fe/api/account/account_voucher_api.dart';
 import 'package:fooddelivery_fe/api/voucher/voucer_api.dart';
+import 'package:fooddelivery_fe/controller/account_voucher_controller.dart';
 import 'package:fooddelivery_fe/model/voucher_model.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ enum SortVoucherByType { percent, amount }
 class VoucherController extends GetxController {
   late VoucherApi _voucherApi;
   late AccountVoucherApi _accountVoucherApi;
+  late AccountVoucherController _accountVoucherController;
   RxList<VoucherModel> listVoucher = <VoucherModel>[].obs;
   RxList<VoucherModel> storedListVoucher = <VoucherModel>[].obs;
 
@@ -27,6 +29,7 @@ class VoucherController extends GetxController {
     super.onInit();
     _voucherApi = VoucherApi();
     _accountVoucherApi = AccountVoucherApi();
+    _accountVoucherController = Get.find<AccountVoucherController>();
   }
 
   Future<void> getAllVoucher() async {
@@ -43,6 +46,7 @@ class VoucherController extends GetxController {
       String accountId, String voucherId) async {
     final response =
         await _accountVoucherApi.saveVoucherToAccount(accountId, voucherId);
+    _accountVoucherController.getAllAccountVouchers();
     return response.message ?? "";
   }
 

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -10,6 +11,7 @@ import 'package:fooddelivery_fe/config/spacing.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/controller/map_controller.dart';
+import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
 import 'package:fooddelivery_fe/screens/mapscreen/map_screen.dart';
@@ -53,20 +55,46 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 GestureDetector(
                   onTap: () {
                     Get.put(MapController());
-                    Get.offAll(() => MapScreen(), transition: Transition.zoom);
+                    Get.to(
+                        () => MapScreen(
+                              onChooseAddress: (location) {
+                                AddressModel selectedAddress = AddressModel();
+                                selectedAddress.details = location.results.name;
+                                selectedAddress.ward =
+                                    location.results.compound.commune;
+                                selectedAddress.district =
+                                    location.results.compound.district;
+                                selectedAddress.province =
+                                    location.results.compound.province;
+                                _accountController.selectedAddress.value =
+                                    selectedAddress;
+                                _accountController.saveSelectedAddress();
+                                Get.delete<MapController>();
+                                Get.back(closeOverlays: false);
+                              },
+                            ),
+                        transition: Transition.zoom);
                   },
                   child: Row(
                     children: [
-                      Text(
-                        tr("home.choose_location"),
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.orange100,
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 200.w),
+                        child: Obx(
+                          () => Text(
+                            _accountController.selectedAddress.value != null
+                                ? "${_accountController.selectedAddress.value?.details}, ${_accountController.selectedAddress.value?.ward}, ${_accountController.selectedAddress.value?.district}, ${_accountController.selectedAddress.value?.province}"
+                                : tr("home.choose_location"),
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.orange100,
+                            ),
+
+                            overflow: TextOverflow
+                                .ellipsis, // Truncate text with ellipsis
+                            maxLines: 1, // Limit to one line
+                          ),
                         ),
-                        overflow: TextOverflow
-                            .ellipsis, // Truncate text with ellipsis
-                        maxLines: 1, // Limit to one line
                       ),
                       SizedBox(
                         width: CustomMediaQuerry.mediaWidth(context, 60),

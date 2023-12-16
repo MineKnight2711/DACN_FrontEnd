@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
+import 'package:fooddelivery_fe/controller/account_voucher_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/main_controllers.dart';
@@ -14,6 +15,7 @@ import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/model/transaction_response.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
+import 'package:fooddelivery_fe/screens/payment_screen/choose_voucher_screen.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/payment_method_choose.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/choose_address_screen.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/payment_webview.dart';
@@ -34,7 +36,7 @@ class CheckoutScreen extends GetView {
   final paymentController = Get.find<PaymentController>();
   final transactionController = Get.find<TransactionController>();
   final cartController = Get.find<CartController>();
-
+  final accountVoucherController = Get.find<AccountVoucherController>();
   Future<bool> popScreen() async {
     Get.delete<PaymentController>();
     Get.delete<TransactionController>();
@@ -88,7 +90,7 @@ class CheckoutScreen extends GetView {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Sản phẩm đã chọn:',
-                  style: GoogleFonts.roboto(
+                  style: CustomFonts.customGoogleFonts(
                     fontSize: 14.r,
                     fontWeight: FontWeight.w500,
                   ),
@@ -101,16 +103,18 @@ class CheckoutScreen extends GetView {
               ),
               SizedBox(height: 10.h),
               PaymentMethodAndVoucher(
+                accountVoucherController: accountVoucherController,
                 transactionController: transactionController,
                 paymentController: paymentController,
               ),
               SizedBox(height: 10.h),
-              PaymentDetails(
-                cartTotal: cartController.calculateTotal().value,
-                itemAmount: listItem.fold(
-                    0,
-                    (previousValue, cartItem) =>
-                        previousValue += cartItem.quantity ?? 0),
+              Obx(
+                () => PaymentDetails(
+                  transactionController: transactionController,
+                  cartTotal: cartController.calculateTotal().value,
+                  finalTotal: caculateCartTotal().value,
+                  itemAmount: itemAmount(),
+                ),
               ),
               SizedBox(height: 15.h),
               RoundIconButton(
@@ -137,10 +141,8 @@ class CheckoutScreen extends GetView {
                     showLoadingAnimation(
                         context, "assets/animations/loading.json", 140.w);
                     final result = await transactionController
-                        .performTransaction(
-                            listItem, cartController.calculateTotal().value)
+                        .performTransaction(listItem, caculateCartTotal().value)
                         .whenComplete(() => Get.back());
-                    print("Result --------- ${result.message}");
 
                     if (result.message == "Success") {
                       TransactionResponseModel response =
@@ -170,6 +172,30 @@ class CheckoutScreen extends GetView {
         ),
       ),
     );
+  }
+
+  int itemAmount() {
+    return listItem.fold(0,
+        (previousValue, cartItem) => previousValue += cartItem.quantity ?? 0);
+  }
+
+  RxDouble caculateCartTotal() {
+    RxDouble total = cartController.calculateTotal();
+    if (transactionController.selectedVoucher.value != null) {
+      final voucher = transactionController.selectedVoucher.value!;
+      switch (voucher.type) {
+        case "Percent":
+          total.value = total.value -
+              (total.value * ((voucher.discountPercent ?? 0) / 100));
+          return total;
+        case "Amount":
+          total.value = total.value - (voucher.discountAmount ?? 0);
+          return total;
+        default:
+          break;
+      }
+    }
+    return total;
   }
 
   void toCheckoutWebView(
@@ -269,19 +295,19 @@ class AccountAddress extends StatelessWidget {
             child: ListTile(
               title: Text(
                 "Thông tin người nhận :",
-                style: GoogleFonts.roboto(fontSize: 14.r),
+                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
               ),
               subtitle: Obx(
                 () => Text(
                   "${transactionController.selectedAddress.value?.receiverName} | ${transactionController.selectedAddress.value?.receiverPhone}",
-                  style: GoogleFonts.roboto(
+                  style: CustomFonts.customGoogleFonts(
                       fontSize: 13.r, color: AppColors.dark20),
                 ),
               ),
               trailing: TextButton.icon(
                 label: Text(
                   "Sửa",
-                  style: GoogleFonts.roboto(fontSize: 14.r),
+                  style: CustomFonts.customGoogleFonts(fontSize: 14.r),
                 ),
                 onPressed: () {
                   Get.to(ChooseAddressScreen(),
@@ -298,7 +324,7 @@ class AccountAddress extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 11.w),
             child: Text(
               "Địa chỉ :",
-              style: GoogleFonts.roboto(fontSize: 14.r),
+              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
             ),
           ),
           Expanded(
@@ -306,13 +332,11 @@ class AccountAddress extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: 11.w), // Adjust padding as needed
               child: NoGlowingScrollView(
-                child: Obx(
-                  () => Text(
-                    "${transactionController.selectedAddress.value?.details}, ${transactionController.selectedAddress.value?.ward}, ${transactionController.selectedAddress.value?.district}, ${transactionController.selectedAddress.value?.province}",
-                    textAlign: TextAlign.justify,
-                    style: GoogleFonts.roboto(
-                        fontSize: 13.r, color: AppColors.dark20),
-                  ),
+                child: Text(
+                  "${transactionController.selectedAddress.value?.details}, ${transactionController.selectedAddress.value?.ward}, ${transactionController.selectedAddress.value?.district}, ${transactionController.selectedAddress.value?.province}",
+                  textAlign: TextAlign.justify,
+                  style: CustomFonts.customGoogleFonts(
+                      fontSize: 13.r, color: AppColors.dark20),
                 ),
               ),
             ),
@@ -325,12 +349,17 @@ class AccountAddress extends StatelessWidget {
 
 //Widget chi tiết thanh toán
 class PaymentDetails extends StatelessWidget {
+  final TransactionController transactionController;
   final double cartTotal;
-
+  final double finalTotal;
   final int itemAmount;
 
   const PaymentDetails(
-      {super.key, required this.cartTotal, required this.itemAmount});
+      {super.key,
+      required this.cartTotal,
+      required this.itemAmount,
+      required this.transactionController,
+      required this.finalTotal});
 
   @override
   Widget build(BuildContext context) {
@@ -343,6 +372,22 @@ class PaymentDetails extends StatelessWidget {
               fontSize: 16.r, fontWeight: FontWeight.w500),
         ),
         SizedBox(height: 10.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Tạm tính',
+              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+            ),
+            Text(
+              DataConvert().formatCurrency(cartTotal),
+              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 15.h,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -366,9 +411,21 @@ class PaymentDetails extends StatelessWidget {
               'Giảm giá',
               style: CustomFonts.customGoogleFonts(fontSize: 14.r),
             ),
-            Text(
-              '10%',
-              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+            Obx(
+              () => Text(
+                transactionController.selectedVoucher.value != null
+                    ? transactionController.selectedVoucher.value?.type ==
+                            "Percent"
+                        ? '${transactionController.selectedVoucher.value?.discountPercent}%'
+                        : transactionController.selectedVoucher.value?.type ==
+                                "Amount"
+                            ? DataConvert().formatCurrency(transactionController
+                                    .selectedVoucher.value?.discountAmount ??
+                                0.0)
+                            : ""
+                    : 'Không có',
+                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+              ),
             ),
           ],
         ),
@@ -384,7 +441,7 @@ class PaymentDetails extends StatelessWidget {
               style: CustomFonts.customGoogleFonts(fontSize: 18.r),
             ),
             Text(
-              DataConvert().formatCurrency(cartTotal),
+              DataConvert().formatCurrency(finalTotal),
               style: CustomFonts.customGoogleFonts(fontSize: 18.r),
             ),
           ],
@@ -398,47 +455,66 @@ class PaymentDetails extends StatelessWidget {
 class PaymentMethodAndVoucher extends StatelessWidget {
   final TransactionController transactionController;
   final PaymentController paymentController;
+  final AccountVoucherController accountVoucherController;
   const PaymentMethodAndVoucher(
       {super.key,
       required this.transactionController,
-      required this.paymentController});
+      required this.paymentController,
+      required this.accountVoucherController});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextButton.icon(
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => PaymentDialog(
-                  transactionController: transactionController,
-                  paymentController: paymentController),
-            );
-          },
-          label: Obx(
-            () => Text(
-              transactionController.selectedPayment.value != null
-                  ? "${transactionController.selectedPayment.value?.paymentMethod}"
-                  : "Chọn phương thức thanh toán",
-              style: GoogleFonts.roboto(fontSize: 14.r),
+        Expanded(
+          child: TextButton.icon(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => PaymentDialog(
+                    transactionController: transactionController,
+                    paymentController: paymentController),
+              );
+            },
+            label: Obx(
+              () => Text(
+                transactionController.selectedPayment.value != null
+                    ? "${transactionController.selectedPayment.value?.paymentMethod}"
+                    : "Chọn phương thức thanh toán",
+                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+              ),
             ),
+            icon: const Icon(CupertinoIcons.creditcard),
           ),
-          icon: const Icon(CupertinoIcons.creditcard),
         ),
         Container(
           color: AppColors.dark100,
           width: 0.5.w,
           height: 20.h,
         ),
-        TextButton.icon(
-          onPressed: () {},
-          label: Text(
-            "Thêm mã giảm giá",
-            style: GoogleFonts.roboto(fontSize: 14.r),
+        Expanded(
+          child: TextButton.icon(
+            onPressed: () {
+              accountVoucherController.getAllAccountVouchers();
+              Get.to(
+                () => ChooseVoucherScreen(
+                    transactionController: transactionController),
+                transition: Transition.rightToLeft,
+              );
+            },
+            label: Obx(
+              () => Text(
+                transactionController.selectedVoucher.value != null
+                    ? "${transactionController.selectedVoucher.value?.voucherName}"
+                    : "Thêm mã giảm giá",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+              ),
+            ),
+            icon: const Icon(CupertinoIcons.tags),
           ),
-          icon: const Icon(CupertinoIcons.tags),
         ),
       ],
     );
@@ -479,17 +555,20 @@ class OrderItems extends StatelessWidget {
                               ),
                               title: Text(
                                 "${item.quantity}x ${item.dish?.dishName}",
-                                style: GoogleFonts.roboto(fontSize: 14.r),
+                                style: CustomFonts.customGoogleFonts(
+                                    fontSize: 14.r),
                               ),
                               subtitle: Text(
                                 "${item.dish?.category.categoryName}",
-                                style: GoogleFonts.roboto(fontSize: 12.r),
+                                style: CustomFonts.customGoogleFonts(
+                                    fontSize: 12.r),
                               ),
                               trailing: Text(
                                 DataConvert().formatCurrency(
                                     double.parse("${item.quantity}") *
                                         double.parse("${item.dish?.price}")),
-                                style: GoogleFonts.roboto(fontSize: 12.r),
+                                style: CustomFonts.customGoogleFonts(
+                                    fontSize: 12.r),
                               ),
                             ),
                           ),

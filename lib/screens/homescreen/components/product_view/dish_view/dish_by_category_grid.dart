@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
+import 'package:fooddelivery_fe/controller/cart_controller.dart';
+import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/model/dish_model.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/product_view/dish_details_bottom_sheet.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/product_view/favorite_icon_button.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
+import 'package:get/get.dart';
 
 class DishByCategoryGridView extends StatelessWidget {
   final List<DishFavoriteCountDTO> dishes;
-
-  const DishByCategoryGridView({super.key, required this.dishes});
+  final favoriteController = Get.find<FavoriteController>();
+  final cartController = Get.find<CartController>();
+  DishByCategoryGridView({super.key, required this.dishes});
 
   @override
   Widget build(BuildContext context) {
@@ -35,22 +41,7 @@ class DishByCategoryGridView extends StatelessWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(20),
                     onTap: () {
-                      // showModalBottomSheet(
-                      //   context: context,
-                      //   isScrollControlled: true,
-                      //   shape: const RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.only(
-                      //       topLeft: Radius.circular(20),
-                      //       topRight: Radius.circular(20),
-                      //     ),
-                      //   ),
-                      //   backgroundColor: Colors.white,
-                      //   builder: (BuildContext context) {
-                      //     return OrderDetailsBottomSheet(
-                      //       dish: item,
-                      //     );
-                      //   },
-                      // );
+                      _showBottomSheet(dishItem, context);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +49,6 @@ class DishByCategoryGridView extends StatelessWidget {
                         Container(
                           height: 80.h,
                           decoration: BoxDecoration(
-                            color: AppColors.orange100,
                             image: DecorationImage(
                                 image: Image.network(
                               "${dishItem.dish.imageUrl}",
@@ -72,24 +62,37 @@ class DishByCategoryGridView extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                dishItem.dish.dishName,
-                                style: CustomFonts.customGoogleFonts(
-                                    fontSize: 16.r),
-                              ),
-                              Text(
-                                DataConvert()
-                                    .formatCurrency(dishItem.dish.price),
-                                style: CustomFonts.customGoogleFonts(
-                                    fontSize: 14.r),
-                              ),
-                            ],
-                          ),
-                        ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5.0.w, horizontal: 5.w),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Title Column
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        dishItem.dish.dishName,
+                                        style: CustomFonts.customGoogleFonts(
+                                            fontSize: 16.r),
+                                      ),
+                                      Text(
+                                        DataConvert().formatCurrency(
+                                            dishItem.dish.price),
+                                        style: CustomFonts.customGoogleFonts(
+                                            fontSize: 16.r),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                FavoriteIconButton(
+                                  dishDTO: dishItem,
+                                  favoriteController: favoriteController,
+                                ),
+                              ],
+                            )),
                       ],
                     ),
                   ),
@@ -99,5 +102,32 @@ class DishByCategoryGridView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showBottomSheet(DishFavoriteCountDTO dishDTO, BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      builder: (context) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.8, //Kích cỡ sheet khi vừa hiện lên
+          minChildSize:
+              0.3, //Khi ta kéo sheet về 0.3 chiều cao của nó, nó sẽ đóng
+          maxChildSize: 0.95, //Chiều cao tối đa của sheet được phép kéo lên
+          expand: false,
+          builder: (context, scrollController) {
+            return DishDetailsBottomSheet(
+              dishDTO: dishDTO,
+            );
+          },
+        );
+      },
+    ).whenComplete(() => cartController.selectedQuantity.value = 1);
   }
 }

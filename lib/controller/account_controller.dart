@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
+import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,10 +11,12 @@ class AccountController extends GetxController {
   Rx<AccountModel?> accountSession = Rx<AccountModel?>(null);
   User? user = FirebaseAuth.instance.currentUser;
   late AccountApi _accountApi;
+  Rx<AddressModel?> selectedAddress = Rx<AddressModel?>(null);
   @override
   void onInit() {
     super.onInit();
     _accountApi = AccountApi();
+    getCurrentSelectedAddress();
   }
 
   Future<void> fetchCurrentUser() async {
@@ -44,6 +47,24 @@ class AccountController extends GetxController {
       return AccountModel.fromJson(jsonDecode(jsonString));
     }
     return null;
+  }
+
+  Future<void> saveSelectedAddress() async {
+    if (selectedAddress.value != null) {
+      await SharedPreferences.getInstance().then((prefs) {
+        final addressToJson =
+            jsonEncode(selectedAddress.value?.toAddressOnlyJson());
+        prefs.setString("current_address", addressToJson);
+      });
+    }
+  }
+
+  Future<void> getCurrentSelectedAddress() async {
+    final prefs = await SharedPreferences.getInstance();
+    String addressToJson = prefs.getString("current_address") ?? "";
+    if (addressToJson.isNotEmpty) {
+      selectedAddress.value = AddressModel.fromJson(jsonDecode(addressToJson));
+    }
   }
 
   Future logOut() async {

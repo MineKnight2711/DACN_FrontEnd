@@ -361,6 +361,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Khuyến mãi sử dụng",
@@ -368,8 +369,11 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                                 fontSize: 14.r,
                               ),
                             ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
                             Text(
-                              "Tên khuyến mãi",
+                              "${orderDetails.order?.voucher?.voucherName}",
                               style: CustomFonts.customGoogleFonts(
                                 fontSize: 14.r,
                               ),
@@ -377,7 +381,11 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          "-${DataConvert().formatCurrency(-10000)}",
+                          orderDetails.order?.voucher?.type == "Percent"
+                              ? "${orderDetails.order?.voucher?.discountPercent}%"
+                              : orderDetails.order?.voucher?.type == "Amount"
+                                  ? "- ${DataConvert().formatCurrency(orderDetails.order?.voucher?.discountAmount ?? 0)}"
+                                  : "",
                           style: CustomFonts.customGoogleFonts(
                             fontSize: 14.r,
                           ),
@@ -401,7 +409,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    DataConvert().formatCurrency(10000),
+                    DataConvert().formatCurrency(caculateCartTotal()),
                     style: CustomFonts.customGoogleFonts(
                       fontSize: 14.r,
                     ),
@@ -416,6 +424,28 @@ class OrderDetailsBottomSheet extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  double caculateCartTotal() {
+    double total = orderDetails.detailList?.fold<double>(
+          0.0,
+          (previousValue, details) => previousValue + (details.price ?? 0.0),
+        ) ??
+        0.0;
+    if (orderDetails.order != null && orderDetails.order?.voucher != null) {
+      final voucher = orderDetails.order!.voucher!;
+      switch (voucher.type) {
+        case "Percent":
+          total = total - (total * ((voucher.discountPercent ?? 0) / 100));
+          return total;
+        case "Amount":
+          total = total - (voucher.discountAmount ?? 0);
+          return total;
+        default:
+          break;
+      }
+    }
+    return total;
   }
 }
 

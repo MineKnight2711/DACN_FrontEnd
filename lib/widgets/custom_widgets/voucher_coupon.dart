@@ -5,11 +5,17 @@ import 'package:fooddelivery_fe/config/font.dart';
 
 class VoucherCoupon extends StatelessWidget {
   final double size;
-  final String imagePath;
+  final String imagePath, voucherName, startDate, expDate, discount;
+  final Color? textColor;
   const VoucherCoupon({
     super.key,
     required this.size,
     required this.imagePath,
+    required this.voucherName,
+    required this.startDate,
+    required this.expDate,
+    required this.discount,
+    this.textColor = AppColors.white100,
   });
 
   @override
@@ -21,7 +27,7 @@ class VoucherCoupon extends StatelessWidget {
               color: AppColors.orange100.withOpacity(0.9),
               borderRadius: BorderRadius.circular(20)),
           height: finalSize.sh,
-          width: (finalSize * 5).sw,
+          width: (finalSize * 10).sw,
           child: Row(
             children: [
               Container(
@@ -47,9 +53,10 @@ class VoucherCoupon extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Voucher",
+                      voucherName,
                       style: CustomFonts.customGoogleFonts(
-                          fontSize: (finalSize * (16 / 0.15)).r),
+                          fontSize: (finalSize * (17 / 0.15)).r,
+                          color: textColor),
                     ),
                     SizedBox(
                       height: (finalSize * (10 / 0.15)).h,
@@ -59,13 +66,13 @@ class VoucherCoupon extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: "Giảm",
-                            style:
-                                CustomFonts.customGoogleFonts(fontSize: 14.r),
+                            style: CustomFonts.customGoogleFonts(
+                                fontSize: 14.r, color: textColor),
                           ),
                           TextSpan(
-                            text: " 1000 %",
-                            style:
-                                CustomFonts.customGoogleFonts(fontSize: 18.r),
+                            text: discount,
+                            style: CustomFonts.customGoogleFonts(
+                                fontSize: 18.r, color: textColor),
                           ),
                         ],
                       ),
@@ -79,22 +86,26 @@ class VoucherCoupon extends StatelessWidget {
                           TextSpan(
                             text: "Từ",
                             style: CustomFonts.customGoogleFonts(
-                                fontSize: (finalSize * (14 / 0.15)).r),
+                                fontSize: (finalSize * (14 / 0.15)).r,
+                                color: textColor),
                           ),
                           TextSpan(
-                            text: " 13/12",
+                            text: " $startDate",
                             style: CustomFonts.customGoogleFonts(
-                                fontSize: (finalSize * (16 / 0.15)).r),
+                                fontSize: (finalSize * (16 / 0.15)).r,
+                                color: textColor),
                           ),
                           TextSpan(
                             text: " đến",
                             style: CustomFonts.customGoogleFonts(
-                                fontSize: (finalSize * (14 / 0.15)).r),
+                                fontSize: (finalSize * (14 / 0.15)).r,
+                                color: textColor),
                           ),
                           TextSpan(
-                            text: " 15/12",
+                            text: " $expDate",
                             style: CustomFonts.customGoogleFonts(
-                                fontSize: (finalSize * (16 / 0.15)).r),
+                                fontSize: (finalSize * (16 / 0.15)).r,
+                                color: textColor),
                           ),
                         ],
                       ),
@@ -111,7 +122,7 @@ class VoucherCoupon extends StatelessWidget {
           child: Container(
             width: (finalSize * (30 / 0.15)).w,
             height: (finalSize * (58 / 0.15)).h,
-            color: AppColors.white100,
+            color: Colors.white.withOpacity(1),
           ),
         ),
       ),
