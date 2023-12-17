@@ -81,7 +81,7 @@
         "order_history":"Lịch sử đơn hàng",
         "get_voucher":"Nhận mã ưu đãi",
         "order_review":"Đánh giá đơn hàng",
-        "food_favorite":"Món yêu thích"
+        "favorite_food":"Món yêu thích"
       
     },
     "order_history_screen":{

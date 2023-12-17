@@ -29,6 +29,7 @@ class BottomTabBarController extends GetxController {
       vsync: _tickerProvider,
     );
     tabs.stream.listen(_onTabChanged);
+    createConstantTabs();
   }
 
   void _onTabChanged(List<TabModel>? tabs) {
@@ -38,8 +39,7 @@ class BottomTabBarController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
+  void createConstantTabs() {
     tabs.value = [
       TabModel(
           tag: "Home",
@@ -58,6 +58,10 @@ class BottomTabBarController extends GetxController {
           name: tr("home.bottom_navigation_bar.more"),
           imagePath: 'assets/images/menu.png'),
     ];
+  }
+
+  @override
+  void onInit() {
     cartController = Get.find<CartController>();
     super.onInit();
   }

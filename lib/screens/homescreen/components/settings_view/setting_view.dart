@@ -6,19 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
-import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
-import 'package:fooddelivery_fe/controller/order_controller.dart';
-import 'package:fooddelivery_fe/controller/rating_order_controller.dart';
-import 'package:fooddelivery_fe/controller/voucher_controller.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
-import 'package:fooddelivery_fe/screens/favorite_screen/favorite_screen.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/components/utilities_list.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
-import 'package:fooddelivery_fe/screens/order_screen/order_screen.dart';
-import 'package:fooddelivery_fe/screens/rating_order/rating_order_screen.dart';
-import 'package:fooddelivery_fe/screens/voucher_shop_screen/voucher_shop_screen.dart';
+import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -52,7 +46,8 @@ class SettingsView extends StatelessWidget {
                       childAspectRatio: 2.r,
                       mainAxisSpacing: 10.h,
                       crossAxisSpacing: 10.w,
-                      children: extensionsCard.map((e) => e).toList(),
+                      children:
+                          UltilitiesList.extensionsCard.map((e) => e).toList(),
                     ),
                   ),
                 ],
@@ -137,7 +132,13 @@ class SettingsView extends StatelessWidget {
                           onPressed: () {
                             languageController
                                 .saveLocale(const Locale('en', 'US'))
-                                .whenComplete(() => Phoenix.rebirth(context));
+                                .whenComplete(() {
+                              context.setLocale(const Locale('en', 'US'));
+
+                              showDelayedLoadingAnimation(context,
+                                      "assets/animations/loading.json", 180, 1)
+                                  .whenComplete(() => Phoenix.rebirth(context));
+                            });
                           },
                           child: Text("English"),
                         ),
@@ -145,7 +146,12 @@ class SettingsView extends StatelessWidget {
                           onPressed: () {
                             languageController
                                 .saveLocale(const Locale('vi', 'VN'))
-                                .whenComplete(() => Phoenix.rebirth(context));
+                                .whenComplete(() {
+                              context.setLocale(const Locale('vi', 'VN'));
+                              showDelayedLoadingAnimation(context,
+                                      "assets/animations/loading.json", 180, 1)
+                                  .whenComplete(() => Phoenix.rebirth(context));
+                            });
                           },
                           child: Text("Viet Nam"),
                         ),
@@ -196,92 +202,5 @@ class SettingsView extends StatelessWidget {
         ],
       ),
     ));
-  }
-}
-
-List<ExtensionCard> extensionsCard = [
-  ExtensionCard(
-    onPressed: () {
-      final orderController = Get.put(OrderController());
-      orderController.getAccountOrders();
-      Get.to(() => OrdersScreen(), transition: Transition.upToDown);
-    },
-    icon: CupertinoIcons.square_list,
-    title: tr("more.order_history"),
-  ),
-  ExtensionCard(
-    onPressed: () {
-      final orderController = Get.put(VoucherController());
-      orderController.getAllVoucher();
-      Get.to(() => VoucherShopScreen(), transition: Transition.upToDown);
-    },
-    icon: Icons.discount,
-    title: tr("more.get_voucher"),
-  ),
-  ExtensionCard(
-    onPressed: () async {
-      final orderController = Get.put(RatingOrderController());
-      orderController.getAllCompleteOrder();
-      orderController.getAllRatedOrder();
-      Get.to(() => RatingOrderScreen(), transition: Transition.upToDown);
-    },
-    icon: Icons.star,
-    title: tr("more.order_review"),
-  ),
-  ExtensionCard(
-    onPressed: () {
-      final favoriteController = Get.find<FavoriteController>();
-      favoriteController.getAccountListFavoriteDish();
-      Get.to(() => FavoriteScreen(), transition: Transition.upToDown);
-    },
-    icon: CupertinoIcons.heart_circle_fill,
-    title: tr("more.food_favorite"),
-  ),
-];
-
-class ExtensionCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final Function()? onPressed;
-  const ExtensionCard(
-      {super.key, required this.icon, required this.title, this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      shadowColor: Colors.grey.withOpacity(1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10.0),
-        splashColor: AppColors.lightOrange,
-        highlightColor: Colors.transparent,
-        onTap: onPressed,
-        child: Container(
-          margin: EdgeInsets.all(16.r),
-          height: 20.h,
-          width: 200.w - 50,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Icon(
-                icon,
-                color: AppColors.orange100,
-                size: 24.r,
-              ),
-              Text(
-                title,
-                style: GoogleFonts.roboto(
-                  fontSize: 13.r,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

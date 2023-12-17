@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
@@ -12,6 +13,7 @@ import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bot
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/cart_view.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/homescreen_appbar.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/product_view.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/components/utilities_list.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/setting_view.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/voucher_view/voucher_view.dart';
 
@@ -29,16 +31,17 @@ class _HomeScreenState extends State<HomeScreen>
     with TickerProviderStateMixin<HomeScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final tabBarController = Get.put(BottomTabBarController());
+  final tabBarController = Get.find<BottomTabBarController>();
   final accountController = Get.find<AccountController>();
   final categoryController = Get.find<CategoryController>();
   final dishController = Get.find<DishController>();
   final cartController = Get.find<CartController>();
   final accountVoucherController = Get.find<AccountVoucherController>();
+
   @override
   void initState() {
     super.initState();
-
+    UltilitiesList.initUtilitiesList();
     tabBarController.initTabController(this);
   }
 

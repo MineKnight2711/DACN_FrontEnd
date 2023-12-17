@@ -11,7 +11,6 @@ class CategoryApi {
     );
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (response.statusCode == 200) {
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
       responseBase = ResponseBaseModel.fromJson(
           jsonDecode(utf8.decode(response.bodyBytes)));
       return responseBase;

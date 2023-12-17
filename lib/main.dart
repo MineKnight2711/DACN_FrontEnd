@@ -1,17 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/main_controllers.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
+import 'package:fooddelivery_fe/screens/slpash_screen.dart';
 import 'package:get/get.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
   MainController.initializeControllers();
+  await EasyLocalization.ensureInitialized();
+
   final languageController = Get.find<LanguageController>();
   runApp(
     Obx(
@@ -20,17 +25,21 @@ void main() async {
         path: 'assets/translations',
         fallbackLocale: languageController.currentLocale.value,
         startLocale: languageController.currentLocale.value,
-        child: Phoenix(
-          child: ScreenUtilInit(
-            designSize: const Size(375, 812),
-            minTextAdapt: true,
-            splitScreenMode: true,
-            child: Phoenix(child: const AppFood()),
-          ),
+        child: ScreenUtilInit(
+          designSize: const Size(375, 812),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          child: Phoenix(child: const AppFood()),
         ),
       ),
     ),
   );
+  await initializationSlpashScreen()
+      .whenComplete(() => FlutterNativeSplash.remove());
+}
+
+Future<void> initializationSlpashScreen() async {
+  return await Future.delayed(const Duration(seconds: 1));
 }
 
 class AppFood extends StatelessWidget {
@@ -38,14 +47,16 @@ class AppFood extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.setLocale(context.locale);
     return GetMaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      initialRoute: 'home_screen',
+      initialRoute: 'splash_screen',
       debugShowCheckedModeBanner: false,
       routes: {
         'home_screen': (context) => const HomeScreen(),
+        'splash_screen': (context) => const SplashScreen(),
       },
     );
   }

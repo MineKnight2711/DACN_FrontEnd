@@ -20,7 +20,6 @@ class LanguageController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selected_locale', locale.toString());
     currentLocale.value = locale;
-    Get.find<LanguageController>().currentLocale.value = locale;
     update();
   }
 

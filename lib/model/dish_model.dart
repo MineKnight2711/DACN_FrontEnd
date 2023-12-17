@@ -43,7 +43,6 @@ class DishModel {
     this.dateCreate,
   });
   factory DishModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     String? dateCreateJson = json['dateCreate'] as String?;
     return DishModel(
         dishID: json['dishID'] as String,
