@@ -68,6 +68,7 @@
     },
     "discount":{
         "your_voucher":"Your voucher",
+        "no_voucher":"You don't have any voucher...",
         "ready_to_use":"Ready to use",
         "expired":"Expired :((",
         "voucher_cannot_be_use":"The vouchers have expired and cannot be used",
@@ -78,6 +79,7 @@
             "account":"Account",
             "profile_account":"Profile account",
             "saved_address":"Saved address",
+            "language": "Language",
             "log_out":"Log out"
         },
         "utilities":"Utilities",
@@ -110,6 +112,7 @@
         "update_address":"Update address",
         "remove":"Delete",
         "add":"Add address",
+        "default_address":"Default",
         "choose_on_map":"Choose on map",
         "no_address":"You don't have have any address ..",
         "appbar_new_address":{
@@ -133,6 +136,7 @@
         "appbar":{
             "order_history_text":"Order history"
         },
+        "no_order": "Không có đơn hàng...",
         "pending":"Pending",
         "processing":"Processing",
         "completed":"Completed",

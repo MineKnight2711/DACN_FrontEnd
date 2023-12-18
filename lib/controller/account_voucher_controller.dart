@@ -27,6 +27,8 @@ class AccountVoucherController extends GetxController {
             .map((item) => AccountVoucherModel.fromJson(item))
             .toList();
         checkExpVoucher();
+      } else if (response.message == "NoVoucher") {
+        listAccountVoucher.clear();
       }
     }
   }

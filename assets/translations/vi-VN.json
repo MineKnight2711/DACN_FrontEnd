@@ -65,6 +65,7 @@
     },
     "discount":{
         "your_voucher":"Voucher của bạn",
+        "no_voucher":"Bạn không có voucher nào...",
         "ready_to_use":"Sẵn sàng để sử dụng",
         "expired":"Đã hết hạn :((",
         "voucher_cannot_be_use":"Các voucher đã hết hạn và không thể sử dụng",
@@ -75,6 +76,7 @@
             "account":"Tài khoản",
             "profile_account":"Thông tin tài khoản",
             "saved_address":"Địa chỉ đã lưu",
+            "language": "Ngôn ngữ",
             "log_out":"Đăng xuất"
         },
         "utilities":"Tiện ích",
@@ -88,6 +90,7 @@
         "appbar":{
             "order_history_text":"Lịch sử đơn hàng"
         },
+        "no_order": "Không có đơn hàng...",
         "pending":"Chờ thanh toán",
         "processing":"Đang thực hiện",
         "completed":"Đã hoàn tất",
@@ -166,6 +169,7 @@
         "update_address":"Cập nhật địa chỉ",
         "remove":"Xoá",
         "add":"Thêm địa chỉ",
+        "default_address":"Mặc định",
         "no_address":"Bạn chưa có địa chỉ ..",
         "appbar_new_address":{
             "add_new_address":"Thêm địa chỉ mới"

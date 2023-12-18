@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
@@ -6,7 +5,6 @@ import 'package:fooddelivery_fe/controller/account_voucher_controller.dart';
 import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_controller.dart';
-
 import 'package:fooddelivery_fe/model/account_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar_controller.dart';
@@ -48,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen>
   Future<void> refresh() async {
     await categoryController.getAllCategory();
     await dishController.getAllDish();
+    await cartController.getAccountCart();
   }
 
   Future<void> cartRefresh() async {

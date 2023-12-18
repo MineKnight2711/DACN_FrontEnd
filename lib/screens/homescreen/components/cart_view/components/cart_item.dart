@@ -46,7 +46,7 @@ class CartItem extends StatelessWidget {
                   bool result = await showConfirmDialog(
                       context,
                       tr("cart.cart_message.quantity_cannot_zero"),
-                      "cart.cart_message.dish_remove");
+                      tr("cart.cart_message.dish_remove"));
                   if (result) {
                     cartController.deleteCartItem(cartItem);
                   } else {

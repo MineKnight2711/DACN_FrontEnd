@@ -17,7 +17,7 @@ import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/model/transaction_response.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/choose_voucher_screen.dart';
-import 'package:fooddelivery_fe/screens/payment_screen/components/payment_method_choose.dart';
+import 'package:fooddelivery_fe/screens/payment_screen/components/payment_method_dialog.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/choose_address_screen.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/payment_webview.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
@@ -42,6 +42,12 @@ class CheckoutScreen extends GetView {
     Get.delete<TransactionController>();
     Get.delete<AddressController>();
     paymentController.refresh();
+    return true;
+  }
+
+  Future<bool> refresh() async {
+    paymentController.getAllListPayment();
+    accountVoucherController.getAllAccountVouchers();
     return true;
   }
 
@@ -72,102 +78,108 @@ class CheckoutScreen extends GetView {
           },
           title: tr("payment.appbar.payment_text"),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.r),
-          child: Column(
-            children: [
-              SizedBox(height: 20.h),
-              AccountAddress(transactionController: transactionController),
-              SizedBox(height: 10.h),
-              Divider(
-                thickness: 0.5.w,
-                endIndent: 10.w,
-                indent: 10.w,
-                color: AppColors.dark100,
-              ),
-              SizedBox(height: 10.h),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  tr("payment.selected_product"),
-                  style: CustomFonts.customGoogleFonts(
-                    fontSize: 14.r,
-                    fontWeight: FontWeight.w500,
+        body: RefreshIndicator(
+          onRefresh: refresh,
+          child: NoGlowingScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.r),
+              child: Column(
+                children: [
+                  SizedBox(height: 20.h),
+                  AccountAddress(transactionController: transactionController),
+                  SizedBox(height: 10.h),
+                  Divider(
+                    thickness: 0.5.w,
+                    endIndent: 10.w,
+                    indent: 10.w,
+                    color: AppColors.dark100,
                   ),
-                ),
-              ),
-              SizedBox(height: 10.h),
-              OrderItems(
-                listItem: listItem,
-                listHeight: caculatecartItemHeight(listItem.length),
-              ),
-              SizedBox(height: 10.h),
-              PaymentMethodAndVoucher(
-                accountVoucherController: accountVoucherController,
-                transactionController: transactionController,
-                paymentController: paymentController,
-              ),
-              SizedBox(height: 10.h),
-              Obx(
-                () => PaymentDetails(
-                  transactionController: transactionController,
-                  cartTotal: cartController.calculateTotal().value,
-                  finalTotal: caculateCartTotal().value,
-                  itemAmount: itemAmount(),
-                ),
-              ),
-              SizedBox(height: 15.h),
-              RoundIconButton(
-                size: 80.r,
-                onPressed: () async {
-                  showLoadingAnimation(
-                      context, "assets/animations/loading.json", 140.w);
-                  if (transactionController.selectedPayment.value == null) {
-                    showCustomSnackBar(
-                            context,
-                            "Thông báo",
-                            "Vui lòng chọn phương thức thanh toán!",
-                            ContentType.failure,
-                            2)
-                        .whenComplete(() => Get.back());
-                    return;
-                  }
-                  bool confirmOrdered = await showConfirmDialog(
-                          context,
-                          "Xác nhận đặt hàng",
-                          "Đơn hàng sẽ được giao tại:\n\n${transactionController.selectedAddress.value?.details}, ${transactionController.selectedAddress.value?.ward}, ${transactionController.selectedAddress.value?.district}, ${transactionController.selectedAddress.value?.province}\n\nNgười nhận : ${transactionController.selectedAddress.value?.receiverName}, ${transactionController.selectedAddress.value?.receiverPhone}")
-                      .whenComplete(() => Get.back());
-                  if (confirmOrdered) {
-                    showLoadingAnimation(
-                        context, "assets/animations/loading.json", 140.w);
-                    final result = await transactionController
-                        .performTransaction(listItem, caculateCartTotal().value)
-                        .whenComplete(() => Get.back());
-
-                    if (result.message == "Success") {
-                      TransactionResponseModel response =
-                          TransactionResponseModel.fromJson(result.data);
-                      transactionController.refresh();
-                      await cartController.clearCart();
-                      showCustomSnackBar(context, "Thông báo",
-                          "Đặt hàng thành công", ContentType.success, 2);
-
-                      if (response.paymentResponse != null) {
-                        toCheckoutWebView(context, response);
+                  SizedBox(height: 10.h),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      tr("payment.selected_product"),
+                      style: CustomFonts.customGoogleFonts(
+                        fontSize: 14.r,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  OrderItems(
+                    listItem: listItem,
+                    listHeight: caculatecartItemHeight(listItem.length),
+                  ),
+                  SizedBox(height: 10.h),
+                  PaymentMethodAndVoucher(
+                    accountVoucherController: accountVoucherController,
+                    transactionController: transactionController,
+                    paymentController: paymentController,
+                  ),
+                  SizedBox(height: 10.h),
+                  Obx(
+                    () => PaymentDetails(
+                      transactionController: transactionController,
+                      cartTotal: cartController.calculateTotal().value,
+                      finalTotal: caculateCartTotal().value,
+                      itemAmount: itemAmount(),
+                    ),
+                  ),
+                  SizedBox(height: 15.h),
+                  RoundIconButton(
+                    size: 80.r,
+                    onPressed: () async {
+                      showLoadingAnimation(
+                          context, "assets/animations/loading.json", 140.w);
+                      if (transactionController.selectedPayment.value == null) {
+                        showCustomSnackBar(
+                                context,
+                                "Thông báo",
+                                "Vui lòng chọn phương thức thanh toán!",
+                                ContentType.failure,
+                                2)
+                            .whenComplete(() => Get.back());
+                        return;
                       }
-                    } else {
-                      showCustomSnackBar(
-                          context,
-                          "Lỗi",
-                          "Có lỗi xảy ra :\nChi tiết :${result.data}",
-                          ContentType.failure,
-                          2);
-                    }
-                  }
-                },
-                title: tr("payment.checkout"),
+                      bool confirmOrdered = await showConfirmDialog(
+                              context,
+                              "Xác nhận đặt hàng",
+                              "Đơn hàng sẽ được giao tại:\n\n${transactionController.selectedAddress.value?.details}, ${transactionController.selectedAddress.value?.ward}, ${transactionController.selectedAddress.value?.district}, ${transactionController.selectedAddress.value?.province}\n\nNgười nhận : ${transactionController.selectedAddress.value?.receiverName}, ${transactionController.selectedAddress.value?.receiverPhone}")
+                          .whenComplete(() => Get.back());
+                      if (confirmOrdered) {
+                        showLoadingAnimation(
+                            context, "assets/animations/loading.json", 140.w);
+                        final result = await transactionController
+                            .performTransaction(
+                                listItem, caculateCartTotal().value)
+                            .whenComplete(() => Get.back());
+
+                        if (result.message == "Success") {
+                          TransactionResponseModel response =
+                              TransactionResponseModel.fromJson(result.data);
+                          transactionController.refresh();
+                          await cartController.clearCart();
+                          showCustomSnackBar(context, "Thông báo",
+                              "Đặt hàng thành công", ContentType.success, 2);
+
+                          if (response.paymentResponse != null) {
+                            toCheckoutWebView(context, response);
+                          }
+                        } else {
+                          showCustomSnackBar(
+                              context,
+                              "Lỗi",
+                              "Có lỗi xảy ra :\nChi tiết :${result.data}",
+                              ContentType.failure,
+                              2);
+                        }
+                      }
+                    },
+                    title: tr("payment.checkout"),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -221,6 +233,8 @@ class CheckoutScreen extends GetView {
               if (result == "Success") {
                 showCustomSnackBar(context, "Thông báo",
                     "Thanh toán thành công", ContentType.success, 2);
+
+                refresh();
               } else {
                 showCustomSnackBar(
                     context,

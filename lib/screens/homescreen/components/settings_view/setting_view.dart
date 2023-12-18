@@ -1,18 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/config/font.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
-import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/screens/account_info_screen/profile_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/components/language_slider.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/components/utilities_list.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
-import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,12 +19,12 @@ import 'package:google_fonts/google_fonts.dart';
 class SettingsView extends StatelessWidget {
   SettingsView({super.key});
   final accountController = Get.find<AccountController>();
-  final languageController = Get.find<LanguageController>();
+
   @override
   Widget build(BuildContext context) {
     return NoGlowingScrollView(
         child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -77,7 +76,7 @@ class SettingsView extends StatelessWidget {
                           leading: const Icon(CupertinoIcons.person),
                           title: Text(
                             tr("more.account_info.profile_account"),
-                            style: GoogleFonts.roboto(
+                            style: CustomFonts.customGoogleFonts(
                               fontSize: 14.r,
                             ),
                           ),
@@ -99,7 +98,7 @@ class SettingsView extends StatelessWidget {
                           leading: const Icon(CupertinoIcons.location_solid),
                           title: Text(
                             tr("more.account_info.saved_address"),
-                            style: GoogleFonts.roboto(
+                            style: CustomFonts.customGoogleFonts(
                               fontSize: 14.r,
                             ),
                           ),
@@ -112,53 +111,7 @@ class SettingsView extends StatelessWidget {
                     ),
                   ),
                 ),
-                ListTile(
-                  onTap: () {
-                    accountController.logOut();
-                  },
-                  splashColor: AppColors.lightOrange,
-                  leading: const Icon(Icons.language),
-                  title: Text(
-                    tr("more.language"),
-                    style: GoogleFonts.roboto(
-                      fontSize: 14.r,
-                    ),
-                  ),
-                  trailing: SizedBox(
-                    width: 100.w,
-                    child: Row(
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            languageController
-                                .saveLocale(const Locale('en', 'US'))
-                                .whenComplete(() {
-                              context.setLocale(const Locale('en', 'US'));
-
-                              showDelayedLoadingAnimation(context,
-                                      "assets/animations/loading.json", 180, 1)
-                                  .whenComplete(() => Phoenix.rebirth(context));
-                            });
-                          },
-                          child: Text("English"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            languageController
-                                .saveLocale(const Locale('vi', 'VN'))
-                                .whenComplete(() {
-                              context.setLocale(const Locale('vi', 'VN'));
-                              showDelayedLoadingAnimation(context,
-                                      "assets/animations/loading.json", 180, 1)
-                                  .whenComplete(() => Phoenix.rebirth(context));
-                            });
-                          },
-                          child: Text("Viet Nam"),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                const LanguageSlider(),
                 Divider(
                   thickness: 1.w,
                 ),

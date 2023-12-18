@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/font.dart';
@@ -6,6 +7,7 @@ import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/voucher_coupon.dart';
+import 'package:fooddelivery_fe/widgets/empty_widget.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 
@@ -78,8 +80,14 @@ class ChooseVoucherScreen extends GetView {
               ],
             );
           }
-          return const Center(
-            child: Text("Bạn không có voucher"),
+          return Container(
+            color: Colors.white10,
+            height: 0.8.sh,
+            width: 1.sw,
+            child: EmptyWidget(
+              assetsAnimations: "cat_sleep",
+              tilte: tr("discount.no_voucher"),
+            ),
           );
         }),
       )),

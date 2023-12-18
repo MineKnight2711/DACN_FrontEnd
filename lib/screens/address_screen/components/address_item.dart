@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +10,6 @@ import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/model/address_model.dart';
-import 'package:fooddelivery_fe/screens/address_screen/address_list_screen.dart';
 import 'package:fooddelivery_fe/screens/address_screen/update_address_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
@@ -31,7 +31,7 @@ class AddressItem extends StatelessWidget {
           motion: const DrawerMotion(),
           children: [
             SlidableAction(
-              label: "Sửa",
+              label: tr("address_screen.edit"),
               backgroundColor: Colors.green,
               icon: CupertinoIcons.pencil_ellipsis_rectangle,
               onPressed: (con) {
@@ -44,7 +44,7 @@ class AddressItem extends StatelessWidget {
               },
             ),
             SlidableAction(
-              label: "Xoá",
+              label: tr("address_screen.remove"),
               backgroundColor: Colors.red,
               icon: CupertinoIcons.pencil_ellipsis_rectangle,
               onPressed: (con) async {
@@ -63,7 +63,7 @@ class AddressItem extends StatelessWidget {
                   showCustomSnackBar(
                       context,
                       "Lỗi",
-                      "Thêm địa chỉ thất bại\n Chi tiết:$result",
+                      "Xoá địa chỉ thất bại\n Chi tiết:$result",
                       ContentType.failure,
                       2);
                 }
@@ -135,7 +135,7 @@ class AddressItem extends StatelessWidget {
                                     ),
                                   ),
                                   child: Text(
-                                    'Mặc định',
+                                    tr("address_screen.default_address"),
                                     style: GoogleFonts.roboto(
                                       fontSize: 14.r,
                                       color: AppColors.orange100,
