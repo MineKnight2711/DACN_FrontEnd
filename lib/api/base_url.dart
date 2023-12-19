@@ -1,7 +1,7 @@
 class ApiUrl {
   //ip khi ở trường - 10.10.116.60
   //ip LAN nhà - 192.168.1.44
-  //ip Coffee House NTT 172.16.3.8//172.16.2.242
+  //ip Coffee House NTT 172.16.3.8//172.16.2.242/172.16.2.89
   //ip mạng ảo của giả lập - 10.0.2.2
   //ip wifi nhà - 192.168.0.106
   //ip mobile hostspot - 192.168.29.192/192.168.191.192s

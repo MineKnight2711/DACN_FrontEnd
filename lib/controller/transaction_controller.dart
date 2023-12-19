@@ -40,12 +40,21 @@ class TransactionController extends GetxController {
       if (_accountController.accountSession.value?.phoneNumber == null) {
         return "NoPhone";
       }
+      if (_accountController.selectedAddress.value != null) {
+        selectedAddress.value = _accountController.selectedAddress.value;
+        selectedAddress.value?.receiverName =
+            _accountController.accountSession.value?.fullName;
+        selectedAddress.value?.receiverPhone =
+            _accountController.accountSession.value?.phoneNumber;
+        return "OK";
+      }
       listAddress.value = await _addressController.getListAddressByAccountId(
               "${_accountController.accountSession.value?.accountID}") ??
           [];
       if (listAddress.isEmpty) {
         return "NoAddress";
       }
+
       AddressModel? defaultAddress = listAddress.firstWhereOrNull(
         (address) => address.defaultAddress.toString() == "true",
       );

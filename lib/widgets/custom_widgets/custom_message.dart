@@ -3,6 +3,8 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
+import 'package:fooddelivery_fe/config/font.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_snackbar.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -69,30 +71,6 @@ Future<void> showCustomSnackBar(BuildContext context, String title,
     ..showSnackBar(snackBar);
 
   return await Future.delayed(snackBar.duration);
-}
-
-class CustomSnackBar {
-  static void showCustomSnackBar(
-      BuildContext context, String message, int duration,
-      {Color backgroundColor = Colors.blue}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16.0,
-          ),
-        ),
-        duration: Duration(seconds: duration),
-        backgroundColor: backgroundColor,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-      ),
-    );
-  }
 }
 
 class CustomAlertDialog extends StatelessWidget {

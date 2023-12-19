@@ -3,9 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fooddelivery_fe/controller/category_controller.dart';
-import 'package:fooddelivery_fe/model/category_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/category_view/category_view.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:get/get.dart';

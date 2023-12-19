@@ -31,6 +31,8 @@
             "discount":"Ưu đãi",
             "more":"Nhiều hơn"
         },   
+        "no_category":"Đang tải các danh mục...",
+        "no_dish":"Đang tải các món ăn...",
         "category":"Danh mục",
         "search":"Hôm nay ăn gì ?",
         "top_food":"Các món nổi bật?",

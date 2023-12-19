@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -13,6 +14,7 @@ import 'package:fooddelivery_fe/screens/homescreen/components/product_view/dish_
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/favorite_icon_button.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/empty_widget.dart';
 import 'package:fooddelivery_fe/widgets/image_view.dart';
 import 'package:get/get.dart';
 
@@ -180,7 +182,10 @@ class ListDishView extends StatelessWidget {
                       ))
                   .toList());
         }
-        return const Text("Không có món ăn");
+        return EmptyWidgetSmall(
+          assetsAnimations: "loading_1",
+          tilte: tr("home.no_dish"),
+        );
       },
     );
   }

@@ -32,6 +32,8 @@
             "discount":"Discount",
             "more":"More"
         },
+        "no_category":"Loading categories ...",
+        "no_dish":"Loading dishes...",
         "category":"Category",
         "top_food":"Top food",
         "search":"Find your favorite food",

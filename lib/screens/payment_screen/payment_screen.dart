@@ -16,11 +16,11 @@ import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/model/cart_model.dart';
 import 'package:fooddelivery_fe/model/transaction_response.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
-import 'package:fooddelivery_fe/screens/payment_screen/choose_voucher_screen.dart';
-import 'package:fooddelivery_fe/screens/payment_screen/components/payment_method_dialog.dart';
-import 'package:fooddelivery_fe/screens/payment_screen/components/choose_address_screen.dart';
+import 'package:fooddelivery_fe/screens/payment_screen/components/choose_dishes_box.dart';
+import 'package:fooddelivery_fe/screens/payment_screen/components/payment_details.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/components/payment_webview.dart';
-import 'package:fooddelivery_fe/utils/data_convert.dart';
+import 'package:fooddelivery_fe/screens/payment_screen/components/selected_address_box.dart';
+import 'package:fooddelivery_fe/screens/payment_screen/components/selected_payment_method_and_voucher.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
@@ -52,7 +52,7 @@ class CheckoutScreen extends GetView {
   }
 
   double caculatecartItemHeight(int itemCount) {
-    double maxHeight = 280.h;
+    double maxHeight = 230.h;
     double itemHeight = 55.h;
     double dividerHeight = 15.h;
     double height = 0.0;
@@ -92,6 +92,7 @@ class CheckoutScreen extends GetView {
                     thickness: 0.5.w,
                     endIndent: 10.w,
                     indent: 10.w,
+                    height: 5.h,
                     color: AppColors.dark100,
                   ),
                   SizedBox(height: 10.h),
@@ -118,7 +119,7 @@ class CheckoutScreen extends GetView {
                   ),
                   SizedBox(height: 10.h),
                   Obx(
-                    () => PaymentDetails(
+                    () => PaymentDetailsBox(
                       transactionController: transactionController,
                       cartTotal: cartController.calculateTotal().value,
                       finalTotal: caculateCartTotal().value,
@@ -278,327 +279,5 @@ class CheckoutScreen extends GetView {
               ),
             ),
         transition: Transition.downToUp);
-  }
-}
-
-//Widget địa chỉ của account
-class AccountAddress extends StatelessWidget {
-  const AccountAddress({
-    super.key,
-    required this.transactionController,
-  });
-
-  final TransactionController transactionController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 100.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.dark100,
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ListTile(
-              title: Text(
-                tr("payment.address_box.recipient_information"),
-                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-              ),
-              subtitle: Obx(
-                () => Text(
-                  "${transactionController.selectedAddress.value?.receiverName} | ${transactionController.selectedAddress.value?.receiverPhone}",
-                  style: CustomFonts.customGoogleFonts(
-                      fontSize: 13.r, color: AppColors.dark20),
-                ),
-              ),
-              trailing: TextButton.icon(
-                label: Text(
-                  tr("payment.address_box.address_edit"),
-                  style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-                ),
-                onPressed: () {
-                  Get.to(ChooseAddressScreen(),
-                      transition: Transition.rightToLeft);
-                },
-                icon: const Icon(
-                  CupertinoIcons.pencil,
-                  size: 18,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 11.w),
-            child: Text(
-              tr("payment.address_box.address"),
-              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 11.w), // Adjust padding as needed
-              child: NoGlowingScrollView(
-                child: Text(
-                  "${transactionController.selectedAddress.value?.details}, ${transactionController.selectedAddress.value?.ward}, ${transactionController.selectedAddress.value?.district}, ${transactionController.selectedAddress.value?.province}",
-                  textAlign: TextAlign.justify,
-                  style: CustomFonts.customGoogleFonts(
-                      fontSize: 13.r, color: AppColors.dark20),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-//Widget chi tiết thanh toán
-class PaymentDetails extends StatelessWidget {
-  final TransactionController transactionController;
-  final double cartTotal;
-  final double finalTotal;
-  final int itemAmount;
-
-  const PaymentDetails(
-      {super.key,
-      required this.cartTotal,
-      required this.itemAmount,
-      required this.transactionController,
-      required this.finalTotal});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          tr("payment.payment_details"),
-          style: CustomFonts.customGoogleFonts(
-              fontSize: 16.r, fontWeight: FontWeight.w500),
-        ),
-        SizedBox(height: 10.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              tr("payment.payment_details"),
-              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-            ),
-            Text(
-              DataConvert().formatCurrency(cartTotal),
-              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 15.h,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              tr("payment.dishes(amount)"),
-              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-            ),
-            Text(
-              itemAmount.toString(),
-              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 15.h,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              tr("payment.discount"),
-              style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-            ),
-            Obx(
-              () => Text(
-                transactionController.selectedVoucher.value != null
-                    ? transactionController.selectedVoucher.value?.type ==
-                            "Percent"
-                        ? '${transactionController.selectedVoucher.value?.discountPercent}%'
-                        : transactionController.selectedVoucher.value?.type ==
-                                "Amount"
-                            ? DataConvert().formatCurrency(transactionController
-                                    .selectedVoucher.value?.discountAmount ??
-                                0.0)
-                            : ""
-                    : 'Không có',
-                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 5.h,
-        ),
-        const Divider(color: AppColors.gray100),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              tr("payment.total"),
-              style: CustomFonts.customGoogleFonts(fontSize: 18.r),
-            ),
-            Text(
-              DataConvert().formatCurrency(finalTotal),
-              style: CustomFonts.customGoogleFonts(fontSize: 18.r),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-//Widget chọn phương thức thanh toán và chọn voucher
-class PaymentMethodAndVoucher extends StatelessWidget {
-  final TransactionController transactionController;
-  final PaymentController paymentController;
-  final AccountVoucherController accountVoucherController;
-  const PaymentMethodAndVoucher(
-      {super.key,
-      required this.transactionController,
-      required this.paymentController,
-      required this.accountVoucherController});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: TextButton.icon(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => PaymentDialog(
-                    transactionController: transactionController,
-                    paymentController: paymentController),
-              );
-            },
-            label: Obx(
-              () => Text(
-                transactionController.selectedPayment.value != null
-                    ? "${transactionController.selectedPayment.value?.paymentMethod}"
-                    : tr("payment.choose_payment_methods"),
-                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-              ),
-            ),
-            icon: const Icon(CupertinoIcons.creditcard),
-          ),
-        ),
-        Container(
-          color: AppColors.dark100,
-          width: 0.5.w,
-          height: 20.h,
-        ),
-        Expanded(
-          child: TextButton.icon(
-            onPressed: () {
-              accountVoucherController.getAllAccountVouchers();
-              Get.to(
-                () => ChooseVoucherScreen(
-                    transactionController: transactionController),
-                transition: Transition.rightToLeft,
-              );
-            },
-            label: Obx(
-              () => Text(
-                transactionController.selectedVoucher.value != null
-                    ? "${transactionController.selectedVoucher.value?.voucherName}"
-                    : tr("payment.add_discount"),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
-              ),
-            ),
-            icon: const Icon(CupertinoIcons.tags),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-//Widget danh sách các món đã đặt
-class OrderItems extends StatelessWidget {
-  final List<CartModel> listItem;
-  final double listHeight;
-  const OrderItems(
-      {super.key, required this.listItem, required this.listHeight});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: listHeight,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.dark100,
-          width: 1,
-        ),
-      ),
-      child: listItem.isNotEmpty
-          ? NoGlowingScrollView(
-              child: Column(
-                children: listItem
-                    .map(
-                      (item) => Column(
-                        children: [
-                          SizedBox(
-                            height: 55.h,
-                            child: ListTile(
-                              leading: Image.network(
-                                "${item.dish?.imageUrl}",
-                              ),
-                              title: Text(
-                                "${item.quantity}x ${item.dish?.dishName}",
-                                style: CustomFonts.customGoogleFonts(
-                                    fontSize: 14.r),
-                              ),
-                              subtitle: Text(
-                                "${item.dish?.category.categoryName}",
-                                style: CustomFonts.customGoogleFonts(
-                                    fontSize: 12.r),
-                              ),
-                              trailing: Text(
-                                DataConvert().formatCurrency(
-                                    double.parse("${item.quantity}") *
-                                        double.parse("${item.dish?.price}")),
-                                style: CustomFonts.customGoogleFonts(
-                                    fontSize: 12.r),
-                              ),
-                            ),
-                          ),
-                          Divider(
-                            height: 15.h,
-                            indent: 15.w,
-                            endIndent: 15.w,
-                            color: AppColors.gray100,
-                          )
-                        ],
-                      ),
-                    )
-                    .toList(),
-              ),
-            )
-          : const SizedBox.shrink(),
-    );
   }
 }

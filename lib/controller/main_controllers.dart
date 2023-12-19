@@ -9,7 +9,7 @@ import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar_controller.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
@@ -24,6 +24,8 @@ class MainController {
     Get.put(BottomTabBarController());
     final languageController = Get.put(LanguageController());
     await languageController.fetchCurrentLocale();
+    initializeDateFormatting(
+        languageController.currentLocale.value.toString(), null);
     final accountVoucherController = Get.put(AccountVoucherController());
     final accountController = Get.find<AccountController>();
     await accountController.fetchCurrentUser();

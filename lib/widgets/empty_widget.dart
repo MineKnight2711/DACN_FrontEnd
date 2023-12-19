@@ -28,3 +28,31 @@ class EmptyWidget extends StatelessWidget {
     );
   }
 }
+
+class EmptyWidgetSmall extends StatelessWidget {
+  final String assetsAnimations, tilte;
+  const EmptyWidgetSmall(
+      {super.key, required this.assetsAnimations, required this.tilte});
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      alignment: WrapAlignment.center,
+      runSpacing: -10.w,
+      children: [
+        LottieBuilder.asset(
+          "assets/animations/$assetsAnimations.json",
+          height: 100.h,
+          width: 200.w,
+        ),
+        const SizedBox(
+          width: double.infinity,
+        ),
+        Text(
+          tilte,
+          style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+        ),
+      ],
+    );
+  }
+}

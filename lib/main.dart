@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -8,7 +9,9 @@ import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/main_controllers.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/slpash_screen.dart';
+
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +19,6 @@ void main() async {
   await Firebase.initializeApp();
   MainController.initializeControllers();
   await EasyLocalization.ensureInitialized();
-
   final languageController = Get.find<LanguageController>();
   runApp(
     Obx(
@@ -47,7 +49,6 @@ class AppFood extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.setLocale(context.locale);
     return GetMaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

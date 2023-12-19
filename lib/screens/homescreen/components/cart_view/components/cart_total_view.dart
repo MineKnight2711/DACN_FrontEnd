@@ -23,7 +23,7 @@ class CartTotalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110.h,
+      height: 85.h,
       width: 400.w,
       decoration: const BoxDecoration(
         color: AppColors.gray15,
@@ -41,10 +41,8 @@ class CartTotalView extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(4),
+          Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -62,9 +60,7 @@ class CartTotalView extends StatelessWidget {
                   DataConvert().formatCurrency(cartTotal),
                   style: GoogleFonts.roboto(fontSize: 20.r),
                 ),
-                // SizedBox(
-                //   width: 30.w,
-                // ),
+
                 deleteCartPressed != null
                     ? Material(
                         borderRadius: BorderRadius.circular(50),
@@ -88,13 +84,13 @@ class CartTotalView extends StatelessWidget {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.center,
+          Expanded(
             child: Container(
-              margin: const EdgeInsets.only(bottom: 10),
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(bottom: 10.h),
               child: RoundIconButton(
                   enabled: checkOutEnable,
-                  size: 75.r,
+                  size: 70.r,
                   title: tr("cart.order"),
                   onPressed: checkoutPressed),
             ),

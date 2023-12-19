@@ -6,7 +6,9 @@ import 'package:fooddelivery_fe/controller/category_controller.dart';
 import 'package:fooddelivery_fe/controller/dish_by_category_controller.dart';
 import 'package:fooddelivery_fe/model/category_model.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/dish_by_category_screen.dart';
+import 'package:fooddelivery_fe/widgets/empty_widget.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class CategoryList extends StatefulWidget {
   final List<CategoryModel>? categories;
@@ -179,11 +181,10 @@ class _CategoryListState extends State<CategoryList>
               ],
             );
           }
-          return const Center(
-              child: Padding(
-            padding: EdgeInsets.all(32),
-            child: Text("Không có danh mục :(("),
-          ));
+          return EmptyWidgetSmall(
+            assetsAnimations: "loading_1",
+            tilte: tr("home.no_category"),
+          );
         }),
       ],
     );
