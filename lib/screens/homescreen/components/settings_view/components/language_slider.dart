@@ -92,43 +92,73 @@ class _LanguageSliderState extends State<LanguageSlider>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextButton(
-                        onPressed: () {
-                          languageController
-                              .saveLocale(const Locale('en', 'US'))
-                              .whenComplete(() {
-                            context.setLocale(const Locale('en', 'US'));
+                      Obx(
+                        () => TextButton(
+                          onPressed: languageController.currentLocale.value
+                                      .toString() !=
+                                  const Locale('en', 'US').toString()
+                              ? () {
+                                  languageController
+                                      .saveLocale(const Locale('en', 'US'))
+                                      .whenComplete(() {
+                                    context.setLocale(const Locale('en', 'US'));
 
-                            showDelayedLoadingAnimation(context,
-                                    "assets/animations/loading.json", 180, 1)
-                                .whenComplete(() => Phoenix.rebirth(context));
-                            _toggleButtonVisibility();
-                          });
-                        },
-                        child: Text(
-                          "English",
-                          style: CustomFonts.customGoogleFonts(
-                              fontSize: 14.r, color: Colors.blue),
+                                    showDelayedLoadingAnimation(
+                                            context,
+                                            "assets/animations/loading.json",
+                                            180,
+                                            1)
+                                        .whenComplete(
+                                            () => Phoenix.rebirth(context));
+                                    _toggleButtonVisibility();
+                                  });
+                                }
+                              : null,
+                          child: Text(
+                            "English",
+                            style: CustomFonts.customGoogleFonts(
+                                fontSize: 14.r,
+                                color: languageController.currentLocale.value
+                                            .toString() !=
+                                        const Locale('en', 'US').toString()
+                                    ? Colors.blue
+                                    : Colors.grey),
+                          ),
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          languageController
-                              .saveLocale(const Locale('vi', 'VN'))
-                              .whenComplete(() {
-                            context.setLocale(const Locale('vi', 'VN'));
-                            showDelayedLoadingAnimation(context,
-                                    "assets/animations/loading.json", 180, 1)
-                                .whenComplete(() => Phoenix.rebirth(context));
-                            _toggleButtonVisibility();
-                          });
-                        },
-                        child: Text(
-                          "Tiếng việt",
-                          style: CustomFonts.customGoogleFonts(
-                              fontSize: 14.r, color: Colors.blue),
+                      Obx(
+                        () => TextButton(
+                          onPressed: languageController.currentLocale.value
+                                      .toString() !=
+                                  const Locale('vi', 'VN').toString()
+                              ? () {
+                                  languageController
+                                      .saveLocale(const Locale('vi', 'VN'))
+                                      .whenComplete(() {
+                                    context.setLocale(const Locale('vi', 'VN'));
+                                    showDelayedLoadingAnimation(
+                                            context,
+                                            "assets/animations/loading.json",
+                                            180,
+                                            1)
+                                        .whenComplete(
+                                            () => Phoenix.rebirth(context));
+                                    _toggleButtonVisibility();
+                                  });
+                                }
+                              : null,
+                          child: Text(
+                            "Tiếng việt",
+                            style: CustomFonts.customGoogleFonts(
+                                fontSize: 14.r,
+                                color: languageController.currentLocale.value
+                                            .toString() !=
+                                        const Locale('vi', 'VN').toString()
+                                    ? Colors.blue
+                                    : Colors.grey),
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),

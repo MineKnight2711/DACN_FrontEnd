@@ -18,9 +18,9 @@ class UltilitiesList {
     extensionsCard = [
       ExtensionCard(
         onPressed: () {
-          final orderController = Get.put(OrderController());
-          orderController.getAccountOrders();
-          Get.to(() => OrdersScreen(), transition: Transition.upToDown);
+          Get.put(OrderController());
+
+          Get.to(() => const OrdersScreen(), transition: Transition.upToDown);
         },
         icon: CupertinoIcons.square_list,
         title: tr("more.order_history"),

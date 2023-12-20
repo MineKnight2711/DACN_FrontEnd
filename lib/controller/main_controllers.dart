@@ -7,6 +7,7 @@ import 'package:fooddelivery_fe/controller/dish_controller.dart';
 import 'package:fooddelivery_fe/controller/favorite_controller.dart';
 import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/login_controller.dart';
+import 'package:fooddelivery_fe/controller/notification_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -16,6 +17,7 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class MainController {
   static initializeControllers() async {
+    Get.put(NotificationController());
     Get.put(LoginController());
     Get.put(CategoryController());
     Get.put(DishController());

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fooddelivery_fe/api/orders/order_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/model/order_model.dart';
@@ -16,6 +18,9 @@ class OrderController extends GetxController {
     super.onInit();
     _orderApi = OrderApi();
     _accountController = Get.find<AccountController>();
+    Timer.periodic(const Duration(seconds: 2), (timer) {
+      getAccountOrders();
+    });
   }
 
   Future<void> getAccountOrders() async {

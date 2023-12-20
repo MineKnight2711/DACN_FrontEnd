@@ -19,7 +19,7 @@ class ApiUrl {
   static const apiAccountVoucher = '${baseUrl}voucher-account';
   // static const apiCreateAccount = '${baseUrl}account';
   static const apiUpdateAccount = '${baseUrl}account/update-account';
-  static const apiLoginWithEmail = '${baseUrl}account/login-by-email';
+  static const apiGetAccountWithEmail = '${baseUrl}account/get-by-email';
   static const apiSignUpWithFireBase = '${baseUrl}account/create-user';
   static const apiSignInWithFireBase = '${baseUrl}account/sign-in';
   static const apiSignOut = '${baseUrl}account/sign-out';

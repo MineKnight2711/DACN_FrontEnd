@@ -40,7 +40,7 @@ class AccountApi {
 
   Future<ResponseBaseModel?> login(String email) async {
     final response = await http.get(
-      Uri.parse("${ApiUrl.apiLoginWithEmail}/$email"),
+      Uri.parse("${ApiUrl.apiGetAccountWithEmail}/$email"),
     );
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (response.statusCode == 200) {

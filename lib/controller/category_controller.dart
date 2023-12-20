@@ -31,7 +31,7 @@ class CategoryController extends GetxController {
   }
 
   double caculateSubCategoryListHeight(int categoryNum) {
-    double itemHeight = 90.h + 30;
+    double itemHeight = 90.h + 20;
 
     int numItems = categoryNum;
     int rows = 1;

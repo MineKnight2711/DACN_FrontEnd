@@ -87,7 +87,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                         )
                         .toList(),
                     indicatorPadding: EdgeInsets.symmetric(horizontal: 5.w),
-                    padding: EdgeInsets.all(5.w),
+                    padding: EdgeInsets.symmetric(vertical: 5.w),
                   ),
                   SizedBox(
                     height: 1.sh - (50.h + 10.w + 35.h + 26),

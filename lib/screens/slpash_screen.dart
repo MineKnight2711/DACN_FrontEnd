@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,10 +25,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: CircleAvatar(
-          radius: 100.r,
-          backgroundImage:
-              Image.asset("assets/images/background_crop_1000.jpg").image,
+        child: LottieBuilder.asset(
+          "assets/animations/delivery_man_stop.json",
+          width: 250.w,
+          height: 250.w,
         ),
       ),
     );
