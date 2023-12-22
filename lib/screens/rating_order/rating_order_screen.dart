@@ -7,6 +7,7 @@ import 'package:fooddelivery_fe/controller/rating_order_controller.dart';
 import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_item.dart';
 import 'package:fooddelivery_fe/screens/rating_order/components/rating_order_tabbar_controller.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/empty_widget.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,6 +38,7 @@ class RatingOrderScreen extends GetView {
                   CustomFonts.customGoogleFonts(fontSize: 12.r),
               labelColor: AppColors.orange100,
               unselectedLabelColor: AppColors.dark50,
+              indicatorColor: Colors.transparent,
               tabs: tabBarController.tabs
                   .map(
                     (tab) => Container(
@@ -73,7 +75,10 @@ class RatingOrderScreen extends GetView {
                           ),
                         );
                       }
-                      return Center(child: CircularProgressIndicator());
+                      return const EmptyWidget(
+                        assetsAnimations: "cat_sleep",
+                        tilte: "Chưa có đơn hàng..",
+                      );
                     }),
                     Obx(() {
                       if (ratingOrderController.listRatedOrder.isNotEmpty) {
@@ -85,7 +90,10 @@ class RatingOrderScreen extends GetView {
                               .toList(),
                         );
                       }
-                      return Center(child: CircularProgressIndicator());
+                      return const EmptyWidget(
+                        assetsAnimations: "cat_sleep",
+                        tilte: "Chưa có đơn hàng..",
+                      );
                     }),
                   ],
                 )),

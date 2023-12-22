@@ -8,6 +8,7 @@ class TextControllers {
   final txtEmailSignUp = TextEditingController();
   final txtPhoneSignUp = TextEditingController();
   final txtEmailLogin = TextEditingController();
+  final txtEmailUpdate = TextEditingController();
   final txtPhoneLogin = TextEditingController();
 
   final txtFullNameUpdateController = TextEditingController();

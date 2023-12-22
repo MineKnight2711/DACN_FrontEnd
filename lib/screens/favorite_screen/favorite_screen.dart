@@ -83,7 +83,7 @@ class FavoriteScreen extends GetView {
               );
             }
             return EmptyWidget(
-              tilte: tr("favorite_products.appbar.no_favorite"),
+              tilte: tr("favorite_products.no_favorite"),
               assetsAnimations: "cat_sleep",
             );
           })),

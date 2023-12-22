@@ -132,4 +132,23 @@ class UpdateProfileController extends GetxController {
     }
     return "Unknown";
   }
+
+  Future<ResponseBaseModel> changeEmail(String newEmail) async {
+    ResponseBaseModel response = ResponseBaseModel();
+    if (_accountController.accountSession.value != null) {
+      if (newEmail != "${_accountController.accountSession.value?.email}") {
+        final response = await _accountApi.changeEmail(
+            "${_accountController.accountSession.value?.accountID}",
+            "${_accountController.accountSession.value?.email}",
+            newEmail);
+        await _accountController.fetchCurrentUser();
+        return response;
+      }
+      response.message = "IsCurrent";
+      response.data = "Bạn không thể cập nhật email hiện tại";
+      return response;
+    }
+    response.message = "Fail";
+    return response;
+  }
 }

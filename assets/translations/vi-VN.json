@@ -119,7 +119,8 @@
         "ordered_dishes":"Các món ăn đã đặt",
         "total_amount":"Thành tiền",
         "voucher_used":"Khuyến mãi đã sử dụng",
-        "payment_amount":"Số tiền thanh toán"
+        "payment_amount":"Số tiền thanh toán",
+        "payment_method":"Phương thức thanh toán"
     },
     "exchange_voucher":{
         "appbar":{

@@ -115,6 +115,7 @@ class TransactionController extends GetxController {
 
           return response;
         } else if (paymentMethod == "COD") {
+          newTransaction.paymentDetailsDTO?.paidTime = "";
           final response =
               await _transactionApi.performCODTransaction(newTransaction);
           Get.offAll(() => const HomeScreen());

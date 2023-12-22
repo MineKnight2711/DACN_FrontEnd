@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
@@ -16,7 +15,6 @@ import 'package:fooddelivery_fe/screens/homescreen/components/product_view/produ
 import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/components/utilities_list.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/settings_view/setting_view.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/voucher_view/voucher_view.dart';
-import 'package:fooddelivery_fe/widgets/custom_widgets/custom_snackbar.dart';
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -54,26 +52,6 @@ class _HomeScreenState extends State<HomeScreen>
     internetSub.cancel();
     super.dispose();
   }
-
-  // void listenToTheInternet() {
-  //   if (_internetConnectionController.listenToInternetChange()) {
-  //     CustomSnackBar.showCustomSnackBar(
-  //       context,
-  //       "Đã có kết nối trở lại",
-  //       duration: 2,
-  //       type: FlushbarType.internetConnected,
-  //       isShowOnTop: true,
-  //     );
-  //   } else {
-  //     CustomSnackBar.showCustomSnackBar(
-  //       context,
-  //       "Bạn đang offline",
-  //       duration: 2,
-  //       type: FlushbarType.noInternet,
-  //       isShowOnTop: true,
-  //     );
-  //   }
-  // }
 
   Future<void> refresh() async {
     await categoryController.getAllCategory();

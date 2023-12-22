@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_fe/api/orders/order_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/model/order_model.dart';
+import 'package:fooddelivery_fe/model/order_status.dart';
 import 'package:fooddelivery_fe/model/review_order_dto.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +21,10 @@ class RatingOrderController extends GetxController {
     super.onInit();
     _orderApi = OrderApi();
     _accountController = Get.find<AccountController>();
+    Timer.periodic(const Duration(seconds: 2), (timer) {
+      getAllCompleteOrder();
+      getAllRatedOrder();
+    });
   }
 
   @override
@@ -26,12 +33,10 @@ class RatingOrderController extends GetxController {
     score.value = 0.0;
     scoreChangingResult(score.value);
     feedBackController.clear();
-    getAllCompleteOrder();
   }
 
   void scoreChanging(double updateScore) {
     score.value = updateScore;
-    print(score.value);
     scoreChangingResult(score.value);
   }
 
@@ -81,13 +86,15 @@ class RatingOrderController extends GetxController {
     if (_accountController.accountSession.value != null) {
       final response = await _orderApi.getAccountOrdersByStatus(
           "${_accountController.accountSession.value?.accountID}",
-          "Đã thanh toán");
+          OrderStatus.statusComplete);
       if (response.message == "Success") {
         final orderDetailsJson = response.data as List<dynamic>;
 
         listCompleteOrder.value = orderDetailsJson
             .map((orderDetails) => OrderDetailsDTO.fromJson(orderDetails))
             .toList();
+      } else {
+        listCompleteOrder.clear();
       }
     }
   }
@@ -96,13 +103,15 @@ class RatingOrderController extends GetxController {
     if (_accountController.accountSession.value != null) {
       final response = await _orderApi.getAccountOrdersByStatus(
           "${_accountController.accountSession.value?.accountID}",
-          "Đã đánh giá");
+          OrderStatus.statusRated);
       if (response.message == "Success") {
         final orderDetailsJson = response.data as List<dynamic>;
 
         listRatedOrder.value = orderDetailsJson
             .map((orderDetails) => OrderDetailsDTO.fromJson(orderDetails))
             .toList();
+      } else {
+        listRatedOrder.clear();
       }
     }
   }

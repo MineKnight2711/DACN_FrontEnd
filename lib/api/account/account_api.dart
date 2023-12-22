@@ -151,4 +151,20 @@ class AccountApi {
     responseBase.message = 'ConnectError';
     return responseBase;
   }
+
+  Future<ResponseBaseModel> changeEmail(
+      String accountId, String email, String newEmail) async {
+    final verifiedResponse = await http.put(
+      Uri.parse(
+          "${ApiUrl.apiChangeEmail}/$accountId?email=$email&newEmail=$newEmail"),
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (verifiedResponse.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(verifiedResponse.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'ConnectError';
+    return responseBase;
+  }
 }

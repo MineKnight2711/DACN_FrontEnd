@@ -3,9 +3,6 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/font.dart';
-import 'package:fooddelivery_fe/widgets/custom_widgets/custom_snackbar.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 
 Future<bool> showConfirmDialog(

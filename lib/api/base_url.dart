@@ -24,7 +24,7 @@ class ApiUrl {
   static const apiSignInWithFireBase = '${baseUrl}account/sign-in';
   static const apiSignOut = '${baseUrl}account/sign-out';
   static const apiVerifiedEmail = '${baseUrl}account/get-user-info';
-
+  static const apiChangeEmail = '${baseUrl}account/change-email';
   static const apiGetAllCategory = '${baseUrl}category';
   static const apiDish = '${baseUrl}dish/with-favorite';
   static const apiGetDishesByCategoryID = '${baseUrl}dish/get-by-categoryId';

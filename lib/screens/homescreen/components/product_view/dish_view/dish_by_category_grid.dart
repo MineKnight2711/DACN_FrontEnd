@@ -46,18 +46,19 @@ class DishByCategoryGridView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: 80.h,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: Image.network(
-                              "${dishItem.dish.imageUrl}",
-                              scale: 0.5,
-                              fit: BoxFit.cover,
-                            ).image),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: Image.network(
+                                "${dishItem.dish.imageUrl}",
+                                scale: 0.5,
+                                fit: BoxFit.cover,
+                              ).image),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
                             ),
                           ),
                         ),
@@ -67,7 +68,6 @@ class DishByCategoryGridView extends StatelessWidget {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Title Column
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:

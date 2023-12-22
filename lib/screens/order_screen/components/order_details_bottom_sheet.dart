@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -60,7 +59,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                 height: 5.h,
               ),
               Text(
-                tr("bottom_sheet_order_details.already_paid"),
+                "${orderDetails.order?.status}",
                 textAlign: TextAlign.center,
                 style: CustomFonts.customGoogleFonts(
                   fontSize: 16.r,
@@ -197,61 +196,6 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                 "${orderDetails.order?.deliveryInfo?.split("|")[0]}",
                 style: CustomFonts.customGoogleFonts(fontSize: 15.r),
               ),
-              Divider(
-                height: 20.h,
-                thickness: 1.h,
-              ),
-              Text(
-                tr("bottom_sheet_order_details.payment_status"),
-                style: CustomFonts.customGoogleFonts(
-                    fontSize: 14.r, color: AppColors.dark20),
-              ),
-              "${orderDetails.order?.status}" == "Đã thanh toán" ||
-                      "${orderDetails.order?.status}" == "Đã hoàn tất"
-                  ? Row(
-                      children: [
-                        const Icon(
-                          Icons.check_circle,
-                          color: Colors.green,
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Text(
-                          "${orderDetails.order?.status}",
-                          style: CustomFonts.customGoogleFonts(fontSize: 15.r),
-                        ),
-                      ],
-                    )
-                  : "${orderDetails.order?.status}" == "Đã huỷ"
-                      ? Row(
-                          children: [
-                            const Icon(CupertinoIcons.xmark_circle_fill,
-                                color: Colors.redAccent),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Text(
-                              "Đã huỷ",
-                              style:
-                                  CustomFonts.customGoogleFonts(fontSize: 15.r),
-                            ),
-                          ],
-                        )
-                      : Row(
-                          children: [
-                            const Icon(CupertinoIcons.xmark_circle_fill,
-                                color: Colors.redAccent),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Text(
-                              "Chưa thanh toán",
-                              style:
-                                  CustomFonts.customGoogleFonts(fontSize: 15.r),
-                            ),
-                          ],
-                        ),
             ],
           ),
         ),
@@ -409,6 +353,27 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                   ),
                   Text(
                     DataConvert().formatCurrency(caculateCartTotal()),
+                    style: CustomFonts.customGoogleFonts(
+                      fontSize: 14.r,
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                height: 25.h,
+                thickness: 1.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    tr("bottom_sheet_order_details.payment_method"),
+                    style: CustomFonts.customGoogleFonts(
+                      fontSize: 14.r,
+                    ),
+                  ),
+                  Text(
+                    orderDetails.paymentMethod ?? "",
                     style: CustomFonts.customGoogleFonts(
                       fontSize: 14.r,
                     ),

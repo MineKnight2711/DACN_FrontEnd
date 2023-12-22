@@ -4,13 +4,15 @@ import 'package:fooddelivery_fe/model/voucher_model.dart';
 
 class OrderDetailsDTO {
   OrderModel? order;
+  String? paymentMethod;
   List<DetailsDTO>? detailList;
 
-  OrderDetailsDTO({this.order, this.detailList});
+  OrderDetailsDTO({this.order, this.paymentMethod, this.detailList});
 
   factory OrderDetailsDTO.fromJson(Map<String, dynamic> json) {
     return OrderDetailsDTO(
       order: json['order'] != null ? OrderModel.fromJson(json['order']) : null,
+      paymentMethod: json['paymentMethod'] ?? "",
       detailList: json['detailList'] != null
           ? (json['detailList'] as List)
               .map((detail) => DetailsDTO.fromJson(detail))

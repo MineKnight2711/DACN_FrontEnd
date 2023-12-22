@@ -9,7 +9,6 @@ import 'package:fooddelivery_fe/controller/language_controller.dart';
 import 'package:fooddelivery_fe/controller/main_controllers.dart';
 import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/slpash_screen.dart';
-import 'package:fooddelivery_fe/screens/test/cart_screen_stream_builder.dart';
 import 'package:fooddelivery_fe/screens/test/test_notification.dart';
 import 'package:get/get.dart';
 
@@ -58,7 +57,6 @@ class AppFood extends StatelessWidget {
       routes: {
         'home_screen': (context) => const HomeScreen(),
         'splash_screen': (context) => const SplashScreen(),
-        'test_cart_screen': (context) => CartScreenRealtime(),
         'test_screen': (context) => TestNotificationScreen(),
       },
     );

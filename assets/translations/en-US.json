@@ -166,7 +166,8 @@
         "ordered_dishes":"Ordered dishes",
         "voucher_used":"Voucher used",
         "total_amount":"Total amount",
-        "payment_amount":"Payment amount"
+        "payment_amount":"Payment amount",
+        "payment_method":"Payment method"
     },
     "exchange_voucher":{
         "appbar":{

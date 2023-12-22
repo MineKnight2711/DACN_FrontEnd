@@ -14,6 +14,7 @@ import 'package:fooddelivery_fe/screens/homescreen/components/product_view/dish_
 import 'package:fooddelivery_fe/screens/homescreen/components/product_view/favorite_icon_button.dart';
 import 'package:fooddelivery_fe/utils/data_convert.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_snackbar.dart';
 import 'package:fooddelivery_fe/widgets/empty_widget.dart';
 import 'package:fooddelivery_fe/widgets/image_view.dart';
 import 'package:get/get.dart';
@@ -54,14 +55,19 @@ class ListDishView extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return ImageViewer(
+                                    Get.to(
+                                        ImageViewer(
                                             imageUrl:
-                                                "${dishItem.dish.imageUrl}");
-                                      },
-                                    );
+                                                "${dishItem.dish.imageUrl}"),
+                                        transition: Transition.downToUp);
+                                    // showDialog(
+                                    //   context: context,
+                                    //   builder: (context) {
+                                    //     return ImageViewer(
+                                    //         imageUrl:
+                                    //             "${dishItem.dish.imageUrl}");
+                                    //   },
+                                    // );
                                   },
                                   child: ClipRRect(
                                     borderRadius: const BorderRadius.all(
@@ -121,20 +127,30 @@ class ListDishView extends StatelessWidget {
                                                     dishItem.dish, 1);
                                             switch (result) {
                                               case "Success":
-                                                showCustomSnackBar(
-                                                    context,
-                                                    "Thông báo",
-                                                    "Thêm vào giỏ hàng thành công",
-                                                    ContentType.success,
-                                                    2);
+                                                CustomSnackBar
+                                                    .showCustomSnackBar(
+                                                  context,
+                                                  "Thêm vào giỏ hàng thành công",
+                                                  duration: 2,
+                                                  type: FlushbarType.success,
+                                                  isShowOnTop: false,
+                                                );
+                                                // showCustomSnackBar(
+                                                //     context,
+                                                //     "Thông báo",
+                                                //     "Thêm vào giỏ hàng thành công",
+                                                //     ContentType.success,
+                                                //     2);
                                                 break;
                                               case "UpdatedCart":
-                                                showCustomSnackBar(
-                                                    context,
-                                                    "Thông báo",
-                                                    "Cập nhật giỏ hàng thành công",
-                                                    ContentType.help,
-                                                    2);
+                                                CustomSnackBar
+                                                    .showCustomSnackBar(
+                                                  context,
+                                                  "Cập nhật giỏ hàng thành công",
+                                                  duration: 2,
+                                                  type: FlushbarType.info,
+                                                  isShowOnTop: false,
+                                                );
                                                 break;
                                               case "NoAccount":
                                                 showCustomSnackBar(
