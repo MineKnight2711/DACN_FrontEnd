@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class DishController extends GetxController {
   late DishApi _dishApi;
   Rx<List<DishFavoriteCountDTO>> listDish = Rx<List<DishFavoriteCountDTO>>([]);
+  RxList<DishFavoriteCountDTO> listSearchDish = <DishFavoriteCountDTO>[].obs;
   @override
   void onInit() {
     super.onInit();
@@ -24,5 +25,24 @@ class DishController extends GetxController {
           .toList();
       listDish.value = dishList;
     }
+  }
+
+  Future<String?> searchDish(String dishName) async {
+    if (dishName.isNotEmpty) {
+      final response = await _dishApi.searchDish(dishName);
+      if (response.message == "Success") {
+        final listSearchJson = response.data as List<dynamic>;
+        listSearchDish.value = listSearchJson
+            .map((dish) => DishFavoriteCountDTO.fromJson(dish))
+            .toList();
+        if (listSearchDish.isNotEmpty) {
+          return "Đã tìm thấy ${listSearchDish.length} món";
+        }
+        return "Không tìm thấy món nào";
+      }
+      return null;
+    }
+    listSearchDish.clear();
+    return null;
   }
 }

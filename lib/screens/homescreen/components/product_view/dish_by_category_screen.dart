@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/controller/dish_by_category_controller.dart';
 import 'package:fooddelivery_fe/model/category_model.dart';
-import 'package:fooddelivery_fe/screens/homescreen/components/product_view/dish_view/dish_by_category_grid.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/product_view/components/dish_view/dish_by_category_grid.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:fooddelivery_fe/widgets/no_glowing_scrollview.dart';

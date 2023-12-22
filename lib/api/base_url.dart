@@ -28,6 +28,7 @@ class ApiUrl {
   static const apiGetAllCategory = '${baseUrl}category';
   static const apiDish = '${baseUrl}dish/with-favorite';
   static const apiGetDishesByCategoryID = '${baseUrl}dish/get-by-categoryId';
+  static const apiSearchDish = '${baseUrl}dish/search-dish-by-name';
   static const apiPayment = '${baseUrl}payment';
   static const apiTransaction = '${baseUrl}transaction';
   static const apiTransactionVietQR = '$apiTransaction/VietQR-PAYOS';
