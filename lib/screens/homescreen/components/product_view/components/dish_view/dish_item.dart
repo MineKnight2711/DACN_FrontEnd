@@ -44,14 +44,6 @@ class DishItem extends StatelessWidget {
                 onTap: () {
                   Get.to(ImageViewer(imageUrl: "${dishItem.dish.imageUrl}"),
                       transition: Transition.downToUp);
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (context) {
-                  //     return ImageViewer(
-                  //         imageUrl:
-                  //             "${dishItem.dish.imageUrl}");
-                  //   },
-                  // );
                 },
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
