@@ -76,6 +76,13 @@ class DishDetailsBottomSheet extends StatelessWidget {
                           DataConvert().formatCurrency(dishDTO.dish.price),
                           style: CustomFonts.customGoogleFonts(fontSize: 16.r),
                         ),
+                        SizedBox(
+                          height: 18.h,
+                        ),
+                        Text(
+                          "Còn lại :${dishDTO.dish.inStock}",
+                          style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+                        ),
                       ],
                     ),
                     const Spacer(),
@@ -129,10 +136,10 @@ class DishDetailsBottomSheet extends StatelessWidget {
                           context,
                           "Thêm ${dishDTO.dish.dishName}",
                           "Bạn có muốn thêm ${dishDTO.dish.dishName} vào giỏ hàng ?")) {
-                        String? result = await cartController.addToCart(
+                        final result = await cartController.addToCart(
                             dishDTO.dish,
                             cartController.selectedQuantity.value);
-                        switch (result) {
+                        switch (result.message) {
                           case "Success":
                             showCustomSnackBar(
                                 context,
@@ -160,12 +167,8 @@ class DishDetailsBottomSheet extends StatelessWidget {
                                 2);
                             break;
                           default:
-                            showCustomSnackBar(
-                                context,
-                                "Lỗi",
-                                "Lỗi chưa xác định: $result",
-                                ContentType.failure,
-                                2);
+                            showCustomSnackBar(context, "Lỗi", "${result.data}",
+                                ContentType.failure, 2);
                             break;
                         }
                       }

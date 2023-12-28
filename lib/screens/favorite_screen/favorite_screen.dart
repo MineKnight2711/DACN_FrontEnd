@@ -39,9 +39,9 @@ class FavoriteScreen extends GetView {
                                     context,
                                     "Thêm ${favorite.dish?.dishName}",
                                     "Bạn có muốn thêm ${favorite.dish?.dishName} vào giỏ hàng ?")) {
-                                  String? result = await cartController
-                                      .addToCart(favorite.dish, 1);
-                                  switch (result) {
+                                  final result = await cartController.addToCart(
+                                      favorite.dish, 1);
+                                  switch (result.message) {
                                     case "Success":
                                       showCustomSnackBar(
                                           context,
@@ -70,7 +70,7 @@ class FavoriteScreen extends GetView {
                                       showCustomSnackBar(
                                           context,
                                           "Lỗi",
-                                          "Lỗi chưa xác định: $result",
+                                          result.data.toString(),
                                           ContentType.failure,
                                           2);
                                       break;

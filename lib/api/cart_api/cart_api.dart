@@ -20,7 +20,7 @@ class CartApi {
     return responseBase;
   }
 
-  Future<ResponseBaseModel?> addToCart(CartModel cartModel) async {
+  Future<ResponseBaseModel> addToCart(CartModel cartModel) async {
     final response = await http.post(
       Uri.parse(ApiUrl.apiCart),
       body: cartModel.toJson(),

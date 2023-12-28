@@ -3,6 +3,7 @@ import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/address_controller.dart';
 import 'package:fooddelivery_fe/model/address_model.dart';
 import 'package:fooddelivery_fe/model/cart_model.dart';
+import 'package:fooddelivery_fe/model/dish_model.dart';
 import 'package:fooddelivery_fe/model/payment_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
 import 'package:fooddelivery_fe/model/transaction_model.dart';
@@ -19,6 +20,7 @@ class TransactionController extends GetxController {
   Rx<AddressModel?> selectedAddress = Rx<AddressModel?>(null);
   Rx<PaymentModel?> selectedPayment = Rx<PaymentModel?>(null);
   Rx<VoucherModel?> selectedVoucher = Rx<VoucherModel?>(null);
+  RxList<DishModel> listExceededInstock = <DishModel>[].obs;
   @override
   void onInit() {
     super.onInit();
@@ -141,5 +143,17 @@ class TransactionController extends GetxController {
         await _transactionApi.cancelTransaction(orderId, paymentDetailsId);
     Logger().i("Cancel transaction result ${response.message}");
     return response.message ?? "";
+  }
+
+  Future<String> checkInstock(List<CartModel> listCart) async {
+    final response = await _transactionApi.checkInstock(listCart);
+    if (response.data != null) {
+      final responseJson = response.data as List<dynamic>;
+      listExceededInstock.value =
+          responseJson.map((d) => DishModel.fromJson(d)).toList();
+      return "ExceededInstockDishes";
+    }
+
+    return "OK";
   }
 }

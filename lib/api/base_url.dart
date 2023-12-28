@@ -31,6 +31,7 @@ class ApiUrl {
   static const apiSearchDish = '${baseUrl}dish/search-dish-by-name';
   static const apiPayment = '${baseUrl}payment';
   static const apiTransaction = '${baseUrl}transaction';
+  static const apiCheckDishes = '$apiTransaction/check-instock';
   static const apiTransactionVietQR = '$apiTransaction/VietQR-PAYOS';
   static const apiTransactionCOD = '$apiTransaction/COD';
   static const apiTransactionUpdate = '$apiTransaction/update';

@@ -7,6 +7,7 @@ import 'package:fooddelivery_fe/controller/cart_controller.dart';
 import 'package:fooddelivery_fe/controller/payment_controller.dart';
 import 'package:fooddelivery_fe/controller/transaction_controller.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/components/cart_item.dart';
+import 'package:fooddelivery_fe/screens/homescreen/components/cart_view/components/exceeded_instock_dishes_alertdialog.dart';
 import 'package:fooddelivery_fe/screens/payment_screen/payment_screen.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/empty_widget.dart';
@@ -93,33 +94,49 @@ class CartView extends StatelessWidget {
             checkoutPressed: () async {
               final paymentController = Get.put(PaymentController());
               final transactionController = Get.put(TransactionController());
-
-              await paymentController.getAllListPayment();
-              final addressResult =
-                  await transactionController.getAccountListAddress();
-              if (addressResult == "NoAddress") {
-                Get.delete<PaymentController>();
-                Get.delete<TransactionController>();
-                showCustomSnackBar(
-                    context,
-                    "Thông báo",
-                    "Bạn chưa có địa chỉ!\nVui lòng thêm địa chỉ để đặt hàng!",
-                    ContentType.warning,
-                    3);
-              } else if (addressResult == "NoPhone") {
-                Get.delete<PaymentController>();
-                Get.delete<TransactionController>();
-                showCustomSnackBar(
-                    context,
-                    "Thông báo",
-                    "Bạn chưa có cố điện thoại!\nVui lòng thêm số điện thoại để đặt hàng!",
-                    ContentType.warning,
-                    3);
+              final checkResult = await transactionController
+                  .checkInstock(cartController.listCart);
+              if (checkResult == "ExceededInstockDishes") {
+                if (transactionController.listExceededInstock.isNotEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ExceededDishesDialog(
+                          listExceededDish:
+                              transactionController.listExceededInstock);
+                    },
+                  );
+                } else {
+                  await paymentController.getAllListPayment();
+                  final addressResult =
+                      await transactionController.getAccountListAddress();
+                  if (addressResult == "NoAddress") {
+                    Get.delete<PaymentController>();
+                    Get.delete<TransactionController>();
+                    showCustomSnackBar(
+                        context,
+                        "Thông báo",
+                        "Bạn chưa có địa chỉ!\nVui lòng thêm địa chỉ để đặt hàng!",
+                        ContentType.warning,
+                        3);
+                  } else if (addressResult == "NoPhone") {
+                    Get.delete<PaymentController>();
+                    Get.delete<TransactionController>();
+                    showCustomSnackBar(
+                        context,
+                        "Thông báo",
+                        "Bạn chưa có cố điện thoại!\nVui lòng thêm số điện thoại để đặt hàng!",
+                        ContentType.warning,
+                        3);
+                  } else {
+                    Get.to(
+                      () => CheckoutScreen(cartController.listCart),
+                      transition: Transition.downToUp,
+                    );
+                  }
+                }
               } else {
-                Get.to(
-                  () => CheckoutScreen(cartController.listCart),
-                  transition: Transition.downToUp,
-                );
+                transactionController.listExceededInstock.clear();
               }
             },
           ),

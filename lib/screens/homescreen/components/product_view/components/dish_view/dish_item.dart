@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
@@ -73,6 +74,11 @@ class DishItem extends StatelessWidget {
                         DataConvert().formatCurrency(dishItem.dish.price),
                         style: CustomFonts.customGoogleFonts(fontSize: 14.r),
                       ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        "Còn lại: ${dishItem.dish.inStock}",
+                        style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+                      ),
                     ],
                   ),
                 ),
@@ -92,9 +98,9 @@ class DishItem extends StatelessWidget {
                             context,
                             "Thêm ${dishItem.dish.dishName}",
                             "Bạn có muốn thêm ${dishItem.dish.dishName} vào giỏ hàng ?")) {
-                          String? result =
+                          final result =
                               await cartController.addToCart(dishItem.dish, 1);
-                          switch (result) {
+                          switch (result.message) {
                             case "Success":
                               showCustomSnackBar(
                                   context,
@@ -123,7 +129,7 @@ class DishItem extends StatelessWidget {
                               showCustomSnackBar(
                                   context,
                                   "Lỗi",
-                                  "Lỗi chưa xác định: $result",
+                                  result.data.toString(),
                                   ContentType.failure,
                                   2);
                               break;

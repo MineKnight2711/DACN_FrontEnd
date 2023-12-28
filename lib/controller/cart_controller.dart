@@ -91,24 +91,26 @@ class CartController extends GetxController {
     }
   }
 
-  Future<String?> addToCart(DishModel? dish, int quantity) async {
+  Future<ResponseBaseModel> addToCart(DishModel? dish, int quantity) async {
     _accountController.fetchCurrentUser();
+
     if (_accountController.accountSession.value != null) {
       CartModel newCartItem = CartModel();
       newCartItem.quantity = quantity;
       newCartItem.dish = dish;
       newCartItem.account = _accountController.accountSession.value;
-      ResponseBaseModel? responseBaseModel =
-          await _cartApi.addToCart(newCartItem);
-      Logger().i("Logger cart : ${responseBaseModel?.data}");
-      if (responseBaseModel?.message == "Success") {
+      final response = await _cartApi.addToCart(newCartItem);
+
+      if (response.message == "Success") {
         getAccountCart();
         calculateTotal();
-        return "Success";
       }
-      return responseBaseModel?.message;
+      return response;
     }
-    return "NoAccount";
+    ResponseBaseModel newResponse = ResponseBaseModel();
+    newResponse.message = "Unknown";
+    newResponse.data = "Lỗi chưa xác định";
+    return newResponse;
   }
 
   Future<String?> deleteCartItem(CartModel cart) async {

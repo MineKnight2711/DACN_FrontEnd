@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:fooddelivery_fe/api/base_url.dart';
+import 'package:fooddelivery_fe/model/cart_model.dart';
+import 'package:fooddelivery_fe/model/dish_model.dart';
 import 'package:fooddelivery_fe/model/respone_base_model.dart';
 import 'package:fooddelivery_fe/model/transaction_model.dart';
 import 'package:http/http.dart' as http;
@@ -79,6 +81,28 @@ class TransactionApi {
     final response = await http.put(
       uri,
       headers: headers,
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (response.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'Error';
+    return responseBase;
+  }
+
+  Future<ResponseBaseModel> checkInstock(List<CartModel> listDish) async {
+    print(jsonEncode(listDish
+        .map((dish) => {"dishId": dish.dish?.dishID, "quantity": dish.quantity})
+        .toList()));
+    final response = await http.post(
+      Uri.parse(ApiUrl.apiCheckDishes),
+      headers: headers,
+      body: jsonEncode(listDish
+          .map((dish) =>
+              {"dishId": dish.dish?.dishID, "quantity": dish.quantity})
+          .toList()),
     );
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (response.statusCode == 200) {
