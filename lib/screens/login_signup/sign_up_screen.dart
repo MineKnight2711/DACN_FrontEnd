@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/register_controller.dart';
 import 'package:fooddelivery_fe/screens/login_signup/login_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
@@ -74,7 +73,7 @@ class SignUpScreen extends GetView {
                 onChanged: (value) {
                   registerController.selectedGender.value = value;
                 },
-                size: CustomMediaQuerry.mediaAspectRatio(context, 0.27),
+                size: 1.3.r,
               ),
               const SizedBox(
                 height: 25,

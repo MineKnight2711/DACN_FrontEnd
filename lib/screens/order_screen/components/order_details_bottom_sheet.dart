@@ -73,11 +73,7 @@ class OrderDetailsBottomSheet extends StatelessWidget {
           thickness: 3.h,
         ),
         Row(
-          mainAxisAlignment: "${orderDetails.order?.status}" == "Đã hoàn tất"
-              ? MainAxisAlignment.spaceEvenly
-              : "${orderDetails.order?.status}" == "Chờ thanh toán"
-                  ? MainAxisAlignment.spaceEvenly
-                  : MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             "${orderDetails.order?.status}" == "Đã hoàn tất"
                 ? SizedBox(
@@ -94,29 +90,19 @@ class OrderDetailsBottomSheet extends StatelessWidget {
                     height: 0.05.sh,
                     child: RoundIconButton(
                       size: 60.w,
-                      title: tr("bottom_sheet_order_details.checkout_now"),
+                      title: tr("bottom_sheet_order_details.cancel"),
                       onPressed: () {},
                     ),
                   )
                 : const SizedBox.shrink(),
-            SizedBox(
-              height: 0.05.sh,
-              child: RoundIconButton(
-                size: "${orderDetails.order?.status}" == "Đã hoàn tất"
-                    ? 40.w
-                    : "${orderDetails.order?.status}" == "Chờ thanh toán"
-                        ? 40.w
-                        : 80.w,
-                title: tr("bottom_sheet_order_details.reorder"),
-                onPressed: () {},
-              ),
-            )
           ],
         ),
-        Divider(
-          height: 20.h,
-          thickness: 3.h,
-        ),
+        "${orderDetails.order?.status}" != "Đang thực hiện"
+            ? Divider(
+                height: 20.h,
+                thickness: 3.h,
+              )
+            : const Card(),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Column(

@@ -151,4 +151,28 @@ class UpdateProfileController extends GetxController {
     response.message = "Fail";
     return response;
   }
+
+  String? validatePassword(String? password) {
+    if (password == null || password.isEmpty) {
+      validate.isValidPasswordSignUp.value = false;
+      return 'Mật khẩu không được trống';
+    }
+
+    RegExp regex = RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*(),.?":{}|<>]).{8,}$');
+    if (!regex.hasMatch(password)) {
+      validate.isValidPasswordSignUp.value = false;
+      return 'Mật khẩu phải chứa ít nhất:\n* 1 ký tự hoa,\n* 1 ký tự thường ,\n* 1 số,\n* 1 ký tự đặc biệt,\n* 8 ký tự';
+    }
+
+    validate.isValidPasswordSignUp.value = true;
+
+    return null;
+  }
+
+  Future<String> changePassword(String newPass) async {
+    final response = await _accountApi.changePassword(
+        "${_accountController.accountSession.value?.email}", newPass);
+    return response.message ?? "";
+  }
 }

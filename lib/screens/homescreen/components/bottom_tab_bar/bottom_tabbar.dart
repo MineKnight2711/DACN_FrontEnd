@@ -1,8 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/screens/homescreen/components/bottom_tab_bar/bottom_tabbar_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,14 +16,17 @@ class BottomNavigationTabBar extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       tabs: bottomTabBarController.tabs
           .map((tab) => SizedBox(
-              width: CustomMediaQuerry.mediaWidth(context, 4.5),
-              height: CustomMediaQuerry.mediaHeight(context, 12),
+              width: 1.sw / 4.5,
+              height: 1.sh / 12,
               child: Tab(
                   icon: Stack(
                     children: [
                       Align(
                           alignment: Alignment.center,
-                          child: Image.asset(tab.imagePath)),
+                          child: Image.asset(
+                            tab.imagePath,
+                            scale: 1.8,
+                          )),
                       tab.tag == "Cart"
                           ? Align(
                               alignment: Alignment.topRight,

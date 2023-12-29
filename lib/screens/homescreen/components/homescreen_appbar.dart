@@ -1,10 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/config/radius.dart';
 
 import 'package:fooddelivery_fe/config/spacing.dart';
@@ -97,7 +95,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ),
                       SizedBox(
-                        width: CustomMediaQuerry.mediaWidth(context, 60),
+                        width: 1.sw / 60,
                       ),
                       const Icon(
                         Icons.arrow_forward,

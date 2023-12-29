@@ -11,7 +11,7 @@ class ApiUrl {
   // static const baseUrl =
   //     'https://testjava-fooddelivery-07101b5575c7.herokuapp.com/api/';
 
-  static const baseUrl = "http://26.196.143.193:6969/api/";
+  static const baseUrl = "http://192.168.1.44:6969/api/";
   // static const apiGetAllAccount = '${baseUrl}account/all';
   static const apiGoongMapBaseUrl = "https://rsapi.goong.io/";
   ///// Api của Đạt-------------------------------------------------
@@ -25,6 +25,7 @@ class ApiUrl {
   static const apiSignOut = '${baseUrl}account/sign-out';
   static const apiVerifiedEmail = '${baseUrl}account/get-user-info';
   static const apiChangeEmail = '${baseUrl}account/change-email';
+  static const apiChangePassword = '${baseUrl}account/change-password';
   static const apiGetAllCategory = '${baseUrl}category';
   static const apiDish = '${baseUrl}dish/with-favorite';
   static const apiGetDishesByCategoryID = '${baseUrl}dish/get-by-categoryId';
@@ -41,7 +42,7 @@ class ApiUrl {
   static const apiVoucher = '${baseUrl}voucher';
   static const apiGetAllVoucher = '$apiVoucher/all';
   // static const apiFindAccountById = '${baseUrl}account';
-  // static const apiChangePassword = '${baseUrl}account';
+
   // static const apiForgotPassword = '${baseUrl}account/reset-password';
   // static const apiGetProductById = '${baseUrl}product/getById';
   // static const apiGetProductDetailsById = '${baseUrl}productDetail/getById';

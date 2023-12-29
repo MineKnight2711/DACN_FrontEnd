@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -47,7 +46,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title ?? "",
         style: GoogleFonts.nunito(
           color: AppColors.white100,
-          fontSize: CustomMediaQuerry.mediaAspectRatio(context, 1 / 37),
+          fontSize: (1 / 37).r,
           fontWeight: FontWeight.w500,
         ),
       ),

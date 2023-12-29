@@ -1,12 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/update_profile_controller.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:fooddelivery_fe/widgets/datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class DatePickerExpandTile extends StatelessWidget {
   final String title;
@@ -64,7 +62,7 @@ class DatePickerExpandTile extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   height: 60.h,
-                  width: CustomMediaQuerry.mediaWidth(context, 1.5),
+                  width: 1.sw / 1.5,
                   child: BirthdayDatePickerWidget(
                     initialDate: currentBirthday,
                     onChanged: (value) {
@@ -150,7 +148,7 @@ class InputExpandTile extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   margin: const EdgeInsets.only(left: 10),
                   height: 90.h,
-                  width: CustomMediaQuerry.mediaWidth(context, 1.35),
+                  width: 1.sw / 1.35,
                   child: Center(
                     child: RoundTextfield(
                       controller: textController,

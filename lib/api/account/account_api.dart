@@ -23,10 +23,11 @@ class AccountApi {
     return responseBase;
   }
 
-  Future<ResponseBaseModel?> createAccount(AccountModel account) async {
+  Future<ResponseBaseModel> createAccount(AccountModel account) async {
+    print(account.newAccountToJson());
     final response = await http.post(
       Uri.parse(ApiUrl.apiCreateAccount),
-      body: account.toJson(),
+      body: account.newAccountToJson(),
     );
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (response.statusCode == 200) {
@@ -157,6 +158,20 @@ class AccountApi {
     final verifiedResponse = await http.put(
       Uri.parse(
           "${ApiUrl.apiChangeEmail}/$accountId?email=$email&newEmail=$newEmail"),
+    );
+    ResponseBaseModel responseBase = ResponseBaseModel();
+    if (verifiedResponse.statusCode == 200) {
+      responseBase = ResponseBaseModel.fromJson(
+          jsonDecode(utf8.decode(verifiedResponse.bodyBytes)));
+      return responseBase;
+    }
+    responseBase.message = 'ConnectError';
+    return responseBase;
+  }
+
+  Future<ResponseBaseModel> changePassword(String email, String newPass) async {
+    final verifiedResponse = await http.put(
+      Uri.parse("${ApiUrl.apiChangePassword}/$email?newPassword=$newPass"),
     );
     ResponseBaseModel responseBase = ResponseBaseModel();
     if (verifiedResponse.statusCode == 200) {

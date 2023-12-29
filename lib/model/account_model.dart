@@ -63,6 +63,20 @@ class AccountModel {
     };
   }
 
+  Map<String, dynamic> newAccountToJson() {
+    return {
+      'accountID': accountID,
+      'fullName': fullName,
+      'birthday': birthday != null
+          ? DateFormat("yyyy-MM-dd").format(birthday!)
+          : DateTime.now(),
+      'email': email,
+      'gender': gender,
+      'imageUrl': imageUrl ?? "",
+      'phoneNumber': phoneNumber,
+    };
+  }
+
   Map<String, dynamic> updateToJson() {
     return {
       'accountID': accountID,

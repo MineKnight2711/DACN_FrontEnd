@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
 import 'package:fooddelivery_fe/config/font.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/controller/change_image_controller.dart';
 import 'package:fooddelivery_fe/controller/update_profile_controller.dart';
@@ -14,6 +13,7 @@ import 'package:fooddelivery_fe/screens/homescreen/homescreen.dart';
 import 'package:fooddelivery_fe/screens/slpash_screen.dart';
 import 'package:fooddelivery_fe/utils/transition_animation.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_appbar.dart';
+import 'package:fooddelivery_fe/widgets/custom_widgets/custom_button.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_message.dart';
 import 'package:fooddelivery_fe/widgets/custom_widgets/custom_textfield.dart';
 import 'package:fooddelivery_fe/widgets/expansion_tile.dart';
@@ -46,7 +46,7 @@ class ProfileScreen extends GetView {
         child: Column(
           children: [
             SizedBox(
-              height: CustomMediaQuerry.mediaHeight(context, 40),
+              height: 1.sh / 40,
             ),
             Obx(
               () {
@@ -60,17 +60,23 @@ class ProfileScreen extends GetView {
                 return const SizedBox.shrink();
               },
             ),
+            Obx(
+              () => Text(
+                "${accountController.accountSession.value?.email}",
+                style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+              ),
+            ),
             SizedBox(
-              height: CustomMediaQuerry.mediaHeight(context, 40),
+              height: 1.sh / 40,
             ),
             Divider(
-              endIndent: CustomMediaQuerry.mediaWidth(context, 5),
-              indent: CustomMediaQuerry.mediaWidth(context, 5),
+              endIndent: 1.sw / 5,
+              indent: 1.sw / 5,
               thickness: 2,
               color: Colors.black38,
             ),
             SizedBox(
-              height: CustomMediaQuerry.mediaHeight(context, 50),
+              height: 1.sh / 50,
             ),
             Obx(
               () => InputExpandTile(
@@ -109,7 +115,7 @@ class ProfileScreen extends GetView {
               ),
             ),
             SizedBox(
-              height: CustomMediaQuerry.mediaHeight(context, 20 * 10),
+              height: 1.sh / 200,
             ),
             Obx(
               () => InputExpandTile(
@@ -180,8 +186,39 @@ class ProfileScreen extends GetView {
               child: Text(tr("profile.change_email")),
             ),
             TextButton(
-              onPressed: () {
-                // Show reset password dialog
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  builder: (context) => ChangePassDialog(
+                      onChanged: profileController.validatePassword,
+                      onPressed: () async {
+                        final result = await profileController.changePassword(
+                            profileController
+                                .textControllers.txtPasswordUpdate.text);
+                        if (result == "Success") {
+                          showCustomSnackBar(
+                              context,
+                              "Thông báo",
+                              "Đổi mật khẩu thành công\nVui lòng đăng nhập lại",
+                              ContentType.success,
+                              3);
+                          Future.delayed(
+                            const Duration(seconds: 1),
+                            () async {
+                              await accountController.logOut().whenComplete(
+                                    () => Get.offAll(const HomeScreen(),
+                                        transition: Transition.fadeIn),
+                                  );
+                            },
+                          );
+                        } else {
+                          showCustomSnackBar(context, "Thông báo",
+                              "Có lỗi xảy ra!", ContentType.failure, 2);
+                        }
+                      },
+                      txtPassword:
+                          profileController.textControllers.txtPasswordUpdate),
+                );
               },
               child: Text(tr("profile.reset_password")),
             ),
@@ -208,46 +245,6 @@ class ProfileScreen extends GetView {
       });
     }
   }
-
-  // void toVerifiedEmailWebView(
-  //     BuildContext context, String link, String oldEmail, String newEmail) {
-  //   final webViewController = MainController.initController();
-  //   webViewController
-  //     ..setJavaScriptMode(JavaScriptMode.unrestricted)
-  //     ..setBackgroundColor(AppColors.white100)
-  //     ..setNavigationDelegate(
-  //       NavigationDelegate(
-  //         onProgress: (int progress) {
-  //           // Update loading bar.
-  //         },
-  //         onPageStarted: (String url) {},
-  //         onPageFinished: (String url) {},
-  //         onWebResourceError: (WebResourceError error) {},
-  //         onNavigationRequest: (NavigationRequest request) async {
-  //           if (request.url.contains("/api/account/verifiedEmail")) {
-  //             // Future.delayed(
-  //             //   const Duration(seconds: 3),
-  //             //   () => Get.back(),
-  //             // );
-  //             return NavigationDecision.navigate;
-  //           }
-  //           return NavigationDecision.navigate;
-  //         },
-  //       ),
-  //     )
-  //     ..loadRequest(Uri.parse(link));
-  //   Get.to(
-  //       () => WillPopScope(
-  //             onWillPop: () async {
-  //               await profileController.changeEmail(newEmail);
-  //               return true;
-  //             },
-  //             child: VerifyEmailWebView(
-  //               webViewController: webViewController,
-  //             ),
-  //           ),
-  //       transition: Transition.downToUp);
-  // }
 }
 
 class ViewEmailLinkDialog extends StatelessWidget {
@@ -308,6 +305,41 @@ class ViewEmailLinkDialog extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class ChangePassDialog extends StatelessWidget {
+  final TextEditingController txtPassword;
+  final Function()? onPressed;
+  final Function(String?)? onChanged;
+  const ChangePassDialog(
+      {super.key, required this.txtPassword, this.onPressed, this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      title: Center(
+        child: Text(
+          tr("profile.reset_password"),
+          style: CustomFonts.customGoogleFonts(fontSize: 14.r),
+        ),
+      ),
+      content: RoundTextfield(
+        hintText: tr("profile.reset_password_textfield"),
+        controller: txtPassword,
+        onChanged: onChanged,
+      ),
+      actions: [
+        Center(
+          child: RoundIconButton(
+            size: 55.r,
+            onPressed: onPressed,
+            title: tr("profile.reset_password"),
+          ),
+        )
+      ],
     );
   }
 }

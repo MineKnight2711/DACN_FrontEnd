@@ -110,7 +110,7 @@
         "order_details":"Chi tiết đơn hàng",
         "status":"Trạng thái",
         "already_paid":"Đã thanh toán",
-        "checkout_now":"Thanh toán ngay!",
+        "cancel":"Huỷ đơn hàng",
         "rate_order":"Đánh giá",
         "reorder":"Đặt lại",
         "order_information":"Thông tin đơn hàng",
@@ -161,6 +161,7 @@
         "phone_number":"Số điện thoại",
         "change_email":"Thay đổi email",
         "reset_password":"Đổi mật khẩu",
+        "reset_password_textfield":"Nhập mật khẩu mới...",
         "save":"Lưu"
     },
     "address_screen":{

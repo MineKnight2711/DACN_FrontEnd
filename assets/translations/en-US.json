@@ -103,6 +103,7 @@
         "phone_number":"Phone number",
         "change_email":"Change email",
         "reset_password":"Reset password",
+        "reset_password_textfield":"Enter new password...",
         "save":"Save"
         
     },
@@ -157,7 +158,7 @@
         "order_details":"Order details",
         "status":"Status",
         "already_paid":"Already paid",
-        "checkout_now":"Checkout now!",
+        "cancel":"Cancel order",
         "rate_order":"Rate this order",
         "reorder":"Reorder",
         "order_information":"Order information",

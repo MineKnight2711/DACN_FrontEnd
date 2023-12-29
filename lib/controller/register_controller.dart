@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fooddelivery_fe/api/account/account_api.dart';
 import 'package:fooddelivery_fe/controller/account_controller.dart';
 import 'package:fooddelivery_fe/model/account_model.dart';
@@ -46,44 +45,18 @@ class RegisterController extends GetxController {
     newAccount.phoneNumber = textControllers.txtPhoneSignUp.text;
     ResponseBaseModel? responseBaseModel =
         await _accountApi.createAccount(newAccount);
-    if (responseBaseModel?.message == "Success") {
+    if (responseBaseModel.message == "Success") {
       return "Success";
     }
-    return responseBaseModel?.message ?? "";
+    return responseBaseModel.message ?? "";
   }
 
   Future<ResponseBaseModel> register() async {
-    // UserCredential userCredential = await FirebaseAuth.instance
-    //     .createUserWithEmailAndPassword(
-    //         email: textControllers.txtEmailSignUp.text,
-    //         password: textControllers.txtPasswordSignUp.text);
     final response = await _accountApi.register(
         textControllers.txtEmailSignUp.text,
         textControllers.txtPasswordSignUp.text);
-
     return response;
   }
-
-  // String? catchFirebaseAuthError(FirebaseAuthException error) {
-  //   String? errorMessage;
-  //   switch (error.code) {
-  //     case "invalid-email":
-  //       errorMessage = "Email không đúng định dạng.";
-  //       break;
-  //     case "email-already-in-use":
-  //       errorMessage = "Địa chỉ email đã được sử dụng bởi một tài khoản khác.";
-  //       break;
-  //     case "too-many-requests":
-  //       errorMessage = "Quá nhiều yêu cầu (thử lại sau 30s)";
-  //       break;
-  //     case "operation-not-allowed":
-  //       errorMessage = "Thao tác này không thể thực hiện!";
-  //       break;
-  //     default:
-  //       errorMessage = "Lỗi chưa xác định.";
-  //   }
-  //   return errorMessage;
-  // }
 
   Future<String> getAccountByEmail(String email) async {
     ResponseBaseModel? responseBaseModel = await _accountApi.login(email);

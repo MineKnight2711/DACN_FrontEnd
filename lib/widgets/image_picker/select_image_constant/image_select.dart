@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import '../selectphoto/select_photo_options_screen.dart';
@@ -109,8 +109,8 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
               ScaleTransition(
                 scale: _inanimation,
                 child: Container(
-                  width: CustomMediaQuerry.mediaWidth(context, 4),
-                  height: CustomMediaQuerry.mediaHeight(context, 7),
+                  width: 1.sw / 4,
+                  height: 1.sh / 7,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     boxShadow: [
@@ -123,7 +123,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
                     ],
                   ),
                   child: CircleAvatar(
-                    radius: CustomMediaQuerry.mediaHeight(context, 3),
+                    radius: 1.sh / 3,
                     backgroundImage: Image.file(
                       image!,
                     ).image,
@@ -140,10 +140,10 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
                   },
                   child: CircleAvatar(
                     backgroundColor: AppColors.orange100,
-                    radius: CustomMediaQuerry.mediaAspectRatio(context, 1 / 37),
+                    radius: 20.r,
                     child: Icon(
                       Icons.camera_alt,
-                      size: CustomMediaQuerry.mediaAspectRatio(context, 1 / 40),
+                      size: 20.r,
                       color: Colors.white,
                     ),
                   ),
@@ -155,8 +155,8 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
           Stack(
             children: [
               Container(
-                width: CustomMediaQuerry.mediaWidth(context, 3),
-                height: CustomMediaQuerry.mediaHeight(context, 7),
+                width: 1.sw / 3,
+                height: 1.sh / 7,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppColors.orange100,
@@ -166,12 +166,12 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
                       ? Image.network(
                           widget.currentImageUrl!,
                           fit: BoxFit.cover,
-                          width: CustomMediaQuerry.mediaWidth(context, 4),
-                          height: CustomMediaQuerry.mediaHeight(context, 7),
+                          width: 1.sw / 4,
+                          height: 1.sh / 7,
                         )
                       : Image.asset(
                           'assets/images/profile.png',
-                          scale: CustomMediaQuerry.mediaWidth(context, 4),
+                          scale: 1.sw / 4,
                         ),
                 ),
               ),
@@ -185,10 +185,10 @@ class ImagePickerWidgetState extends State<ImagePickerWidget>
                   },
                   child: CircleAvatar(
                     backgroundColor: AppColors.orange100,
-                    radius: CustomMediaQuerry.mediaAspectRatio(context, 1 / 37),
+                    radius: 20.r,
                     child: Icon(
                       Icons.camera_alt,
-                      size: CustomMediaQuerry.mediaAspectRatio(context, 1 / 40),
+                      size: 20.r,
                       color: Colors.white,
                     ),
                   ),

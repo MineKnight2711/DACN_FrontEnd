@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery_fe/config/colors.dart';
-import 'package:fooddelivery_fe/config/mediquerry.dart';
 
 class BirthdayDatePickerWidget extends StatefulWidget {
   final DateTime? initialDate;
@@ -30,12 +30,9 @@ class BirthdayDatePickerWidgetState extends State<BirthdayDatePickerWidget> {
       children: [
         Expanded(
           child: Padding(
-            padding:
-                EdgeInsets.only(top: CustomMediaQuerry.mediaWidth(context, 30)),
+            padding: EdgeInsets.only(top: 1.sw / 30),
             child: SizedBox(
-              height: CustomMediaQuerry.screenRotate(context)
-                  ? CustomMediaQuerry.mediaHeight(context, 18)
-                  : CustomMediaQuerry.mediaHeight(context, 9),
+              height: 1.sh / 19,
               child: ElevatedButton(
                 onPressed: () {
                   _selectDate(context);

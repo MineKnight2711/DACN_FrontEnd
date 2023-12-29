@@ -44,19 +44,19 @@ class BottomTabBarController extends GetxController {
       TabModel(
           tag: "Home",
           name: tr("home.bottom_navigation_bar.home"),
-          imagePath: 'assets/images/home.png'),
+          imagePath: 'assets/images/home_64.png'),
       TabModel(
           tag: "Cart",
           name: tr("home.bottom_navigation_bar.cart"),
-          imagePath: 'assets/images/cart.png'),
+          imagePath: 'assets/images/cart_64.png'),
       TabModel(
           tag: "Discount",
           name: tr("home.bottom_navigation_bar.discount"),
-          imagePath: 'assets/images/voucher.png'),
+          imagePath: 'assets/images/discount_64.png'),
       TabModel(
           tag: "More",
           name: tr("home.bottom_navigation_bar.more"),
-          imagePath: 'assets/images/menu.png'),
+          imagePath: 'assets/images/menu_64.png'),
     ];
   }
 
