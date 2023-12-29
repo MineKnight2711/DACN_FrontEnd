@@ -125,7 +125,9 @@ class UpdateProfileController extends GetxController {
         await _accountController
             .storedUserToSharedRefererces(AccountModel.fromJson(respone.data))
             .whenComplete(() => fetchCurrent());
-
+        birthDayExpansionTileController.collapse();
+        phoneNumberExpansionTileController.collapse();
+        fullnameExpansionTileController.collapse();
         return "Success";
       }
       return respone.message.toString();
