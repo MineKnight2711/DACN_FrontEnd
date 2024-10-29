@@ -16,7 +16,7 @@ dependencies:
   google_sign_in: ^6.1.5
   geolocator: ^8.0.1
   get: ^4.6.5
-  intl: ^0.18.1
+  intl: ^0.19.0
   image_picker: ^0.8.7+1
   image_cropper: ^3.0.3
   
